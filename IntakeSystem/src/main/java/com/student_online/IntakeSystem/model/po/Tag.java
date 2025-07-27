@@ -4,7 +4,6 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.*;
 
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
 @TableName("tag")
 public class Tag {

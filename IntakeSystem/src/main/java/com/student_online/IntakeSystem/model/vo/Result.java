@@ -1,17 +1,25 @@
 package com.student_online.IntakeSystem.model.vo;
 
+import com.student_online.IntakeSystem.config.exception.CommonErr;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.http.HttpStatus;
 
-@Data
+@Getter
 @NoArgsConstructor
 @AllArgsConstructor
 public class Result {
     private Integer code; // 业务状态码
     private Object data;  // 数据
     private String msg;   // 提示信息
+    
+//    public   Result(Integer code, Object data, String msg) {
+//        this.code = code;
+//        this.data = data;
+//        this.msg = msg;
+//    }
 
     /**
      * 返回成功结果
@@ -33,7 +41,15 @@ public class Result {
     public static Result error(Integer code, String msg) {
         return new Result(code, null, msg);
     }
-
+    
+    public static Result error(String msg, Integer code) {
+        return new Result(code, null, msg);
+    }
+    
+    public static Result error(CommonErr error) {
+        return new Result(error.getCode(),null,error.getMessage());
+    }
+    
     /**
      * 获取 HTTP 状态码
      */
