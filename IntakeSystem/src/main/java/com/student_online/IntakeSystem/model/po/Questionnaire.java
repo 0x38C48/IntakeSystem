@@ -1,9 +1,11 @@
 package com.student_online.IntakeSystem.model.po;
 
+import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.*;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Questionaire {
+@TableName("questionnaire")
+public class Questionnaire {
 }
