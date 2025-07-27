@@ -1,0 +1,22 @@
+server:
+  port: 8081
+
+spring:
+  datasource:
+    url: jdbc:mysql://47.113.194.64:3306
+    username: "NXXT_manager"
+    password: ",1]cLVki5TQFsf9*43PRb+7X:qt6eA2}"
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  data:
+    redis:
+      host: 47.113.194.64
+      port: 7777
+      password: "0n/pMC%^b41IsaVO6+e35u]dcF7Z$G9D"
+
+mybatis-plus:
+  configuration:
+    map-underscore-to-camel-case: true
+
+logging:
+  level:
+    org.springframework: INFO
