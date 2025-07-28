@@ -10,9 +10,6 @@ public interface PermissionMapper {
     @Insert("insert into permission (uid,station_id) values (#{uid},#{stationId})")
     void createPermission(Permission permission);
 
-    @Update("update permission set uid=#{uid},station_id=#{stationId}")
-    void updatePermission(Permission permission);
-
     @Delete("delete from permission where id=#{id}")
     void deletePermissionById(int id);
 
@@ -21,6 +18,9 @@ public interface PermissionMapper {
 
     @Select("select * from permission where uid=#{uid}")
     List<Permission> getPermissionByUid(int uid);
+
+    @Select("select * from permission where station_id=#{stationId}")
+    List<Permission> getPermissionByStationId(int stationId);
 
     @Select("select * from permission where uid=#{uid} and station_id=#{stationId}")
     Permission getPermissionByUidAndStationId(int uid, int stationId);
