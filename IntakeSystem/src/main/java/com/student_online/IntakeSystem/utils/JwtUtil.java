@@ -5,48 +5,75 @@ import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 import io.jsonwebtoken.security.SecureDigestAlgorithm;
+import lombok.SneakyThrows;
 import org.springframework.boot.autoconfigure.security.oauth2.resource.OAuth2ResourceServerProperties;
 
 import javax.crypto.SecretKey;
+import javax.crypto.SecretKeyFactory;
+import javax.crypto.spec.PBEKeySpec;
+import javax.crypto.spec.SecretKeySpec;
+import java.nio.charset.StandardCharsets;
 import java.time.Instant;
 import java.util.Date;
 import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * jwt工具,生成令牌和解析令牌
  */
 public class JwtUtil {
     //jwt密钥解析
-    public static final SecretKey KEY = Keys.hmacShaKeyFor(STATIC.VALUE.jwt_secret.getBytes());
+    public static final String KEY = STATIC.VALUE.jwt_secret;
     
     //jwt加密方式
     public static final SecureDigestAlgorithm<SecretKey,SecretKey> ALGORITHM = Jwts.SIG.HS256;
     
     //设定claim使用的键
-    public static final String CLAIM_KEY = "claims";
+    public static final String CLAIM_KEY = "casID";
     
-    //生成token，可以包裹更多东西，这里包装一个obj
-    public static String generate(Integer uid, String otherInfo) {
-        return Jwts.builder()
-                .header().add("type","JWT")
-                .and()
-                .claim(CLAIM_KEY, new CLAIMS(uid, otherInfo))
-                .expiration(Date.from(Instant.now().plusMillis(STATIC.VALUE.jwt_expire)))
-                .signWith(KEY,ALGORITHM)
-                .compact();
+    private static final byte[] salt = "KOISHIKISHIKAWAIIKAWAIIKISSKISSLOVELY".getBytes(StandardCharsets.UTF_8);
+    
+    private static final int iterationCount = 114514;
+    
+    private static final Map<String, SecretKey> KEY_CACHE = new ConcurrentHashMap<>();
+    
+    @SneakyThrows
+    private static SecretKey generateSecretKey() {
+        SecretKey secretKey = KEY_CACHE.get(KEY);
+        if (secretKey == null) {
+            PBEKeySpec spec = new PBEKeySpec(KEY.toCharArray(), salt, iterationCount, 256);
+            SecretKeyFactory factory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA256");
+            byte[] secretBytes = factory.generateSecret(spec).getEncoded();
+            secretKey = new SecretKeySpec(secretBytes, "HmacSHA256");
+            KEY_CACHE.put(KEY, secretKey);
+        }
+        return secretKey;
     }
+    
+    
+//    public static String generate(String obj) {
+//        SecretKey secretKey = generateSecretKey();
+//        return Jwts.builder()
+//                .header().add("type","JWT")
+//                .and()
+//                .claim(CLAIM_KEY, obj)
+//                .expiration(new Date(System.currentTimeMillis() + STATIC.VALUE.jwt_expire))
+//                .signWith(secretKey,ALGORITHM)
+//                .compact();
+//    }
     
     //解析token，得到包装的obj
     @SuppressWarnings("unchecked")
-    public static CLAIMS getClaims(String token){
+    public static String getClaim(String token){
+        SecretKey secretKey = generateSecretKey();
         try {
-            return new CLAIMS((LinkedHashMap<String, Object>)
-                    Jwts.parser()
-                    .verifyWith(KEY)
+            return (String) Jwts.parser()
+                    .verifyWith(secretKey)
                     .build()
                     .parseSignedClaims(token)
                     .getPayload()
-                    .get(CLAIM_KEY));
+                    .get(CLAIM_KEY);
         } catch (JwtException | IllegalArgumentException e) {
             return null;
         }
