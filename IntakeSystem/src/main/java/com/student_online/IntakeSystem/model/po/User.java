@@ -16,5 +16,5 @@ public class User {
 
     private String studentNum;
 
-    private int type;//0/1/2分别表示普通成员、管理员、顶层管理员
+    private int type;//0/1/2/3分别表示普通成员、部门管理员、模块管理员、顶层管理员
 }
