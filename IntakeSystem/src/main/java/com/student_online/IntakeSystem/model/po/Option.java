@@ -5,15 +5,17 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@TableName("permission")
-public class Permission {
-    private Integer id;
+@TableName("option")
+public class Option {
+    private int id;
 
-    private Integer uid;
+    private int question_id;
 
-    private Integer stationId;
+    private String content;
 
+    private int sort;
 }

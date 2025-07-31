@@ -9,13 +9,13 @@ import lombok.*;
 @AllArgsConstructor
 @TableName("Department")
 public class Department {
-    private int id;
+    private Integer id;
 
     private String name;
 
-    private int stationId;
+    private Integer stationId;
 
-    private int pId;
+    private Integer pId;
 
     private String description;
 

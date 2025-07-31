@@ -1,6 +1,5 @@
 package com.student_online.IntakeSystem.model.po;
 
-import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -8,12 +7,14 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@TableName("permission")
-public class Permission {
+public class Question {
     private Integer id;
 
-    private Integer uid;
+    private String content;
 
-    private Integer stationId;
+    private Integer questionnaireId;
 
+    private Integer sort;
+
+    private Integer type;// 1/2/3 单选 多选 简答
 }

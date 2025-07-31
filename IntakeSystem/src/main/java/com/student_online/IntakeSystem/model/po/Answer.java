@@ -8,12 +8,15 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@TableName("permission")
-public class Permission {
+@TableName("answer")
+public class Answer {
     private Integer id;
 
-    private Integer uid;
+    private String content;
 
-    private Integer stationId;
+    private Integer questionId;
 
+    private Integer finishId;
+
+    private Integer optionId;
 }
