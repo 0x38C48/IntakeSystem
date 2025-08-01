@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 public class Answer {
     private Integer id;
 
-    private String content;
+    private String answerContent;
 
     private Integer questionId;
 
