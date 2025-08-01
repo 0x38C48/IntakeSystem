@@ -1,9 +1,7 @@
 package com.student_online.IntakeSystem.service;
 
-import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.collection.CollUtil;
-import cn.hutool.core.util.ObjUtil;
 import com.student_online.IntakeSystem.mapper.OptionMapper;
 import com.student_online.IntakeSystem.mapper.QuestionMapper;
 import com.student_online.IntakeSystem.mapper.QuestionnaireMapper;
@@ -36,7 +34,7 @@ public class QuestionService  {
 
 
     public ResponseEntity<Result> saveQuestion(List<QuestionVo> questionsDto) {
-        if (questionsDto.size() == 0) {
+        if (questionsDto.isEmpty()) {
             return ResponseUtil.build(Result.error(400, ""));
         }
         // 获取问卷id
@@ -112,6 +110,17 @@ public class QuestionService  {
         return questions;
     }
 
+    public ResponseEntity<Result>changeStatus(Integer questionnaireId, Integer status) {
+        Questionnaire questionnaire = questionnaireMapper.getQuestionnaireById(questionnaireId);
+        if(status>-2&&status<2){
+            questionnaire.setStatus(status);
+            questionnaireMapper.updateQuestionnaire(questionnaire);
+            return ResponseUtil.build(Result.ok());
+        }
+        else return ResponseUtil.build(Result.error(400,"状态码提供有误"));
+
+    }
+
     public List<QuestionVo> getQuestions(Integer questionnaireId) {
         // 查询问卷状态，如果未设计直接返回空
         if (questionnaireMapper.getQuestionnaireById(questionnaireId).getStatus()
@@ -136,11 +145,7 @@ public class QuestionService  {
     }
 
 
-    /**
-     * 根据问卷id和题目序号将问题按照顺序查询出来，目的给Options的questionId赋值
-     *
-     * @return
-     */
+
     private List<Question> getQuestionsBySort(Integer questionnaireId) {
         List<Question> questions=questionMapper.getQuestionByQuestionnaireId(questionnaireId);
         CollUtil.sort(questions, Comparator.comparing(Question::getSort));

@@ -7,16 +7,19 @@ import java.util.List;
 
 @Mapper
 public interface OptionMapper {
-    @Insert("insert into `option` (question_id,option_sort,option_content) values (#{question_id},#{sort},#{content})")
+    @Insert("insert into `option` (question_id,option_sort,option_content) values (#{questionId},#{optionSort},#{optionContent})")
     void createOption(Option option);
 
-    @Delete("delete from `option` where option_id=#{id}")
-    void deleteOptionById(int id);
+    @Delete("delete from `option` where question_id=#{id}")
+    void deleteOptionByQuestionId(int id);
 
-    @Select("select * from `option` where question_id=#{questionnaireId}")
-    List<Option> getOptionByQuestionnaireId(int questionnaireId);
+    @Delete("delete from `option` where question_id=#{id} and option_sort=#{sort}")
+    void deleteOptionByQuestionIdAndSort(@Param("id") int id,@Param("sort") int sort);
 
-    @Update("update `option` set question_id=#{questionId},option_sort=#{sort},option_content=#{content} where option_id=#{id}")
+    @Select("select * from `option` where question_id=#{questionId}")
+    List<Option> getOptionByQuestionId(int questionId);
+
+    @Update("update `option` set question_id=#{questionId},option_sort=#{optionSort},option_content=#{optionContent} where option_id=#{optionId}")
     void updateOption(Option option);
 
 }
