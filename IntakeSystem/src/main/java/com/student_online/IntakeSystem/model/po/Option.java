@@ -11,11 +11,11 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @TableName("option")
 public class Option {
-    private int id;
+    private int optionId;
 
-    private int question_id;
+    private Integer questionId;
 
-    private String content;
+    private String optionContent;
 
-    private int sort;
+    private Integer optionSort;
 }

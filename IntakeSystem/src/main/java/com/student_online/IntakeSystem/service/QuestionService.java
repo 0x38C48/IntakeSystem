@@ -78,7 +78,7 @@ public class QuestionService  {
             if (questionsDto.get(i).getType() != 3) {
                 for (int j = 0; j < questionsDto.get(i).getOption().size(); j++) {
                     questionsDto.get(i).getOption().get(j)
-                            .setId(questionsBySave.get(i).getId());
+                            .setOptionId(questionsBySave.get(i).getId());
                 }
             }
         }

@@ -22,7 +22,7 @@ public class QuestionVo extends Question {
     private List<Option> option;
 
 
-    private Integer Type;//题目类型
+    private Integer type;//题目类型
 
 
     private String answerContext;//单选或者客观简答题（填空）

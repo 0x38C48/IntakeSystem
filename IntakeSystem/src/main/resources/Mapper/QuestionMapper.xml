@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.student_online.IntakeSystem.mapper.QuestionMapper">
+
+    <resultMap id="questionMap" type="com.student_online.IntakeSystem.model.vo.QuestionVo">
+        <id column="id" property="id"/>
+        <result column="questionnaire_id" property="questionnaireId"/>
+        <result column="type" property="type"/>
+        <result column="content" property="content"/>
+        <result column="sort" property="sort"/>
+        <collection property="option" ofType="com.student_online.IntakeSystem.model.po.Option">
+            <id column="id" property="option"/>
+            <result column="option_content" property="optionContent"/>
+            <result column="option_sort" property="optionSort"/>
+        </collection>
+    </resultMap>
+
+    <select id="getQuestionsAndOptionsByQuestionnaireId" resultMap="questionMap">
+        SELECT
+            q.id,
+            q.questionnaire_id,
+            q.type,
+            q.content,
+            q.sort,
+            o.option_id,
+            o.option_content,
+            o.option_sort
+        FROM question q
+                 LEFT JOIN `option` o ON q.id = o.question_id
+        WHERE q.questionnaire_id = #{questionnaireId}
+          AND (q.type != 3 OR q.type = 0)
+        UNION
+        SELECT
+            q.id,
+            q.questionnaire_id,
+            q.type,
+            q.content,
+            q.sort,
+            NULL AS option_id,
+            NULL AS option_content,
+            NULL AS option_sort
+        FROM question q
+        WHERE q.questionnaire_id = #{questionnaireId}
+          AND (q.type =3)
+    </select>
+
+</mapper>
