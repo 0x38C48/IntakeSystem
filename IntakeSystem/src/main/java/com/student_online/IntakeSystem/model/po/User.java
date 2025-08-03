@@ -14,7 +14,15 @@ public class User {
 
     private String password;
 
-    private String studentNum;
+    private String gender;
+    
+    private String depart;
+    
+    private String major;
+    
+    private String name;
+    
+    private String email;
 
     private int type;//0/1/2/3分别表示普通成员、部门管理员、模块管理员、顶层管理员
 }

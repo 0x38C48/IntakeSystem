@@ -5,10 +5,20 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="550f93a3-53ab-42ec-83c3-ef7986e85d54" name="更改" comment="模块和部门创建、权限管理初步实现">
+      <change afterPath="$PROJECT_DIR$/IntakeSystem/src/main/java/com/student_online/IntakeSystem/model/constant/MAPPER.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/IntakeSystem/src/main/java/com/student_online/IntakeSystem/model/constant/REDIS.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/IntakeSystem/src/main/java/com/student_online/IntakeSystem/service/UserService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IntakeSystem/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/IntakeSystem/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IntakeSystem/src/main/java/com/student_online/IntakeSystem/config/WebConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/IntakeSystem/src/main/java/com/student_online/IntakeSystem/config/WebConfig.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/IntakeSystem/src/main/java/com/student_online/IntakeSystem/controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/IntakeSystem/src/main/java/com/student_online/IntakeSystem/controller/UserController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/IntakeSystem/src/main/java/com/student_online/IntakeSystem/interceptor/MyInterceptor.java" beforeDir="false" afterPath="$PROJECT_DIR$/IntakeSystem/src/main/java/com/student_online/IntakeSystem/interceptor/MyInterceptor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IntakeSystem/src/main/java/com/student_online/IntakeSystem/mapper/UserMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/IntakeSystem/src/main/java/com/student_online/IntakeSystem/mapper/UserMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IntakeSystem/src/main/java/com/student_online/IntakeSystem/model/po/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/IntakeSystem/src/main/java/com/student_online/IntakeSystem/model/po/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IntakeSystem/src/main/java/com/student_online/IntakeSystem/service/DepartmentService.java" beforeDir="false" afterPath="$PROJECT_DIR$/IntakeSystem/src/main/java/com/student_online/IntakeSystem/service/DepartmentService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/IntakeSystem/src/main/java/com/student_online/IntakeSystem/utils/JwtUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/IntakeSystem/src/main/java/com/student_online/IntakeSystem/utils/JwtUtil.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IntakeSystem/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/IntakeSystem/src/main/resources/application.yml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -130,6 +140,16 @@
       <workItem from="1753884119124" duration="15000" />
       <workItem from="1753884155915" duration="104000" />
       <workItem from="1753884272553" duration="253000" />
+      <workItem from="1753884531826" duration="287000" />
+      <workItem from="1753884842711" duration="12000" />
+      <workItem from="1754154364926" duration="658000" />
+      <workItem from="1754155029506" duration="3000" />
+      <workItem from="1754155055012" duration="25000" />
+      <workItem from="1754155088694" duration="162000" />
+      <workItem from="1754155280534" duration="2320000" />
+      <workItem from="1754157636172" duration="32000" />
+      <workItem from="1754157674558" duration="2847000" />
+      <workItem from="1754229635167" duration="6003000" />
     </task>
     <task id="LOCAL-00001" summary="initial">
       <option name="closed" value="true" />

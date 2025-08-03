@@ -5,13 +5,22 @@ import org.apache.ibatis.annotations.*;
 
 @Mapper
 public interface UserMapper {
+    @Select("SELECT EXISTS(SELECT 1 FROM user WHERE username = #{username})")
+    boolean isUsernameExists(String username);
+    
+//    @Select("SELECT castgc_cookies FROM user WHERE username = #{username}")
+//    String getCastgcCookiesByUsername(String username);
+    
     @Select("SELECT * from user where uid = #{uid}")
     User getUserByUid(int uid);
     
     @Select("SELECT * from user where username = #{username}")
     User getUserByUsername(String username);
     
-    @Insert("INSERT INTO user(username, password, studentNum, type) VALUES(#{username}, #{password}, #{studentNum}, #{type})")
+    @Select("SELECT password FROM user WHERE username = #{username}")
+    String getPasswordByUsername(String username);
+    
+    @Insert("INSERT INTO user(username, password, type, gender, depart, major, name, email, castgc_cookies) VALUES(#{username}, #{password}, #{type},#{gender}, #{depart}, #{major}, #{name}, #{email}),#{castgcCookies}")
     void insertUser(User user);
     
     @Delete("DELETE FROM user WHERE uid = #{uid}")
@@ -22,4 +31,7 @@ public interface UserMapper {
     
     @Update("UPDATE user SET type = #{type} WHERE uid = #{uid}")
     void updateUserTypeByUid(@Param("uid") int uid,@Param("type") int type);
+    
+    @Update("UPDATE user SET password = #{hashpw} WHERE username = #{studentNumber}")
+    void updatePasswordByUsername(String studentNumber, String hashpw);
 }

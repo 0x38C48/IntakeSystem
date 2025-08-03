@@ -26,9 +26,9 @@ public class DepartmentService {
             int pid = department.getPId();
             PermissionService permissionService = new PermissionService();
             if (permissionService.isPermitted(pid, uid)) {
-                if (departmentMapper.getDepartmentByName(name) != null)
+                if (departmentMapper.getDepartmentByName(name) != null) {
                     return ResponseUtil.build(Result.error(409, "该部门已存在"));
-                else {
+                } else {
                     Station station = new Station();
                     station.setName(name);
                     station.setDescription(department.getDescription());
@@ -38,7 +38,9 @@ public class DepartmentService {
                     departmentMapper.createDepartment(department);
                     return ResponseUtil.build(Result.ok());
                 }
-            } else return ResponseUtil.build(Result.error(401, "无权限"));
+            } else {
+                return ResponseUtil.build(Result.error(401, "无权限"));
+            }
         }catch (Exception e) {
             return ResponseUtil.build(Result.error(400, "创建失败"));
         }
@@ -52,7 +54,9 @@ public class DepartmentService {
             if (permissionService.isPermitted(stationId, uid)) {
                 departmentMapper.updateDepartment(department);
                 return ResponseUtil.build(Result.ok());
-            } else return ResponseUtil.build(Result.error(401, "无权限"));
+            } else {
+                return ResponseUtil.build(Result.error(401, "无权限"));
+            }
         }catch (Exception e) {
             return ResponseUtil.build(Result.error(400, "更新失败"));
         }
@@ -67,7 +71,9 @@ public class DepartmentService {
                 departmentMapper.deleteDepartmentById(departmentId);
                 stationMapper.deleteStationById(stationId);
                 return ResponseUtil.build(Result.ok());
-            }else return ResponseUtil.build(Result.error(401, "无权限"));
+            }else {
+                return ResponseUtil.build(Result.error(401, "无权限"));
+            }
         }catch (Exception e){
             return ResponseUtil.build(Result.error(404, "部门不存在"));
         }
@@ -76,8 +82,11 @@ public class DepartmentService {
     public ResponseEntity<Result> getDepartmentById(int departmentId) {
         try {
             Department department = departmentMapper.getDepartmentById(departmentId);
-            if (department == null) return ResponseUtil.build(Result.error(404, "未找到该部门"));
-            else return ResponseUtil.build(Result.success(department, "返回部门"));
+            if (department == null) {
+                return ResponseUtil.build(Result.error(404, "未找到该部门"));
+            } else {
+                return ResponseUtil.build(Result.success(department, "返回部门"));
+            }
         }catch (Exception e) {
             return ResponseUtil.build(Result.error(400, "获取失败"));
         }
@@ -86,8 +95,11 @@ public class DepartmentService {
     public ResponseEntity<Result> getDepartmentByName(@NotNull String name) {
         try {
             Department department = departmentMapper.getDepartmentByName(name);
-            if (department == null) return ResponseUtil.build(Result.error(404, "未找到该部门"));
-            else return ResponseUtil.build(Result.success(department, "返回部门"));
+            if (department == null) {
+                return ResponseUtil.build(Result.error(404, "未找到该部门"));
+            } else {
+                return ResponseUtil.build(Result.success(department, "返回部门"));
+            }
         }catch (Exception e) {
             return ResponseUtil.build(Result.error(400, "获取失败"));
         }
@@ -97,8 +109,11 @@ public class DepartmentService {
         try {
             int pId = department.getPId();
             Station result = stationMapper.getStationById(pId);
-            if (result == null) return ResponseUtil.build(Result.error(404, "未找到它的上级模块"));
-            else return ResponseUtil.build(Result.success(result, "返回部门的上级模块"));
+            if (result == null) {
+                return ResponseUtil.build(Result.error(404, "未找到它的上级模块"));
+            } else {
+                return ResponseUtil.build(Result.success(result, "返回部门的上级模块"));
+            }
         }catch (Exception e) {
             return ResponseUtil.build(Result.error(400, "获取失败"));
         }

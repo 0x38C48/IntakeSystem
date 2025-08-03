@@ -23,14 +23,14 @@ public class MyInterceptor implements HandlerInterceptor {
             return false;
         }
 //        JwtUtil.CLAIMS claims = JwtUtil.getClaims(token);
-        String claims = JwtUtil.getClaim(token);
-        System.out.println(claims);
+        JwtUtil.CLAIMS claims = JwtUtil.getClaims(token);
+//        System.out.println(claims);
         if (claims == null) {
             response.setStatus(401);
             System.out.println("token is error");
             return false;
         }
-//        ThreadLocalUtil.set(claims);
+        ThreadLocalUtil.set(claims);
         return true;
     }
 }
