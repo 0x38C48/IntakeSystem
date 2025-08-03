@@ -22,7 +22,7 @@ public class JwtUtil {
     public static final SecureDigestAlgorithm<SecretKey,SecretKey> ALGORITHM = Jwts.SIG.HS256;
     
     //设定claim使用的键
-    public static final String CLAIM_KEY = "studentNumber";
+    public static final String CLAIM_KEY = "claims";
     
     //生成token，可以包裹更多东西，这里包装一个obj
     public static String generate(String studentNumber) {
@@ -60,7 +60,7 @@ public class JwtUtil {
         }
         
         public CLAIMS(LinkedHashMap<String, Object> linkedHashMap) {
-            studentNumber = (String) linkedHashMap.get(CLAIM_KEY);
+            studentNumber = (String) linkedHashMap.get("studentNumber");
         }
     }
 }

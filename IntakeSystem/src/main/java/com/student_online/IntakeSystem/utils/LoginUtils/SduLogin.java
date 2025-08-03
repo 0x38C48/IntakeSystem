@@ -27,24 +27,24 @@ import java.util.Scanner;
 public class SduLogin {
     // 统一认证登入网页
     private static final String CAS_LOGIN_PAGE = "https://pass.sdu.edu.cn/cas/login";
-
+    
     // 统一认证语言
     private static final String Language = "zh_CN";
-
+    
     // 统一认证登入 设备验证components（该值可替换）
     private static final String components = "java-spider-for-sdu-components";
     // 统一认证登入 设备验证details
     private static final String details = "java-spider-for-sdu-details";
-
+    
     private static final String murmur = Hashing.murmur3_128(31).hashString(components, StandardCharsets.UTF_8).toString();
     private static final String murmur_s = Hashing.murmur3_128(31).hashString(details, StandardCharsets.UTF_8).toString();
     private static final String murmur_md5 = DigestUtils.md5Hex(details);
-
+    
     /**
      * 统一认证账号
      */
     public String sdu_id;
-
+    
     /**
      * 统一认证密码
      */
@@ -60,23 +60,22 @@ public class SduLogin {
      */
     @Getter
     Map<String, String> casLoginCookie = new HashMap<>();
-
+    
     /**
      * 统一认证登入页面隐藏字段
      */
     private String lt;
-
+    
     /**
      * 标记先前是否经过统一认证密码验证
      */
 //    @Setter
 //    private boolean checked = false;
-
     public SduLogin(String sdu_id, String sdu_password) {
         this.sdu_id = sdu_id;
         this.sdu_password = sdu_password;
     }
-
+    
     /**
      * 进入统一认证登入页面提取信息
      * 打开浏览器后第一次登入统一认证页面时，该页面会返回一个JSESSIONID的cookie
@@ -87,22 +86,25 @@ public class SduLogin {
      * 现在尚未测试过一个JSESSIONID能在统一认证后台保存多久，需要进一步测试
      */
     private void enterCasLoginPage(String casLoginURL) throws URISyntaxException {
-
+        
         // 获取登录页面，提取隐藏字段和统一认证界面cookie
         HttpUtil.Response<String> loginFormResponse = HttpUtil.connect(casLoginURL)
                 .method(HttpMethod.GET)
                 .execute();
-
+        
         // 获取页面会话（可以保持一段时间）
-        JSESSIONID = loginFormResponse.cookie("JSESSIONID");
-        cookie_adx = loginFormResponse.cookie("cookie-adx");
-        casLoginCookie.put("cookie-adx", cookie_adx);
+        if(JSESSIONID == null) {
+            JSESSIONID = loginFormResponse.cookie("JSESSIONID");
+            cookie_adx = loginFormResponse.cookie("cookie-adx");
+        }
         casLoginCookie.put("JSESSIONID", JSESSIONID);
-
+        casLoginCookie.put("cookie-adx", cookie_adx);
+        casLoginCookie.put("Language", Language);
+        
         // 提取页面隐藏字段
         lt = loginFormResponse.parse().select("input[name=lt]").attr("value");
     }
-
+    
     /**
      * 设备验证
      * 设备验证和JSESSIONID绑定，带上JSESSIONID经过设备验证后，JSESSIONID会被统一认证登入标记为已经验证过
@@ -112,43 +114,53 @@ public class SduLogin {
         String u = Des.strEnc(sdu_id, "1", "2", "3");
         String p = Des.strEnc(sdu_password, "1", "2", "3");
         // 发送设备验证请求
-        HttpUtil.Response<Map<String,String>> deviceResponse = HttpUtil.connect("https://pass.sdu.edu.cn/cas/device")
+        HttpUtil.Response<Map<String, String>> deviceResponse = HttpUtil.connect("https://pass.sdu.edu.cn/cas/device")
                 .cookies(casLoginCookie)
                 .formData()
-                    .data("d", murmur)
-                    .data("d_s", murmur_s)
-                    .data("d_md5", murmur_md5)
-                    .data("m", "1")
-                    .data("u", u)
-                    .data("p", p)
+                .data("d", murmur)
+                .data("d_s", murmur_s)
+                .data("d_md5", murmur_md5)
+                .data("m", "1")
+                .data("u", u)
+                .data("p", p)
                 .set()
                 .method(HttpMethod.POST)
-                .execute(new TypeReference<>() {});
-
+                .execute(new TypeReference<>() {
+                });
+        
         // 解析设备验证结果
-        Map<String,String> deviceInfo = deviceResponse.body();
-        System.out.println(deviceInfo.get("info"));
-
+        Map<String, String> deviceInfo = deviceResponse.body();
+//        System.out.println(deviceInfo.get("info"));
+        
         switch (deviceInfo.get("info")) {
-            case "binded","pass" -> System.out.println("设备验证通过，准备登入");
+            case "binded", "pass" -> {
+//                System.out.println("设备验证通过，准备登入");
+            }
             case "bind" -> {
-                if(captcha == null){
+                if (captcha == null) {
+                    
+                    HttpUtil.connect("https://pass.sdu.edu.cn/cas/device")
+                            .cookies(casLoginCookie)
+                            .formData().data("m", "2").set()
+                            .method(HttpMethod.POST)
+                            .execute();
+                    
                     return "need captcha";
                 }
                 twiceDeviceCheck();
             }
-            case "validErr","notFound" -> {
-                System.out.println("密码错误或用户不存在");
+            case "validErr", "notFound" -> {
+//                System.out.println("密码错误或用户不存在");
                 throw new RuntimeException();
             }
             case "mobileErr" -> {
-                System.out.println("未绑定手机");
+//                System.out.println("未绑定手机");
                 throw new RuntimeException();
             }
         }
         return null;
     }
-
+    
     /**
      * 二次设备验证
      * 对于陌生的components以及details，统一认证登入平台将要求用户进行二次验证
@@ -158,54 +170,52 @@ public class SduLogin {
      */
     public void twiceDeviceCheck() throws URISyntaxException {
         // 发送验证码
-        if(captcha == null) {
-            HttpUtil.connect("https://pass.sdu.edu.cn/cas/device")
-                    .cookies(casLoginCookie)
-                    .formData().data("m", "2").set()
-                    .method(HttpMethod.POST)
-                    .execute();
-        }
-        
+
 //        String c = (new Scanner(System.in)).next();
 //        System.out.println("是否信任该设备？(true or false)");
 //        boolean s = (new Scanner(System.in)).nextBoolean();
-
+        
         // 进行二次设备验证
         HttpUtil.Response<Map<String, String>> checkResponse = HttpUtil.connect("https://pass.sdu.edu.cn/cas/device")
                 .cookies(casLoginCookie)
                 .formData()
-                    .data("d", murmur_s)
-                    .data("i", details)
-                    .data("m", "3")
-                    .data("u", sdu_id)
-                    .data("c", captcha)
-                    .data("s", "0")
+                .data("d", murmur_s)
+                .data("i", details)
+                .data("m", "3")
+                .data("u", sdu_id)
+                .data("c", captcha)
+                .data("s", "0")
                 .set()
                 .method(HttpMethod.POST)
-                .execute(new TypeReference<>() {});
-
-        Map<String,String> checkInfo = checkResponse.body();
-        System.out.println(checkInfo.get("info"));
-
+                .execute(new TypeReference<>() {
+                });
+        
+        Map<String, String> checkInfo = checkResponse.body();
+//        System.out.println(checkInfo.get("info"));
+        
         switch (checkInfo.get("info")) {
-            case "ok" -> System.out.println("已授权!");
-            case "most" -> System.out.println("设备已经超过最大数量，已自动解除最早一台设备。");
+            case "ok" -> {
+//                System.out.println("已授权!");
+            }
+            case "most" -> {
+//                System.out.println("设备已经超过最大数量，已自动解除最早一台设备。");
+            }
             case "codeErr" -> {
-                System.out.println("验证码有误");
+//                System.out.println("验证码有误");
                 throw new RuntimeException();
             }
             case "timeout" -> {
-                System.out.println("验证码超时");
+//                System.out.println("验证码超时");
                 throw new RuntimeException();
             }
             default -> {
-                System.out.println("验证失败");
+//                System.out.println("验证失败");
                 throw new RuntimeException();
             }
         }
-
+        
     }
-
+    
     /**
      * 密码验证
      * 通过密码验证后，统一认证登入页面会返回一个名为CASTGC的cookie，该cookie的expire time也是“会话”。
@@ -221,7 +231,7 @@ public class SduLogin {
                 "lt", lt,
                 "execution", "e1s1",
                 "_eventId", "submit");
-
+        
         // 提交表单
         HttpUtil.Response<String> loginResponse = HttpUtil.connect(casLoginURL)
                 .method(HttpMethod.POST)
@@ -229,29 +239,29 @@ public class SduLogin {
                 .cookies(casLoginCookie)
                 .config().followRedirects(false).set()
                 .execute();
-
+        
         // 检查登录是否成功
         if (loginResponse.statusCode() != 302) {
             if (loginResponse.statusCode() == 200) {
-                System.out.println("登录失败！");
+//                System.out.println("登录失败！");
                 Document loggedInPage = loginResponse.parse();
                 Element element = loggedInPage.getElementById("errormsg");
-                System.out.println(element);
+//                System.out.println(element);
             } else {
-                System.out.println("登录失败，状态码：" + loginResponse.statusCode());
+//                System.out.println("登录失败，状态码：" + loginResponse.statusCode());
             }
             throw new RuntimeException();
         }
-
+        
         // 提取用于下次无需用户名密码登入的CASTGC
         casLoginCookie.put("CASTGC", loginResponse.cookie("CASTGC"));
-
+        
         // 标记为验证过
 //        checked = true;
-
+        
         return loginResponse.location();
     }
-
+    
     /**
      * CASTGC验证
      * 使用CASTGC省去了用户名密码。经过密码验证的JSESSIONID后续再登入统一认证平台都必须使用此接口
@@ -263,36 +273,34 @@ public class SduLogin {
                 .cookies(casLoginCookie)
                 .config().followRedirects(false).set()
                 .execute();
-
+        
         // 检查登录是否成功
         if (loginResponse.statusCode() != 302) {
             // 标记为未验证过
 //            checked = false;
-
+            
             if (loginResponse.statusCode() == 200) {
-                System.out.println("使用CASTGC验证失败，尝试使用用户名密码重新登入");
+//                System.out.println("使用CASTGC验证失败，尝试使用用户名密码重新登入");
                 return null;
             } else {
-                System.out.println("登录失败，状态码：" + loginResponse.statusCode());
+//                System.out.println("登录失败，状态码：" + loginResponse.statusCode());
                 return null;
             }
         }
-
+        
         return loginResponse.location();
     }
-
-
-
+    
+    
     /**
      * 统一认证登入
      */
     public String login(String loginService) throws IOException, URISyntaxException {
-
-        String casLoginURL = CAS_LOGIN_PAGE + "?service=" + URLEncoder.encode(loginService, StandardCharsets.UTF_8);
-
-        String redirectUrl = null;
-        casLoginCookie.put("Language", Language);
         
+        String casLoginURL = CAS_LOGIN_PAGE + "?service=" + URLEncoder.encode(loginService, StandardCharsets.UTF_8);
+        
+        String redirectUrl = null;
+
 
 //        if (checked) {
 //            System.out.println("执行CASTGC验证...");
@@ -300,23 +308,21 @@ public class SduLogin {
 //        }
 
 //        if (!checked) {
-          if(JSESSIONID == null){
 //            System.out.println("进入统一认证登入页面提取信息...");
-            enterCasLoginPage(casLoginURL);
-          }
-            System.out.println("执行设备验证...");
-            String result = deviceCheck();
-            if(Objects.equals(result,"need captcha")){
-                return result;
-            }
-            System.out.println("进行用户名密码验证...");
-            redirectUrl = passwordVerification(casLoginURL);
-            
-//        }
+        enterCasLoginPage(casLoginURL);
+//        System.out.println("执行设备验证...");
+        String result = deviceCheck();
+        if (Objects.equals(result, "need captcha")) {
+            return result;
+        }
+//        System.out.println("进行用户名密码验证...");
+        redirectUrl = passwordVerification(casLoginURL);
 
-        System.out.println("统一认证登入验证通过！");
-        System.out.println("统一认证登入重定向 URL: " + redirectUrl);
+//        }
+        
+//        System.out.println("统一认证登入验证通过！");
+//        System.out.println("统一认证登入重定向 URL: " + redirectUrl);
         return redirectUrl;
     }
-
+    
 }

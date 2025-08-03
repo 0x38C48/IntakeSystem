@@ -20,7 +20,7 @@ public interface UserMapper {
     @Select("SELECT password FROM user WHERE username = #{username}")
     String getPasswordByUsername(String username);
     
-    @Insert("INSERT INTO user(username, password, type, gender, depart, major, name, email, castgc_cookies) VALUES(#{username}, #{password}, #{type},#{gender}, #{depart}, #{major}, #{name}, #{email}),#{castgcCookies}")
+    @Insert("INSERT INTO user(username, password, type, gender, depart, major, name, email) VALUES(#{username}, #{password}, #{type},#{gender}, #{depart}, #{major}, #{name}, #{email})")
     void insertUser(User user);
     
     @Delete("DELETE FROM user WHERE uid = #{uid}")
@@ -33,5 +33,5 @@ public interface UserMapper {
     void updateUserTypeByUid(@Param("uid") int uid,@Param("type") int type);
     
     @Update("UPDATE user SET password = #{hashpw} WHERE username = #{studentNumber}")
-    void updatePasswordByUsername(String studentNumber, String hashpw);
+    void updatePasswordByUsername(@Param("studentNumber") String studentNumber,@Param("hashpw") String hashpw);
 }
