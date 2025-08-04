@@ -35,6 +35,8 @@ public class Questionnaire {
 
     private Integer collected;
 
-    private Integer status;
+    private Integer departmentId;
+
+    private Integer status;// 0/1 不可填写/可填写
 
 }

@@ -118,4 +118,13 @@ public class DepartmentService {
             return ResponseUtil.build(Result.error(400, "获取失败"));
         }
     }
+
+    public int getStationId(int departmentId) {//返回部门的上一级模块
+        try {
+            Department department = departmentMapper.getDepartmentById(departmentId);
+            return department.getStationId();
+        }catch (Exception e) {
+            return 0;
+        }
+    }
 }

@@ -4,12 +4,12 @@ import com.student_online.IntakeSystem.model.po.Department;
 import com.student_online.IntakeSystem.model.vo.Result;
 import com.student_online.IntakeSystem.service.PermissionService;
 import com.student_online.IntakeSystem.service.DepartmentService;
+import com.student_online.IntakeSystem.service.QuestionnaireService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-@CrossOrigin
 @RestController
 @RequestMapping("/department")
 public class DepartmentController {
@@ -18,6 +18,12 @@ public class DepartmentController {
 
     @Autowired
     private DepartmentService departmentService;
+
+    @Autowired
+    private PermissionService permissionService;
+
+    @Autowired
+    private QuestionnaireService questionnaireService;
 
     @PostMapping("/create")
     public ResponseEntity<Result> createDepartment(@RequestBody Department department) {//不要传入stationId这个参数，这个是和station关联，自动生成的
@@ -45,5 +51,15 @@ public class DepartmentController {
     @GetMapping("/search")
     public ResponseEntity<Result> search(@RequestParam String name) {
         return departmentService.getDepartmentByName(name);
+    }
+
+    @GetMapping("/view/questionnaire")
+    public ResponseEntity<Result> getQuestionnaireForDepartment(@RequestParam int departmentId) {
+        return questionnaireService.listQuestionnairesForDepartment(departmentId);
+    }
+
+    @GetMapping("/view/questions")
+    public ResponseEntity<Result> getQuestionnaireDetailedById(@RequestParam int departmentId) {
+        return questionnaireService.getQuestionnaireDetailedByDepartmentId(departmentId);
     }
 }

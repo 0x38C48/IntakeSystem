@@ -42,13 +42,13 @@ public class QuestionService  {
 
         Questionnaire questionnaireById = questionnaireMapper.getQuestionnaireById(questionnaireId);
         // 判断问卷状态
-        if (questionnaireById.getStatus() == -1) {
-            return ResponseUtil.build(Result.error(400, "无法修改"));
+        if (questionnaireById.getStatus() == 1) {
+            return ResponseUtil.build(Result.error(400, "问卷已经发布无法修改"));
         }
 
         // 先删除问卷下的问题和选项(可能是更新操作)
         // 判断是否第一次设计问卷的保存，如果第一次无需再进行删除操作
-        if (questionnaireById.getStatus() != 0) {
+        if (questionnaireMapper.getQuestionnaireById(questionnaireId)!= null) {
             // MySQL数据库设置了外键级联删除，选项会自动删除
             deleteQuestions(questionnaireId);
         }
@@ -110,16 +110,6 @@ public class QuestionService  {
         return questions;
     }
 
-    public ResponseEntity<Result>changeStatus(Integer questionnaireId, Integer status) {
-        Questionnaire questionnaire = questionnaireMapper.getQuestionnaireById(questionnaireId);
-        if(status>-2&&status<2){
-            questionnaire.setStatus(status);
-            questionnaireMapper.updateQuestionnaire(questionnaire);
-            return ResponseUtil.build(Result.ok());
-        }
-        else return ResponseUtil.build(Result.error(400,"状态码提供有误"));
-
-    }
 
     public List<QuestionVo> getQuestions(Integer questionnaireId) {
         // 查询问卷状态，如果未设计直接返回空
