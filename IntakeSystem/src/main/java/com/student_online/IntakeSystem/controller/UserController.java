@@ -5,6 +5,7 @@ import com.student_online.IntakeSystem.model.vo.Result;
 import com.student_online.IntakeSystem.service.UserService;
 import com.student_online.IntakeSystem.utils.JwtUtil;
 import jakarta.servlet.http.HttpServletResponse;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,17 +16,17 @@ public class UserController {
     UserService userService;
     
     @PostMapping("/login/cas")
-    public Result loginCas(@RequestParam String studentNumber,@RequestParam String password,@RequestParam(required = false) String captcha){
+    public Result loginCas(@RequestParam @NotNull String studentNumber, @RequestParam @NotNull String password, @RequestParam(required = false) String captcha){
         return userService.loginCas(studentNumber, password, captcha);
     }
     
     @PostMapping("/login")
-    public Result login(@RequestParam String studentNumber, @RequestParam String password){
+    public Result login(@RequestParam @NotNull String studentNumber, @RequestParam @NotNull String password){
         return userService.login(studentNumber, password);
     }
     
     @PostMapping("/update/password")
-    public Result updatePassword(@RequestParam(required = false) String oldPassword, @RequestParam String newPassword){
+    public Result updatePassword(@RequestParam(required = false) String oldPassword, @RequestParam @NotNull String newPassword){
         return userService.updatePassword(oldPassword, newPassword);
     }
 }
