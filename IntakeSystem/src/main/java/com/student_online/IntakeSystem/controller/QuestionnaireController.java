@@ -69,6 +69,7 @@ public class QuestionnaireController {
         }else return ResponseUtil.build(Result.error(401,"无权限"));
     }
 
+
     @GetMapping("/view/status")
     public ResponseEntity<Result> getQuestionnaireByStatus(@RequestParam int status) {
         return questionnaireService.getQuestionnairesByStatus(status);
