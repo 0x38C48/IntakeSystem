@@ -5,9 +5,9 @@ server:
 spring:
   servlet:
     multipart:
-      location: /var/myapp/temp/
+      location: /app/temp/
 
 avatar:
   path:
-    upload: /var/myapp/avatars/
+    upload: /app/avatars/
     access: /avatar/
