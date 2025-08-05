@@ -1,6 +1,6 @@
 server:
   domain: https://www.isdu-remote-connect.asia/XSZX/NXXT/api/
-#  port:
+  port: 8000
 
 spring:
   servlet:

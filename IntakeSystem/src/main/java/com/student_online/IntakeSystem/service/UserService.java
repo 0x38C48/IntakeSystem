@@ -44,6 +44,9 @@ public class UserService {
     @Value("${avatar.path.access}")
     private String accessPath;
     
+    @Value("${spring.profiles.active}")
+    private String env;
+    
     public Result uploadAvatar(MultipartFile file) throws IOException {
         String username = ThreadLocalUtil.get().studentNumber;
         
@@ -87,9 +90,9 @@ public class UserService {
         File dest = new File(uploadPath+ "/" + fileName + suffix);
         file.transferTo(dest);
         
-        MAPPER.user.setAvatarUrl(userId, "http://" + serverDomain + ":" + (serverPort != null && !serverPort.isEmpty() ? serverPort : "") + accessPath + fileName + suffix);
+        MAPPER.user.setAvatarUrl(userId, "http://" + serverDomain + ":" + ("dev".equals(env) ? serverPort : "") + accessPath + fileName + suffix);
         
-        return Result.success("http://" + serverDomain + ":" + (serverPort != null && !serverPort.isEmpty() ? serverPort : "") + accessPath + fileName + suffix,
+        return Result.success("http://" + serverDomain + ":" + ("dev".equals(env) ? serverPort : "") + accessPath + fileName + suffix,
                 "头像上传成功");
     }
     
