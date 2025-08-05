@@ -1,8 +1,10 @@
 package com.student_online.IntakeSystem.service;
 
+import com.student_online.IntakeSystem.config.exception.CommonErr;
 import com.student_online.IntakeSystem.mapper.UserMapper;
 import com.student_online.IntakeSystem.model.constant.MAPPER;
 import com.student_online.IntakeSystem.model.constant.REDIS;
+import com.student_online.IntakeSystem.model.dto.UserDto;
 import com.student_online.IntakeSystem.model.po.User;
 import com.student_online.IntakeSystem.model.vo.Result;
 import com.student_online.IntakeSystem.utils.BCryptUtil;
@@ -13,14 +15,85 @@ import com.student_online.IntakeSystem.utils.LoginUtils.ServicedeskLogin;
 import com.student_online.IntakeSystem.utils.ThreadLocalUtil;
 import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Stream;
 
 @Service
 public class UserService {
+    
+    @Value("${avatar.path.upload}")
+    private String uploadPath;
+    
+    @Value("${server.port}")
+    private String serverPort;
+    
+    @Value("${server.domain}")
+    private String serverDomain;
+    
+    @Value("${avatar.path.access}")
+    private String accessPath;
+    
+    public Result uploadAvatar(MultipartFile file) throws IOException {
+        String username = ThreadLocalUtil.get().studentNumber;
+        
+        if (file.isEmpty()) {
+            throw new IllegalArgumentException("头像为空");
+        }
+        
+        String contentType = file.getContentType();
+        if (contentType == null || !contentType.startsWith("image/")) {
+            throw new IllegalArgumentException("上传文件非是图片");
+        }
+        
+        File uploadDir = new File(uploadPath);
+        if (!uploadDir.exists()) {
+            uploadDir.mkdirs();
+        }
+        
+        String originalFilename = file.getOriginalFilename();
+        String suffix = originalFilename.substring(originalFilename.lastIndexOf("."));
+        int userId = MAPPER.user.getUserIdByUsername(username);
+        String fileName = "avatar_" + userId;
+        
+        
+        Path directoryPath = Paths.get(uploadPath);
+        try (Stream<Path> stream = Files.list(directoryPath)) {
+            stream.filter(Files::isRegularFile)
+                    .filter(path -> path.getFileName().toString().startsWith(fileName))
+                    .forEach(path -> {
+                        path.toFile().delete();
+//                        System.out.println("删除文件: " + path.getFileName());
+                    });
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        
+        Path path = Paths.get(uploadPath);
+        if(!Files.exists(path)){
+            Files.createDirectories(path);
+        }
+        
+        File dest = new File(uploadPath+ "/" + fileName + suffix);
+        file.transferTo(dest);
+        
+        MAPPER.user.setAvatarUrl(userId, "http://" + serverDomain + ":" + (serverPort != null && !serverPort.isEmpty() ? serverPort : "") + accessPath + fileName + suffix);
+        
+        return Result.success("http://" + serverDomain + ":" + (serverPort != null && !serverPort.isEmpty() ? serverPort : "") + accessPath + fileName + suffix,
+                "头像上传成功");
+    }
+    
+    
     @SneakyThrows
     public Result loginCas(String studentNumber, String password, String captcha) {
         SduLogin sduLogin = new SduLogin(studentNumber, password);
@@ -43,7 +116,7 @@ public class UserService {
         Map<String, String> userInfo = ServicedeskLogin.fetchStudentInfo(cookie, studentNumber);
         
         if (!MAPPER.user.isUsernameExists(studentNumber)) {
-            User user = new User(1, studentNumber, null, userInfo.get("USER_SEX"), userInfo.get("UNIT_NAME"), userInfo.get("MAJOR_NAME"), userInfo.get("USER_NAME"), userInfo.get("EMAIL"), 0);
+            User user = new User(1, studentNumber, null, userInfo.get("USER_SEX"), userInfo.get("UNIT_NAME"), userInfo.get("MAJOR_NAME"), userInfo.get("USER_NAME"), userInfo.get("EMAIL"), 0,null);
             MAPPER.user.insertUser(user);
         }
         
@@ -71,5 +144,26 @@ public class UserService {
         }
         MAPPER.user.updatePasswordByUsername(studentNumber, BCryptUtil.hashpw(newPassword));
         return Result.ok();
+    }
+    
+    public Result getUserInfo(String username) {
+        if(username!=null && !MAPPER.user.isUsernameExists(username)){
+            return Result.error(CommonErr.NO_DATA);
+        }
+        String executor = ThreadLocalUtil.get().studentNumber;
+        int type = MAPPER.user.getTypeByUsername(executor);
+        
+        if(username != null && type < 1){
+            return Result.error(CommonErr.NO_AUTHORITY);
+        }
+        
+        if(username == null){
+            username = executor;
+        }
+        
+        User user = MAPPER.user.getUserByUsername(username);
+        UserDto userDto = new UserDto(user);
+        
+        return Result.success(userDto, "获取成功");
     }
 }

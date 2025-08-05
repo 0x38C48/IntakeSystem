@@ -1,0 +1,13 @@
+server:
+  domain: https://www.isdu-remote-connect.asia/XSZX/NXXT/api/
+#  port:
+
+spring:
+  servlet:
+    multipart:
+      location: /var/myapp/temp/
+
+avatar:
+  path:
+    upload: /var/myapp/avatars/
+    access: /avatar/

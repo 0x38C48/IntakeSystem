@@ -5,20 +5,18 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="550f93a3-53ab-42ec-83c3-ef7986e85d54" name="更改" comment="模块和部门创建、权限管理初步实现">
-      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/IntakeSystem/src/main/java/com/student_online/IntakeSystem/controller/StarController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/IntakeSystem/src/main/java/com/student_online/IntakeSystem/mapper/StarMapper.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/IntakeSystem/src/main/java/com/student_online/IntakeSystem/model/pljo/StationTree.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/IntakeSystem/src/main/java/com/student_online/IntakeSystem/service/StarService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/IntakeSystem/src/main/java/com/student_online/IntakeSystem/utils/StationUtil.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/IntakeSystem/src/main/java/com/student_online/IntakeSystem/model/dto/UserDto.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/IntakeSystem/src/main/resources/application-dev.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/IntakeSystem/src/main/resources/application-prod.yml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.cache/.Apifox_Helper/.toolWindow.db" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.cache/.Apifox_Helper/.toolWindow.db" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/ApifoxUploaderProjectSetting.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/ApifoxUploaderProjectSetting.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/IntakeSystem/src/main/java/com/student_online/IntakeSystem/mapper/StationMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/IntakeSystem/src/main/java/com/student_online/IntakeSystem/mapper/StationMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/IntakeSystem/src/main/java/com/student_online/IntakeSystem/model/constant/MAPPER.java" beforeDir="false" afterPath="$PROJECT_DIR$/IntakeSystem/src/main/java/com/student_online/IntakeSystem/model/constant/MAPPER.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/IntakeSystem/src/main/java/com/student_online/IntakeSystem/model/constant/STATIC.java" beforeDir="false" afterPath="$PROJECT_DIR$/IntakeSystem/src/main/java/com/student_online/IntakeSystem/model/constant/STATIC.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/IntakeSystem/src/test/java/com/student_online/IntakeSystem/IntakeSystemApplicationTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/IntakeSystem/src/test/java/com/student_online/IntakeSystem/IntakeSystemApplicationTests.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IntakeSystem/src/main/java/com/student_online/IntakeSystem/config/WebConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/IntakeSystem/src/main/java/com/student_online/IntakeSystem/config/WebConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IntakeSystem/src/main/java/com/student_online/IntakeSystem/controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/IntakeSystem/src/main/java/com/student_online/IntakeSystem/controller/UserController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IntakeSystem/src/main/java/com/student_online/IntakeSystem/mapper/UserMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/IntakeSystem/src/main/java/com/student_online/IntakeSystem/mapper/UserMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IntakeSystem/src/main/java/com/student_online/IntakeSystem/model/po/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/IntakeSystem/src/main/java/com/student_online/IntakeSystem/model/po/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IntakeSystem/src/main/java/com/student_online/IntakeSystem/service/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/IntakeSystem/src/main/java/com/student_online/IntakeSystem/service/UserService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IntakeSystem/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/IntakeSystem/src/main/resources/application.yml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -73,7 +71,7 @@
     "RequestMappingsPanelWidth1": "75",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "Spring Boot.IntakeSystemApplication (1).executor": "Debug",
+    "Spring Boot.IntakeSystemApplication (1).executor": "Run",
     "git-widget-placeholder": "master",
     "ignore.virus.scanning.warn.message": "true",
     "kotlin-language-version-configured": "true",
@@ -83,7 +81,7 @@
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "com.itangcent.idea.plugin.configurable.AccountConfigurable.apifox",
+    "settings.editor.selected.configurable": "com.itangcent.idea.plugin.configurable.rootConfigurable.apifox",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
@@ -254,6 +252,8 @@
       <workItem from="1754238415960" duration="456000" />
       <workItem from="1754238890641" duration="1583000" />
       <workItem from="1754307494860" duration="5962000" />
+      <workItem from="1754313477514" duration="342000" />
+      <workItem from="1754404907360" duration="7854000" />
     </task>
     <task id="LOCAL-00001" summary="initial">
       <option name="closed" value="true" />

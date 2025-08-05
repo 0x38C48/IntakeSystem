@@ -34,4 +34,16 @@ public interface UserMapper {
     
     @Update("UPDATE user SET password = #{hashpw} WHERE username = #{studentNumber}")
     void updatePasswordByUsername(@Param("studentNumber") String studentNumber,@Param("hashpw") String hashpw);
+    
+    @Select("SELECT uid from user WHERE username = #{username}")
+    int getUserIdByUsername(String username);
+    
+    @Update("UPDATE user SET avatar = #{fileName} WHERE uid = #{userId}")
+    void setAvatarUrl(@Param("userId") int userId,@Param("fileName") String fileName);
+    
+    @Select("SELECT avatar FROM user WHERE username = #{username}")
+    String getAvatar(String username);
+    
+    @Select("SELECT type FROM user WHERE username = #{executor}")
+    int getTypeByUsername(String executor);
 }
