@@ -1,5 +1,5 @@
 server:
-  domain: https://www.isdu-remote-connect.asia/XSZX/NXXT/api/
+  domain: https://i.sdu.edu.cn/XSZX/NXXT/api/
   port: 8000
 
 spring:
