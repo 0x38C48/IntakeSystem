@@ -91,9 +91,9 @@ public class UserService {
         File dest = new File(uploadPath+ "/" + fileName + suffix);
         file.transferTo(dest);
         
-        MAPPER.user.setAvatarUrl(userId, "http://" + serverDomain  + ("dev".equals(env) ? ":" + serverPort : "") + accessPath + fileName + suffix);
+        MAPPER.user.setAvatarUrl(userId, "http"+("dev".equals(env) ? "" : "s") +  "://" + serverDomain  + ("dev".equals(env) ? ":" + serverPort : "") + accessPath + fileName + suffix);
         
-        return Result.success("http://" + serverDomain + ("dev".equals(env) ? ":" + serverPort : "") + accessPath + fileName + suffix,
+        return Result.success("http"+("dev".equals(env) ? "" : "s") +  "://"  + serverDomain + ("dev".equals(env) ? ":" + serverPort : "") + accessPath + fileName + suffix,
                 "头像上传成功");
     }
     
