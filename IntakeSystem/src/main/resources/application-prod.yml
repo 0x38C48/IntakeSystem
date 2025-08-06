@@ -1,5 +1,5 @@
 server:
-  domain: https://i.sdu.edu.cn/XSZX/NXXT/api/
+  domain: i.sdu.edu.cn/XSZX/NXXT/api
   port: 8000
 
 spring:
