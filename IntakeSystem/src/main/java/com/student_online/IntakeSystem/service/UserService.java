@@ -7,6 +7,7 @@ import com.student_online.IntakeSystem.model.constant.REDIS;
 import com.student_online.IntakeSystem.model.dto.UserDto;
 import com.student_online.IntakeSystem.model.po.User;
 import com.student_online.IntakeSystem.model.vo.Result;
+import com.student_online.IntakeSystem.model.vo.UserVo;
 import com.student_online.IntakeSystem.utils.BCryptUtil;
 import com.student_online.IntakeSystem.utils.JwtUtil;
 import com.student_online.IntakeSystem.utils.LoginUtils.BkzhjxLogin;
@@ -119,7 +120,7 @@ public class UserService {
         Map<String, String> userInfo = ServicedeskLogin.fetchStudentInfo(cookie, studentNumber);
         
         if (!MAPPER.user.isUsernameExists(studentNumber)) {
-            User user = new User(1, studentNumber, null, userInfo.get("USER_SEX"), userInfo.get("UNIT_NAME"), userInfo.get("MAJOR_NAME"), userInfo.get("USER_NAME"), userInfo.get("EMAIL"), 0,null);
+            User user = new User(1, studentNumber, null, userInfo.get("USER_SEX"), userInfo.get("UNIT_NAME"), userInfo.get("MAJOR_NAME"), userInfo.get("USER_NAME"), userInfo.get("EMAIL"), 0,null,null,"该用户很神秘,没有简介");
             MAPPER.user.insertUser(user);
         }
         
@@ -150,23 +151,32 @@ public class UserService {
     }
     
     public Result getUserInfo(String username) {
-        if(username!=null && !MAPPER.user.isUsernameExists(username)){
-            return Result.error(CommonErr.NO_DATA);
-        }
         String executor = ThreadLocalUtil.get().studentNumber;
-        int type = MAPPER.user.getTypeByUsername(executor);
-        
-        if(username != null && type < 1){
-            return Result.error(CommonErr.NO_AUTHORITY);
+        if(username != null && !username.isEmpty()) {
+            if (!MAPPER.user.isUsernameExists(username)) {
+                return Result.error(CommonErr.NO_DATA);
+            }
+            
+            if (!Objects.equals(username, executor) && MAPPER.user.getTypeByUsername(executor) < 1) {
+                return Result.error(CommonErr.NO_AUTHORITY);
+            }
         }
-        
-        if(username == null){
+        if(username == null || username.isEmpty()){
             username = executor;
         }
         
         User user = MAPPER.user.getUserByUsername(username);
-        UserDto userDto = new UserDto(user);
+        UserVo userVo = new UserVo(user);
         
-        return Result.success(userDto, "获取成功");
+        return Result.success(userVo, "获取成功");
+    }
+    
+    public Result updateUserInfo(UserDto userDto) {
+        String executor = ThreadLocalUtil.get().studentNumber;
+        userDto.setUsername(executor);
+        
+        MAPPER.user.updateUserInfo(userDto);
+        
+        return Result.ok();
     }
 }

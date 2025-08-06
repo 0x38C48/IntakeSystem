@@ -1,5 +1,6 @@
 package com.student_online.IntakeSystem.mapper;
 
+import com.student_online.IntakeSystem.model.dto.UserDto;
 import com.student_online.IntakeSystem.model.po.User;
 import org.apache.ibatis.annotations.*;
 
@@ -46,4 +47,7 @@ public interface UserMapper {
     
     @Select("SELECT type FROM user WHERE username = #{executor}")
     int getTypeByUsername(String executor);
+    
+    @Update("UPDATE user SET qq = #{qq}, profile = #{profile},email = #{email} WHERE username = #{username}")
+    void updateUserInfo(UserDto userDto);
 }

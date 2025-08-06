@@ -48,4 +48,9 @@ public class UserController {
     public Result getUserInfo(@RequestParam(required = false) String username){
         return userService.getUserInfo(username);
     }
+    
+    @PutMapping("/update/info")
+    public Result updateUserInfo(@RequestBody UserDto userDto){
+        return userService.updateUserInfo(userDto);
+    }
 }

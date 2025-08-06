@@ -27,4 +27,8 @@ public class User {
     private int type;//0/1/2/3分别表示普通成员、部门管理员、模块管理员、顶层管理员
     
     private String avatar;
+    
+    private String qq;
+    
+    private String profile;
 }
