@@ -199,7 +199,7 @@ public class HttpUtil {
         });
     }
     
-    private static void initial() {
+    public static void initial() {
         // 创建 RestTemplate
         request = new RestTemplate(initialClientHttpRequestFactory());
         request.setErrorHandler(initialResponseErrorHandler());

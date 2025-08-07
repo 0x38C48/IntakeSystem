@@ -102,12 +102,15 @@ public class SduLogin {
         
         // 获取页面会话（可以保持一段时间）
         if (JSESSIONID == null) {
+            System.out.println(loginFormResponse.cookies());
             JSESSIONID = loginFormResponse.cookie("JSESSIONID");
             cookie_adx = loginFormResponse.cookie("cookie-adx");
         }
         casLoginCookie.put("JSESSIONID", JSESSIONID);
         casLoginCookie.put("cookie-adx", cookie_adx);
         casLoginCookie.put("Language", Language);
+        
+        HttpUtil.initial();
         
         // 提取页面隐藏字段
         lt = loginFormResponse.parse().select("input[name=lt]").attr("value");
