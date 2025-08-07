@@ -110,8 +110,6 @@ public class SduLogin {
         casLoginCookie.put("cookie-adx", cookie_adx);
         casLoginCookie.put("Language", Language);
         
-        HttpUtil.initial();
-        
         // 提取页面隐藏字段
         lt = loginFormResponse.parse().select("input[name=lt]").attr("value");
     }
