@@ -145,12 +145,12 @@ public class SduLogin {
             case "bind" -> {
                 if (captcha == null) {
                     
-                    HttpUtil.connect("https://pass.sdu.edu.cn/cas/device")
+                    HttpUtil.Response<String> response = HttpUtil.connect("https://pass.sdu.edu.cn/cas/device")
                             .cookies(casLoginCookie)
                             .formData().data("m", "2").set()
                             .method(HttpMethod.POST)
                             .execute();
-                    
+                    System.out.println(response.body());
                     return "need captcha";
                 }
                 twiceDeviceCheck();
