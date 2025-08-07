@@ -10,7 +10,7 @@ spring:
       port: 7777
       password: "0n/pMC%^b41IsaVO6+e35u]dcF7Z$G9D"
   profiles:
-    active: prod
+    active: dev
   servlet:
     multipart:
       max-file-size: 10MB

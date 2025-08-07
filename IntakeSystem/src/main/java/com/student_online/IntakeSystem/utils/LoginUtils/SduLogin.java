@@ -3,6 +3,8 @@ package com.student_online.IntakeSystem.utils.LoginUtils;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.google.common.hash.Hashing;
+import com.student_online.IntakeSystem.config.exception.CommonErr;
+import com.student_online.IntakeSystem.config.exception.CommonErrException;
 import lombok.Getter;
 import lombok.Setter;
 import org.apache.commons.codec.digest.DigestUtils;
@@ -157,11 +159,11 @@ public class SduLogin {
             }
             case "validErr", "notFound" -> {
 //                System.out.println("密码错误或用户不存在");
-                throw new RuntimeException();
+                throw new CommonErrException(CommonErr.NO_DATA);
             }
             case "mobileErr" -> {
 //                System.out.println("未绑定手机");
-                throw new RuntimeException();
+                throw new CommonErrException(CommonErr.PARAM_WRONG);
             }
         }
         return null;
@@ -175,8 +177,6 @@ public class SduLogin {
      * 注意components以及details的存储是有上限的，超出这个上限就会自动清除最早记录的components以及details数据
      */
     public void twiceDeviceCheck() throws URISyntaxException {
-        // 发送验证码
-
 //        String c = (new Scanner(System.in)).next();
 //        System.out.println("是否信任该设备？(true or false)");
 //        boolean s = (new Scanner(System.in)).nextBoolean();
