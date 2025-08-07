@@ -137,7 +137,9 @@ public class HttpUtil {
                 }).setDefaultCredentialsProvider((authScope, context) -> {
                     CredentialsProvider provider = AUTH_CONTEXT.get();
                     return provider == null ? null : provider.getCredentials(authScope, context);
-                }).build();
+                })
+                .disableCookieManagement()
+                .build();
     }
 
     @NotNull
@@ -236,12 +238,9 @@ public class HttpUtil {
         private HttpHost httpHost = null;
         private Credentials credentials = null;
         private Object body;
-        private RestTemplate client;
 
         private Connection(URI url) {
             this.url = url;
-            client = new RestTemplate(initialClientHttpRequestFactory());
-            client.setErrorHandler(initialResponseErrorHandler());
         }
 
         /** set http method */
@@ -347,9 +346,9 @@ public class HttpUtil {
         private <T> Response<T> execute(Type type) {
             try {
                 this.loadBeforeRequest();
-                RequestCallback requestCallback = client.httpEntityCallback(new HttpEntity<>(body, httpHeaders), type);
-                ResponseExtractor<ResponseEntity<T>> responseExtractor = client.responseEntityExtractor(type);
-                return Response.of(client.execute(url, httpMethod, requestCallback, responseExtractor));
+                RequestCallback requestCallback = getRequest().httpEntityCallback(new HttpEntity<>(body, httpHeaders), type);
+                ResponseExtractor<ResponseEntity<T>> responseExtractor = getRequest().responseEntityExtractor(type);
+                return Response.of(getRequest().execute(url, httpMethod, requestCallback, responseExtractor));
             } finally {
                 this.unloadAfterRequest();
             }

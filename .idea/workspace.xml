@@ -4,10 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="550f93a3-53ab-42ec-83c3-ef7986e85d54" name="更改" comment="debug">
-      <change beforePath="$PROJECT_DIR$/IntakeSystem/src/main/java/com/student_online/IntakeSystem/utils/LoginUtils/HttpUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/IntakeSystem/src/main/java/com/student_online/IntakeSystem/utils/LoginUtils/HttpUtil.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/IntakeSystem/src/main/java/com/student_online/IntakeSystem/utils/LoginUtils/SduLogin.java" beforeDir="false" afterPath="$PROJECT_DIR$/IntakeSystem/src/main/java/com/student_online/IntakeSystem/utils/LoginUtils/SduLogin.java" afterDir="false" />
-    </list>
+    <list default="true" id="550f93a3-53ab-42ec-83c3-ef7986e85d54" name="更改" comment="debug" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -248,7 +245,7 @@
       <workItem from="1754559343656" duration="292000" />
       <workItem from="1754559707799" duration="289000" />
       <workItem from="1754560154543" duration="140000" />
-      <workItem from="1754560310856" duration="9736000" />
+      <workItem from="1754560310856" duration="9786000" />
     </task>
     <task id="LOCAL-00001" summary="initial">
       <option name="closed" value="true" />
