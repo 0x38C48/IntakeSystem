@@ -20,8 +20,9 @@ public class UserController {
     UserService userService;
     
     @PostMapping("/login/cas")
-    public Result loginCas(@RequestParam @NotNull String studentNumber, @RequestParam @NotNull String password, @RequestParam(required = false) String captcha){
-        return userService.loginCas(studentNumber, password, captcha);
+    public Result loginCas(@RequestParam @NotNull String studentNumber, @RequestParam @NotNull String password, @RequestParam(required = false) String captcha,
+                           @RequestParam @NotNull String fingerprint){
+        return userService.loginCas(studentNumber, password, captcha, fingerprint);
     }
     
     @PostMapping("/login")

@@ -32,13 +32,13 @@ public class SduLogin {
     private static final String Language = "zh_CN";
     
     // 统一认证登入 设备验证components（该值可替换）
-    private static final String components = "java-spider-for-sdu-components";
+    public String components = "java-spider-for-sdu-components";
     // 统一认证登入 设备验证details
-    private static final String details = "java-spider-for-sdu-details";
+    public String details = "java-spider-for-sdu-details";
     
-    private static final String murmur = Hashing.murmur3_128(31).hashString(components, StandardCharsets.UTF_8).toString();
-    private static final String murmur_s = Hashing.murmur3_128(31).hashString(details, StandardCharsets.UTF_8).toString();
-    private static final String murmur_md5 = DigestUtils.md5Hex(details);
+    private String murmur;
+    private String murmur_s;
+    private String murmur_md5;
     
     /**
      * 统一认证账号
@@ -65,6 +65,12 @@ public class SduLogin {
      * 统一认证登入页面隐藏字段
      */
     private String lt;
+    
+    public void initFingerprint() {
+        murmur = Hashing.murmur3_128(31).hashString(components, StandardCharsets.UTF_8).toString();
+        murmur_s = Hashing.murmur3_128(31).hashString(details, StandardCharsets.UTF_8).toString();
+        murmur_md5 = DigestUtils.md5Hex(details);
+    }
     
     /**
      * 标记先前是否经过统一认证密码验证
@@ -93,7 +99,7 @@ public class SduLogin {
                 .execute();
         
         // 获取页面会话（可以保持一段时间）
-        if(JSESSIONID == null) {
+        if (JSESSIONID == null) {
             JSESSIONID = loginFormResponse.cookie("JSESSIONID");
             cookie_adx = loginFormResponse.cookie("cookie-adx");
         }
@@ -319,7 +325,7 @@ public class SduLogin {
         redirectUrl = passwordVerification(casLoginURL);
 
 //        }
-        
+
 //        System.out.println("统一认证登入验证通过！");
 //        System.out.println("统一认证登入重定向 URL: " + redirectUrl);
         return redirectUrl;

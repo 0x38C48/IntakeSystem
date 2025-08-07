@@ -99,13 +99,22 @@ public class UserService {
     
     
     @SneakyThrows
-    public Result loginCas(String studentNumber, String password, String captcha) {
+    public Result loginCas(String studentNumber, String password, String captcha,String fingerprint) {
+        if(fingerprint == null || fingerprint.isEmpty()){
+            return Result.error(400, "指纹不能为空");
+        }
+        
         SduLogin sduLogin = new SduLogin(studentNumber, password);
         if(captcha!= null && !captcha.isEmpty()){
             sduLogin.captcha = captcha;
             sduLogin.JSESSIONID = REDIS.r.opsForHash().get("jsessionid", studentNumber).toString();
             sduLogin.cookie_adx = REDIS.r.opsForHash().get("cookie-adx", studentNumber).toString();
         }
+        sduLogin.components = fingerprint;
+        sduLogin.details = fingerprint;
+        
+        sduLogin.initFingerprint();
+
 
         String ticket = sduLogin.login(ServicedeskLogin.GATE_WAY);
         
