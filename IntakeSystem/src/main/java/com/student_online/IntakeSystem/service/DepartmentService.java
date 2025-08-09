@@ -33,6 +33,7 @@ public class DepartmentService {
                     station.setName(name);
                     station.setDescription(department.getDescription());
                     station.setPId(department.getPId());
+                    station.setIsDepartment(1);
                     stationMapper.createStation(station);
                     department.setStationId(station.getId());
                     departmentMapper.createDepartment(department);

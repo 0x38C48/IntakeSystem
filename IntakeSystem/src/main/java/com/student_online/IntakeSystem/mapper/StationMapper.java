@@ -5,7 +5,7 @@ import java.util.List;
 
 @Mapper
 public interface StationMapper {
-    @Insert("insert into station (name,p_id,description) values (#{name},#{pId},#{description})")
+    @Insert("insert into station (name,p_id,description,is_department) values (#{name},#{pId},#{description},#{isDepartment})")
     void createStation(Station station);
 
     @Select("select * from station where id=#{id}")
@@ -20,6 +20,6 @@ public interface StationMapper {
     @Delete("delete from station where id=#{id}")
     void deleteStationById(int id);
 
-    @Update("update station set name=#{name},p_id=#{p_id},description=#{description} where station_id=#{stationId}")
+    @Update("update station set name=#{name},p_id=#{p_id},description=#{description} ,is_department=#{isDepartment} where id=#{stationId}")
     void updateStation(Station station);
 }

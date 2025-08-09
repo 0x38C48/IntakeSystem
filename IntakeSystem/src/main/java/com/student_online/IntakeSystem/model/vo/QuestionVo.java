@@ -28,7 +28,7 @@ public class QuestionVo extends Question {
     private String answerContext;//单选或者客观简答题（填空）
 
 
-    private List<Long> answersContext;//多选
+    private List<Integer> answersContext;//多选
 
     @Override
     public String toString() {

@@ -22,6 +22,7 @@ public class StationService {
             int pid = station.getPId();
             if (stationMapper.getStationByName(name) != null)
                 return ResponseUtil.build(Result.error(409, "该模块已存在"));
+            else if(station.getIsDepartment()==0)return ResponseUtil.build(Result.error(400, "无法创建部门"));
             else {
                 PermissionService permissionService = new PermissionService();
                 if (permissionService.isPermitted(pid, uid)) {

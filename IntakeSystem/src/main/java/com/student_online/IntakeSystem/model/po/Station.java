@@ -15,4 +15,6 @@ public class Station {
     private Integer pId;
 
     private String description;
+
+    private Integer isDepartment;
 }
