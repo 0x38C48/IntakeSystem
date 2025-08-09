@@ -10,6 +10,9 @@ public interface StationMapper {
 
     @Select("select * from station where id=#{id}")
     Station getStationById(int id);
+    
+    @Select("select * from station where p_id = #{id}")
+    List<Station> getChildren(Integer id);
 
     @Select("select * from station where name=#{name}")
     Station getStationByName(String name);

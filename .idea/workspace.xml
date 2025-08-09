@@ -4,19 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="550f93a3-53ab-42ec-83c3-ef7986e85d54" name="更改" comment="模块和部门创建、权限管理初步实现">
-      <change beforePath="$PROJECT_DIR$/.idea/.cache/.Apifox_Helper/.toolWindow.db" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.cache/.Apifox_Helper/.toolWindow.db" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/IntakeSystem/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/IntakeSystem/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/IntakeSystem/src/main/java/com/student_online/IntakeSystem/config/WebConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/IntakeSystem/src/main/java/com/student_online/IntakeSystem/config/WebConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/IntakeSystem/src/main/java/com/student_online/IntakeSystem/interceptor/MyInterceptor.java" beforeDir="false" afterPath="$PROJECT_DIR$/IntakeSystem/src/main/java/com/student_online/IntakeSystem/interceptor/MyInterceptor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/IntakeSystem/src/main/java/com/student_online/IntakeSystem/mapper/UserMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/IntakeSystem/src/main/java/com/student_online/IntakeSystem/mapper/UserMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/IntakeSystem/src/main/java/com/student_online/IntakeSystem/model/constant/STATIC.java" beforeDir="false" afterPath="$PROJECT_DIR$/IntakeSystem/src/main/java/com/student_online/IntakeSystem/model/constant/STATIC.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/IntakeSystem/src/main/java/com/student_online/IntakeSystem/utils/JwtUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/IntakeSystem/src/main/java/com/student_online/IntakeSystem/utils/JwtUtil.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/IntakeSystem/src/main/java/com/student_online/IntakeSystem/utils/LoginUtils/SduLogin.java" beforeDir="false" afterPath="$PROJECT_DIR$/IntakeSystem/src/main/java/com/student_online/IntakeSystem/utils/LoginUtils/SduLogin.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/IntakeSystem/src/test/java/com/student_online/IntakeSystem/IntakeSystemApplicationTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/IntakeSystem/src/test/java/com/student_online/IntakeSystem/IntakeSystemApplicationTests.java" afterDir="false" />
-    </list>
+    <list default="true" id="550f93a3-53ab-42ec-83c3-ef7986e85d54" name="更改" comment="debug" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -59,6 +47,10 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "JUnit.IntakeSystemApplicationTests.starIdTest.executor": "Debug",
+    "JUnit.IntakeSystemApplicationTests.starTest.executor": "Debug",
+    "JUnit.IntakeSystemApplicationTests.stationTreeTest.executor": "Run",
+    "JUnit.IntakeSystemApplicationTests.stationtest.executor": "Debug",
     "JUnit.IntakeSystemApplicationTests.testJwt.executor": "Run",
     "RequestMappingsPanelOrder0": "0",
     "RequestMappingsPanelOrder1": "1",
@@ -76,10 +68,13 @@
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "reference.projectsettings.compiler.annotationProcessors",
+    "settings.editor.selected.configurable": "com.itangcent.idea.plugin.configurable.rootConfigurable.apifox",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
+  <component name="ReactorSettings">
+    <option name="notificationShown" value="true" />
+  </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="E:\text\javaprojects\IntakeSystem\IntakeSystem\src\main\java\com\student_online\IntakeSystem\config\exception" />
@@ -87,6 +82,70 @@
     </key>
   </component>
   <component name="RunManager" selected="Spring Boot.IntakeSystemApplication (1)">
+    <configuration name="IntakeSystemApplicationTests.starIdTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="IntakeSystem" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.student_online.IntakeSystem.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.student_online.IntakeSystem" />
+      <option name="MAIN_CLASS_NAME" value="com.student_online.IntakeSystem.IntakeSystemApplicationTests" />
+      <option name="METHOD_NAME" value="starIdTest" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="IntakeSystemApplicationTests.starTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="IntakeSystem" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.student_online.IntakeSystem.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.student_online.IntakeSystem" />
+      <option name="MAIN_CLASS_NAME" value="com.student_online.IntakeSystem.IntakeSystemApplicationTests" />
+      <option name="METHOD_NAME" value="starTest" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="IntakeSystemApplicationTests.stationTreeTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="IntakeSystem" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.student_online.IntakeSystem.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.student_online.IntakeSystem" />
+      <option name="MAIN_CLASS_NAME" value="com.student_online.IntakeSystem.IntakeSystemApplicationTests" />
+      <option name="METHOD_NAME" value="stationTreeTest" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="IntakeSystemApplicationTests.stationtest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="IntakeSystem" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.student_online.IntakeSystem.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.student_online.IntakeSystem" />
+      <option name="MAIN_CLASS_NAME" value="com.student_online.IntakeSystem.IntakeSystemApplicationTests" />
+      <option name="METHOD_NAME" value="stationtest" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="IntakeSystemApplicationTests.testJwt" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="IntakeSystem" />
       <extension name="coverage">
@@ -120,6 +179,10 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.IntakeSystemApplicationTests.stationtest" />
+        <item itemvalue="JUnit.IntakeSystemApplicationTests.stationTreeTest" />
+        <item itemvalue="JUnit.IntakeSystemApplicationTests.starIdTest" />
+        <item itemvalue="JUnit.IntakeSystemApplicationTests.starTest" />
         <item itemvalue="JUnit.IntakeSystemApplicationTests.testJwt" />
       </list>
     </recent_temporary>
@@ -174,7 +237,15 @@
       <workItem from="1754238308726" duration="11000" />
       <workItem from="1754238330121" duration="51000" />
       <workItem from="1754238415960" duration="456000" />
-      <workItem from="1754238890641" duration="299000" />
+      <workItem from="1754238890641" duration="1583000" />
+      <workItem from="1754307494860" duration="5962000" />
+      <workItem from="1754313477514" duration="342000" />
+      <workItem from="1754404907360" duration="12844000" />
+      <workItem from="1754496406798" duration="2801000" />
+      <workItem from="1754559343656" duration="292000" />
+      <workItem from="1754559707799" duration="289000" />
+      <workItem from="1754560154543" duration="140000" />
+      <workItem from="1754560310856" duration="9786000" />
     </task>
     <task id="LOCAL-00001" summary="initial">
       <option name="closed" value="true" />
@@ -200,7 +271,15 @@
       <option name="project" value="LOCAL" />
       <updated>1753586990687</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="debug">
+      <option name="closed" value="true" />
+      <created>1754566698426</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1754566698426</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -209,7 +288,54 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="initial" />
     <MESSAGE value="模块和部门创建、权限管理初步实现" />
-    <option name="LAST_COMMIT_MESSAGE" value="模块和部门创建、权限管理初步实现" />
+    <MESSAGE value="debug" />
+    <option name="LAST_COMMIT_MESSAGE" value="debug" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/IntakeSystem/src/test/java/com/student_online/IntakeSystem/IntakeSystemApplicationTests.java</url>
+          <line>23</line>
+          <option name="timeStamp" value="7" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/IntakeSystem/src/main/java/com/student_online/IntakeSystem/utils/LoginUtils/SduLogin.java</url>
+          <line>150</line>
+          <option name="timeStamp" value="8" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/IntakeSystem/src/main/java/com/student_online/IntakeSystem/service/UserService.java</url>
+          <line>121</line>
+          <option name="timeStamp" value="9" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/IntakeSystem/src/main/java/com/student_online/IntakeSystem/service/UserService.java</url>
+          <line>109</line>
+          <option name="timeStamp" value="10" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/IntakeSystem/src/main/java/com/student_online/IntakeSystem/utils/LoginUtils/SduLogin.java</url>
+          <line>105</line>
+          <option name="timeStamp" value="12" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/IntakeSystem/src/main/java/com/student_online/IntakeSystem/utils/LoginUtils/SduLogin.java</url>
+          <line>108</line>
+          <option name="timeStamp" value="13" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/IntakeSystem/src/main/java/com/student_online/IntakeSystem/utils/LoginUtils/SduLogin.java</url>
+          <line>106</line>
+          <option name="timeStamp" value="14" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/IntakeSystem/src/main/java/com/student_online/IntakeSystem/utils/LoginUtils/SduLogin.java</url>
+          <line>104</line>
+          <option name="timeStamp" value="15" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

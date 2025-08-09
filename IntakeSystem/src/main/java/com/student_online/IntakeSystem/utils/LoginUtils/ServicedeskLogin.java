@@ -37,6 +37,7 @@ public class ServicedeskLogin {
         HttpUtil.Response<String> response = HttpUtil.connect("https://servicedesk.sdu.edu.cn/idc/sys/uacm/profile/getUserInfo")
                 .method(HttpMethod.POST)
                 .header("Content-Type","application/json;charset=UTF-8")
+                .header("Accept","application/json")
                 .cookies(cookie)
                 .jsonBody("{\"BE_OPT_ID\":\"" + BE_OPT_ID +"\"}")
                 .execute();

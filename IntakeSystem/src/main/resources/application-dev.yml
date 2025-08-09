@@ -1,0 +1,13 @@
+server:
+  domain: localhost
+  port: 8081
+
+spring:
+  servlet:
+    multipart:
+      location: E:\multipart
+
+avatar:
+  path:
+    upload: "E:/avatar"
+    access: "/avatar/"

@@ -5,6 +5,6 @@ import org.springframework.beans.factory.annotation.Value;
 public class STATIC {
     public static class VALUE{
         public static String jwt_secret = "KomeijijiemoKKoishihsioK514514SatorirotaS";
-        public static int jwt_expire = 86400;
+        public static int jwt_expire = 86400000;
     }
 }

@@ -137,7 +137,9 @@ public class HttpUtil {
                 }).setDefaultCredentialsProvider((authScope, context) -> {
                     CredentialsProvider provider = AUTH_CONTEXT.get();
                     return provider == null ? null : provider.getCredentials(authScope, context);
-                }).build();
+                })
+                .disableCookieManagement()
+                .build();
     }
 
     @NotNull
@@ -199,7 +201,7 @@ public class HttpUtil {
         });
     }
     
-    private static void initial() {
+    public static void initial() {
         // 创建 RestTemplate
         request = new RestTemplate(initialClientHttpRequestFactory());
         request.setErrorHandler(initialResponseErrorHandler());

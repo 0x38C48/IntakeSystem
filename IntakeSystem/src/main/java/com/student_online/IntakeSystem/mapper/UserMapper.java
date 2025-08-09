@@ -1,5 +1,6 @@
 package com.student_online.IntakeSystem.mapper;
 
+import com.student_online.IntakeSystem.model.dto.UserDto;
 import com.student_online.IntakeSystem.model.po.User;
 import org.apache.ibatis.annotations.*;
 
@@ -34,4 +35,19 @@ public interface UserMapper {
     
     @Update("UPDATE user SET password = #{hashpw} WHERE username = #{studentNumber}")
     void updatePasswordByUsername(@Param("studentNumber") String studentNumber,@Param("hashpw") String hashpw);
+    
+    @Select("SELECT uid from user WHERE username = #{username}")
+    int getUserIdByUsername(String username);
+    
+    @Update("UPDATE user SET avatar = #{fileName} WHERE uid = #{userId}")
+    void setAvatarUrl(@Param("userId") int userId,@Param("fileName") String fileName);
+    
+    @Select("SELECT avatar FROM user WHERE username = #{username}")
+    String getAvatar(String username);
+    
+    @Select("SELECT type FROM user WHERE username = #{executor}")
+    int getTypeByUsername(String executor);
+    
+    @Update("UPDATE user SET qq = #{qq}, profile = #{profile},email = #{email} WHERE username = #{username}")
+    void updateUserInfo(UserDto userDto);
 }
