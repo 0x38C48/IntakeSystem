@@ -91,12 +91,6 @@ public class AnswerService {
         }
     }
 
-    /**
-     * 根据完成记录id获取答案(用于查询每位答题者回答的情况)
-     *
-     * @param id
-     * @return
-     */
     
     public ResponseEntity<Result> getAnswerByFinishId(Integer id) {
         List<Answer> answerList = answerMapper.getAnswerByFinishId(id);

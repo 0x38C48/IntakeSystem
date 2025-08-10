@@ -13,15 +13,18 @@ public interface FinishMapper {
     @Delete("delete from finish where questionnaire_id=#{questionnaireId}")
     void deleteFinishById(int questionnaireId);
 
-    @Select("select * from finish where id=#{id}")
-    Finish getFinishById(int id);
+    @Select("select * from finish where uid=#{uid} and questionnaire_id=#{questionnaireId}")
+    Finish getFinishByUidAndQuestionnaireId(int uid,int questionnaireId);
 
     @Select("select * from finish where questionnaire_id=#{QuestionnaireId}")
     List<Finish> getFinishByQuestionnaireId(int QuestionnaireId);
 
     @Select("select * from finish where uid=#{uid}")
     List<Finish> getFinishByUid(int uid);
+
+    @Select("select * from finish where id=#{id}")
+    Finish getFinishById(int id);
     
     @Update("update finish set questionnaire_id=#{questionnaireId},uid=#{uid} where id=#{id}")
-    void updateQuestion(Finish finish);
+    void updateFinish(Finish finish);
 }

@@ -24,7 +24,7 @@ public class FinishService {
 
 
     
-    public ResponseEntity<Result> listFinish(Integer userId) {
+    public ResponseEntity<Result> listFinishForUser(Integer userId) {
         List<Finish> finishes=finishMapper.getFinishByUid(userId);
         if(finishes.isEmpty()){
             return ResponseUtil.build(Result.error(404,"未找到你完成的问卷"));
@@ -33,49 +33,54 @@ public class FinishService {
 
     }
 
-
-    
-    public QuestionnaireAndQuestionVo setAnswerForQuestion(QuestionnaireAndQuestionVo questionnaireDetailedById, List<Answer> answerList) {
-
-        // 获取问题列表
-        List<QuestionVo> questions = questionnaireDetailedById.getQuestions();
-
-        for (QuestionVo question : questions) {
-            // 通过问题id查询对应选择的答案,使用JDK8新特性 stream流
-            List<Answer> answers = answerList.stream()
-                    .filter(answer -> question.getId()
-                            .equals(answer.getQuestionId())).collect(Collectors.toList());
-            // 单选题
-            if (question.getType() == 1) {
-                // 只需要取list第一个元素即可，因为只有一个数据，设置选择的选项id
-                question.setAnswerContext(answers.get(0).getOptionId().toString());
-            }
-            // 客观题与单选题同理，设置选择的选项内容
-            if (question.getType() == 3) {
-                // 只需要取list第一个元素即可，因为只有一个数据，设置选择的选项id
-                question.setAnswerContext(answers.get(0).getAnswerContent());
-            }
-            // 多选题，需要设置多个选择的选项，放入一个list
-            if (question.getType() == 2) {
-                List<Integer> longs = new ArrayList<>();
-                for (Answer answer : answers) {
-                    longs.add(answer.getOptionId());
-                }
-                // 设置多选答案
-                question.setAnswersContext(longs);
-            }
+    public ResponseEntity<Result> listFinishForDepartment(Integer questionnaireId) {
+        List<Finish> finishes=finishMapper.getFinishByQuestionnaireId(questionnaireId);
+        if(finishes.isEmpty()){
+            return ResponseUtil.build(Result.error(404,"未找到完成的问卷"));
         }
-        // 重新设置并返回
-        questionnaireDetailedById.setQuestions(questions);
-        return questionnaireDetailedById;
+        else return ResponseUtil.build(Result.success(finishes,"返回完成结果"));
+
     }
 
-    public ResponseEntity<Result> deleteByQuestionnaireId(Integer questionnaireId) {
+    public ResponseEntity<Result> listFinishById(Integer finishId) {
+        Finish finish=finishMapper.getFinishById(finishId);
+        if(finish==null){
+            return ResponseUtil.build(Result.error(404,"未找到完成的问卷"));
+        }
+        else return ResponseUtil.build(Result.success(finish,"返回完成结果"));
+
+    }
+
+
+    public ResponseEntity<Result> deleteById(Integer finishId) {
         try{
-            finishMapper.deleteFinishById(questionnaireId);
+            finishMapper.deleteFinishById(finishId);
             return ResponseUtil.build(Result.ok());
         }catch (Exception e){
             return ResponseUtil.build(Result.error(400,"删除失败"));
+        }
+    }
+
+    public ResponseEntity<Result> createFinish(Finish finish) {
+        try{
+            int uid=finish.getUid();
+            int questionnaireId=finish.getQuestionnaireId();
+            if(finishMapper.getFinishByUidAndQuestionnaireId(uid,questionnaireId)==null) {
+                finishMapper.createFinish(finish);
+                return ResponseUtil.build(Result.success(finish.getId(),"创建成功"));
+            }
+            else return ResponseUtil.build(Result.error(409,"已经存在你的作答"));
+        }catch (Exception e){
+            return ResponseUtil.build(Result.error(400,"创建作答失败"));
+        }
+    }
+
+    public ResponseEntity<Result> updateFinish(Finish finish) {
+        try{
+            finishMapper.updateFinish(finish);
+            return ResponseUtil.build(Result.ok());
+        }catch (Exception e){
+            return ResponseUtil.build(Result.error(400,"更新作答失败"));
         }
     }
 }
