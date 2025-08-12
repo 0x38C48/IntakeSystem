@@ -60,7 +60,8 @@ public class AnswerController {
 
     @PostMapping("/delete")//删除回答结果
     public ResponseEntity<Result> deleteAnswer(@RequestParam int finishId) {
-        String uid = (String) request.getAttribute("uid");
+        String username = ThreadLocalUtil.get().studentNumber;
+        String uid = MAPPER.user.getUserIdByUsername(username) + "";
         Finish finish= (Finish) Objects.requireNonNull(finishService.listFinishById(finishId).getBody()).getData();
         if(Integer.parseInt(uid)==finish.getUid()){
             return finishService.deleteById(finishId);
@@ -69,7 +70,8 @@ public class AnswerController {
 
     @GetMapping("/view/answers")
     public ResponseEntity<Result> getAnswerForFinish(@RequestParam int finishId) {
-        String uid = (String) request.getAttribute("uid");
+        String username = ThreadLocalUtil.get().studentNumber;
+        String uid = MAPPER.user.getUserIdByUsername(username) + "";
         Finish finish= (Finish) Objects.requireNonNull(finishService.listFinishById(finishId).getBody()).getData();
         if(Integer.parseInt(uid)==finish.getUid()){
             return answerService.getAnswerByFinishId(finishId);
@@ -79,7 +81,8 @@ public class AnswerController {
 
     @GetMapping("/view/department")
     public ResponseEntity<Result> getFinishByDepartmentId(@RequestParam int departmentId) {
-        String uid = (String) request.getAttribute("uid");
+        String username = ThreadLocalUtil.get().studentNumber;
+        String uid = MAPPER.user.getUserIdByUsername(username) + "";
         int stationId=departmentService.getStationId(departmentId);
         if(permissionService.isPermitted(stationId, Integer.parseInt(uid))){
             return finishService.listFinishForDepartment(departmentId);
@@ -88,7 +91,8 @@ public class AnswerController {
 
     @GetMapping("/view/user")
     public ResponseEntity<Result> getFinishByUid(@RequestParam int userId) {
-        String uid = (String) request.getAttribute("uid");
+        String username = ThreadLocalUtil.get().studentNumber;
+        String uid = MAPPER.user.getUserIdByUsername(username) + "";
         if(Integer.parseInt(uid)==userId){
             return finishService.listFinishForUser(userId);
         }else return ResponseUtil.build(Result.error(401,"无权限"));

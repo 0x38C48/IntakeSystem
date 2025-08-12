@@ -21,13 +21,15 @@ public class PermissionController {
 
     @PostMapping("/set")
     public ResponseEntity<Result> setPermission(@RequestBody Permission permission) {//不要传入stationId这个参数，这个是和station关联，自动生成的
-        String uid = (String) request.getAttribute("uid");
+        String username = ThreadLocalUtil.get().studentNumber;
+        String uid = MAPPER.user.getUserIdByUsername(username) + "";
         return permissionService.createPermission(permission,Integer.parseInt(uid));
     }
 
     @DeleteMapping("/del")
     public ResponseEntity<Result> delPermission(@RequestParam int permissionId) {
-        String uid = (String) request.getAttribute("uid");
+        String username = ThreadLocalUtil.get().studentNumber;
+        String uid = MAPPER.user.getUserIdByUsername(username) + "";
         return permissionService.deletePermission(permissionId,Integer.parseInt(uid));
     }
 

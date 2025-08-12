@@ -27,19 +27,22 @@ public class DepartmentController {
 
     @PostMapping("/create")
     public ResponseEntity<Result> createDepartment(@RequestBody Department department) {//不要传入stationId这个参数，这个是和station关联，自动生成的
-        String uid = (String) request.getAttribute("uid");
+        String username = ThreadLocalUtil.get().studentNumber;
+        String uid = MAPPER.user.getUserIdByUsername(username) + "";
         return departmentService.createDepartment(department,Integer.parseInt(uid));
     }
 
     @PostMapping("/edit")
     public ResponseEntity<Result> editDepartment(@RequestBody Department department) {
-        String uid = (String) request.getAttribute("uid");
+        String username = ThreadLocalUtil.get().studentNumber;
+        String uid = MAPPER.user.getUserIdByUsername(username) + "";
         return departmentService.updateDepartment(department,Integer.parseInt(uid));
     }
 
     @DeleteMapping("/del")
     public ResponseEntity<Result> deleteDepartment(@RequestParam int departmentId) {
-        String uid = (String) request.getAttribute("uid");
+        String username = ThreadLocalUtil.get().studentNumber;
+        String uid = MAPPER.user.getUserIdByUsername(username) + "";
         return departmentService.deleteDepartment(departmentId,Integer.parseInt(uid));
     }
 

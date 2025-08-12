@@ -15,6 +15,8 @@ import java.util.List;
 public class StarService {
     public Result query(){
         String username = ThreadLocalUtil.get().studentNumber;
+        Integer uid = MAPPER.user.getUserIdByUsername(username);
+        
         List<Station> stations = MAPPER.star.getStarByUsername(username);
         List<StationTree> trees = new ArrayList<>();
         for (Station s: stations) {

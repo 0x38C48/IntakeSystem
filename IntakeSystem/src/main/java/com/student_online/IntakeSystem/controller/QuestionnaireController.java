@@ -33,7 +33,8 @@ public class QuestionnaireController {
 
     @PostMapping("/edit")//编辑部门问卷基本信息
     public ResponseEntity<Result> editQuestionnaire(@RequestParam int departmentId, @RequestBody Questionnaire questionnaire) {
-        String uid = (String) request.getAttribute("uid");
+        String username = ThreadLocalUtil.get().studentNumber;
+        String uid = MAPPER.user.getUserIdByUsername(username) + "";
         Department department= (Department) Objects.requireNonNull(departmentService.getDepartmentById(departmentId).getBody()).getData();
         if(permissionService.isPermitted(department.getStationId(),Integer.parseInt(uid))){
             return questionnaireService.saveOrUpdateQuestionnaire(questionnaire,departmentId);
@@ -42,7 +43,8 @@ public class QuestionnaireController {
 
     @PostMapping("/edit/questions")//编辑部门问卷题目
     public ResponseEntity<Result> editQuestions(@RequestBody List<QuestionVo> questions,@RequestParam int departmentId) {
-        String uid = (String) request.getAttribute("uid");
+        String username = ThreadLocalUtil.get().studentNumber;
+        String uid = MAPPER.user.getUserIdByUsername(username) + "";
         int stationId=departmentService.getStationId(departmentId);
         if(permissionService.isPermitted(stationId,Integer.parseInt(uid))){
             return questionService.saveQuestion(questions);
@@ -51,7 +53,8 @@ public class QuestionnaireController {
 
     @PostMapping("/delete")//删除部门问卷
     public ResponseEntity<Result> deleteQuestionnaire(@RequestParam int departmentId) {
-        String uid = (String) request.getAttribute("uid");
+        String username = ThreadLocalUtil.get().studentNumber;
+        String uid = MAPPER.user.getUserIdByUsername(username) + "";
         int stationId=departmentService.getStationId(departmentId);
         if(permissionService.isPermitted(stationId,Integer.parseInt(uid))){
             return questionnaireService.deleteQuestionnaireById(departmentId);
@@ -60,7 +63,8 @@ public class QuestionnaireController {
 
     @PostMapping("/publish")
     public ResponseEntity<Result> publishQuestionnaire(@RequestParam int questionnaireId) {
-        String uid = (String) request.getAttribute("uid");
+        String username = ThreadLocalUtil.get().studentNumber;
+        String uid = MAPPER.user.getUserIdByUsername(username) + "";
         Questionnaire questionnaire= (Questionnaire) Objects.requireNonNull(questionnaireService.getQuestionnaireById(questionnaireId).getBody()).getData();
         Integer departmentId=questionnaire.getDepartmentId();
         int stationId=departmentService.getStationId(departmentId);
