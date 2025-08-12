@@ -24,7 +24,7 @@ public class PermissionService {
         try {
             int stationId = permission.getStationId();
             int pid = stationMapper.getStationById(stationId).getPId();
-            if (permissionMapper.getPermissionByUidAndStationId(uid, stationId) != null)
+            if (permissionMapper.getPermissionByUidAndStationId(permission.getUid(), stationId) != null)
                 return ResponseUtil.build(Result.error(409, "该权限已存在"));
             else {
                 if (this.isPermitted(pid, uid)) {
