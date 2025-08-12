@@ -1,5 +1,6 @@
 package com.student_online.IntakeSystem.controller;
 
+import com.student_online.IntakeSystem.model.constant.MAPPER;
 import com.student_online.IntakeSystem.model.po.Department;
 import com.student_online.IntakeSystem.model.po.Answer;
 import com.student_online.IntakeSystem.model.po.Finish;
@@ -11,6 +12,7 @@ import com.student_online.IntakeSystem.service.DepartmentService;
 import com.student_online.IntakeSystem.service.FinishService;
 import com.student_online.IntakeSystem.service.PermissionService;
 import com.student_online.IntakeSystem.utils.ResponseUtil;
+import com.student_online.IntakeSystem.utils.ThreadLocalUtil;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
