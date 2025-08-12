@@ -1,11 +1,13 @@
 package com.student_online.IntakeSystem.controller;
 
 
+import com.student_online.IntakeSystem.config.exception.CommonErr;
 import com.student_online.IntakeSystem.model.constant.MAPPER;
 import com.student_online.IntakeSystem.model.po.Permission;
 import com.student_online.IntakeSystem.model.vo.Result;
 import com.student_online.IntakeSystem.service.PermissionService;
 import com.student_online.IntakeSystem.service.StationService;
+import com.student_online.IntakeSystem.utils.ResponseUtil;
 import com.student_online.IntakeSystem.utils.ThreadLocalUtil;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,10 +24,18 @@ public class PermissionController {
     private PermissionService permissionService;
 
     @PostMapping("/set")
-    public ResponseEntity<Result> setPermission(@RequestBody Permission permission) {//不要传入stationId这个参数，这个是和station关联，自动生成的
-        String username = ThreadLocalUtil.get().studentNumber;
+    public ResponseEntity<Result> setPermission(@RequestParam int stationId, @RequestParam String username) {//不要传入stationId这个参数，这个是和station关联，自动生成的
+        if(!MAPPER.user.isUsernameExists(username)){
+            return ResponseUtil.build(Result.error(CommonErr.NO_DATA));
+        }
+        
         String uid = MAPPER.user.getUserIdByUsername(username) + "";
-        return permissionService.createPermission(permission,Integer.parseInt(uid));
+        Permission permission = new Permission();
+        permission.setUid(Integer.parseInt(uid));
+        permission.setStationId(stationId);
+        String executor = ThreadLocalUtil.get().studentNumber;
+        executor = MAPPER.user.getUserIdByUsername(executor) + "";
+        return permissionService.createPermission(permission,Integer.parseInt(executor));
     }
 
     @DeleteMapping("/del")
@@ -41,7 +51,11 @@ public class PermissionController {
     }
 
     @GetMapping("/show/user")
-    public ResponseEntity<Result> showPermissionByUserId(@RequestParam int userId) {
-        return permissionService.getPermissionByUid(userId);
+    public ResponseEntity<Result> showPermissionByUserId(@RequestParam String username) {
+        if(!MAPPER.user.isUsernameExists(username)){
+            return ResponseUtil.build(Result.error(CommonErr.NO_DATA));
+        }
+        int uid = MAPPER.user.getUserIdByUsername(username);
+        return permissionService.getPermissionByUid(uid);
     }
 }

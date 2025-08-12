@@ -15,9 +15,12 @@ public class StationTree {
     
     private String description;
     
+    private Integer isDepartment;
+    
     public StationTree(Station station) {
         this.id = station.getId();
         this.name = station.getName();
         this.description = station.getDescription();
+        this.isDepartment = station.getIsDepartment();
     }
 }
