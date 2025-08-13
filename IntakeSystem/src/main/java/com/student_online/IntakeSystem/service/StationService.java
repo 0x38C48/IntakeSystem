@@ -16,7 +16,7 @@ public class StationService {
     @Autowired
     private StationMapper stationMapper;
 
-    public ResponseEntity<Result> createStation(@NotNull Station station,int uid) {
+    public ResponseEntity<Result> createStation(Station station,int uid) {
         try {
             String name = station.getName();
             int pid = station.getPId();
@@ -31,6 +31,7 @@ public class StationService {
                 } else return ResponseUtil.build(Result.error(401, "无权限"));
             }
         }catch (Exception e) {
+            e.printStackTrace();
             return ResponseUtil.build(Result.error(400, "创建失败"+e.getMessage()));
         }
 
