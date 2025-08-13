@@ -82,7 +82,6 @@ public class PermissionService {
     }
 
     public boolean isPermitted( int stationId,int uid) {
-        try {
             List<Permission> permissions = permissionMapper.getPermissionByUid(uid);
             for (Permission permission : permissions) {
                 int curStationId = stationId, topStationId = permission.getStationId();
@@ -92,8 +91,5 @@ public class PermissionService {
                 }
             }
             return false;
-        }catch (Exception e) {
-            return false;
-        }
     }
 }

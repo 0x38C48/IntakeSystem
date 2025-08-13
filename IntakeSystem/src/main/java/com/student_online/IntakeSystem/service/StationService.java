@@ -16,6 +16,9 @@ public class StationService {
     @Autowired
     private StationMapper stationMapper;
 
+    @Autowired
+    private PermissionService permissionService;
+
     public ResponseEntity<Result> createStation(Station station,int uid) {
         try {
             String name = station.getName();
@@ -24,7 +27,7 @@ public class StationService {
                 return ResponseUtil.build(Result.error(409, "该模块已存在"));
 //            else if(station.getIsDepartment()==0)return ResponseUtil.build(Result.error(400, "无法创建部门"));
             else {
-                PermissionService permissionService = new PermissionService();
+
                 if (permissionService.isPermitted(pid, uid)) {
                     stationMapper.createStation(station);
                     return ResponseUtil.build(Result.ok());
@@ -39,7 +42,6 @@ public class StationService {
 
     public ResponseEntity<Result> updateStation(Station station,int uid) {
         try {
-            PermissionService permissionService = new PermissionService();
             int stationId = station.getId();
             if (permissionService.isPermitted(stationId, uid)) {
                 stationMapper.updateStation(station);
@@ -53,7 +55,6 @@ public class StationService {
 
     public ResponseEntity<Result> deleteStation( int stationId,int uid) {
         try {
-            PermissionService permissionService = new PermissionService();
             if(permissionService.isPermitted(stationId, uid )) {
                 stationMapper.deleteStationById(stationId);
                 return ResponseUtil.build(Result.ok());
