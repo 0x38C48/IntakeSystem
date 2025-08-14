@@ -22,6 +22,9 @@ public interface PermissionMapper {
 
     @Select("select * from permission where station_id=#{stationId}")
     List<Permission> getPermissionByStationId(int stationId);
+    
+    @Select("select EXISTS(select * from permission where uid=#{uid} and station_id=#{stationId})")
+    boolean isExists(@Param("uid") int uid, @Param("stationId") int stationId);
 
     @Select("select * from permission where uid=#{uid} and station_id=#{stationId}")
     Permission getPermissionByUidAndStationId(@Param("uid") int uid, @Param("stationId") int stationId);
