@@ -25,4 +25,7 @@ public interface StationMapper {
 
     @Update("update station set name=#{name},p_id=#{p_id},description=#{description} ,is_department=#{isDepartment} where id=#{stationId}")
     void updateStation(Station station);
+    
+    @Select("select * from station where p_id = null or p_id = 0")
+    List<Station> getRoots();
 }

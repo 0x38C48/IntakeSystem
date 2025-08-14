@@ -1,14 +1,17 @@
 package com.student_online.IntakeSystem.service;
 
 import com.student_online.IntakeSystem.mapper.StationMapper;
+import com.student_online.IntakeSystem.model.pljo.StationTree;
 import com.student_online.IntakeSystem.model.po.Station;
 import com.student_online.IntakeSystem.model.vo.Result;
 import com.student_online.IntakeSystem.utils.ResponseUtil;
+import com.student_online.IntakeSystem.utils.StationUtil;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -95,5 +98,15 @@ public class StationService {
             return ResponseUtil.build(Result.error(400, "获取失败"));
         }
     }
-
+    
+    public Result allIn() {
+        List<Station> stationRoots = stationMapper.getRoots();
+        List<StationTree> stationTrees = new ArrayList<>();
+        for (Station station : stationRoots) {
+            StationTree root = StationUtil.processStation(station);
+            stationTrees.add(root);
+        }
+        
+        return Result.success(stationTrees, "返回整个结构");
+    }
 }
