@@ -1,5 +1,6 @@
 package com.student_online.IntakeSystem.model.constant;
 
+import com.student_online.IntakeSystem.mapper.PermissionMapper;
 import com.student_online.IntakeSystem.mapper.StarMapper;
 import com.student_online.IntakeSystem.mapper.StationMapper;
 import com.student_online.IntakeSystem.mapper.UserMapper;
@@ -15,6 +16,7 @@ public class MAPPER {
         user = userMapper;
         star = starMapper;
         station = stationMapper;
+        permission = permissionMapper;
     }
     
     @Autowired
@@ -28,4 +30,8 @@ public class MAPPER {
     @Autowired
     private StationMapper stationMapper;
     public static StationMapper station;
+    
+    @Autowired
+    private PermissionMapper permissionMapper;
+    public static PermissionMapper permission;
 }

@@ -35,6 +35,7 @@ public class DepartmentService {
                     station.setPId(department.getPId());
                     station.setIsDepartment(1);
                     stationMapper.createStation(station);
+                    station = stationMapper.getStationByName(name);
                     department.setStationId(station.getId());
                     departmentMapper.createDepartment(department);
                     return ResponseUtil.build(Result.ok());
@@ -43,6 +44,7 @@ public class DepartmentService {
                 return ResponseUtil.build(Result.error(401, "无权限"));
             }
         }catch (Exception e) {
+            e.printStackTrace();
             return ResponseUtil.build(Result.error(400, "创建失败"));
         }
 
