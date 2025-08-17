@@ -2,6 +2,7 @@ package com.student_online.IntakeSystem.model.po;
 
 
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 
 @Data
@@ -15,6 +16,7 @@ public class Department {
 
     private Integer stationId;
 
+    @JsonProperty("pId")
     private Integer pId;
 
     private String description;

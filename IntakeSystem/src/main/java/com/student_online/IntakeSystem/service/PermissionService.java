@@ -2,9 +2,11 @@ package com.student_online.IntakeSystem.service;
 
 import com.student_online.IntakeSystem.mapper.PermissionMapper;
 import com.student_online.IntakeSystem.mapper.StationMapper;
+import com.student_online.IntakeSystem.model.constant.MAPPER;
 import com.student_online.IntakeSystem.model.po.Permission;
 import com.student_online.IntakeSystem.model.vo.Result;
 import com.student_online.IntakeSystem.utils.ResponseUtil;
+import jakarta.annotation.Resource;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -14,21 +16,21 @@ import java.util.List;
 
 @Service
 public class PermissionService {
-    @Autowired
+    @Resource
     private PermissionMapper permissionMapper;
 
-    @Autowired
+    @Resource
     private StationMapper stationMapper;
 
     public ResponseEntity<Result> createPermission(@NotNull Permission permission,int uid) {
         try {
             int stationId = permission.getStationId();
-            int pid = stationMapper.getStationById(stationId).getPId();
-            if (permissionMapper.getPermissionByUidAndStationId(permission.getUid(), stationId) != null)
+            int pid = MAPPER.station.getStationById(stationId).getPId();
+            if (MAPPER.permission.getPermissionByUidAndStationId(permission.getUid(), stationId) != null)
                 return ResponseUtil.build(Result.error(409, "该权限已存在"));
             else {
                 if (this.isPermitted(pid, uid)) {
-                    permissionMapper.createPermission(permission);
+                    MAPPER.permission.createPermission(permission);
                     return ResponseUtil.build(Result.ok());
                 } else return ResponseUtil.build(Result.error(401, "无权限"));
             }
@@ -39,11 +41,11 @@ public class PermissionService {
 
     public ResponseEntity<Result> deletePermission(int id,int uid) {
         try{
-            Permission permission = permissionMapper.getPermissionById(id);
+            Permission permission = MAPPER.permission.getPermissionById(id);
             int stationId = permission.getStationId();
-            int pid = stationMapper.getStationById(stationId).getPId();
+            int pid = MAPPER.station.getStationById(stationId).getPId();
             if (this.isPermitted(pid, uid)) {
-                permissionMapper.deletePermissionById(id);
+                MAPPER.permission.deletePermissionById(id);
                 return ResponseUtil.build(Result.ok());
             }else return ResponseUtil.build(Result.error(401, "无权限"));
         }catch (Exception e){
@@ -53,7 +55,7 @@ public class PermissionService {
 
     public ResponseEntity<Result> getPermissionById(int permissionId) {
         try {
-            Permission permission = permissionMapper.getPermissionById(permissionId);
+            Permission permission = MAPPER.permission.getPermissionById(permissionId);
             if (permission == null) return ResponseUtil.build(Result.error(404, "未找到该权限"));
             else return ResponseUtil.build(Result.success(permission, "返回权限"));
         }catch (Exception e) {
@@ -63,7 +65,7 @@ public class PermissionService {
 
     public ResponseEntity<Result> getPermissionByUid(int uid) {
         try {
-            List<Permission> permissions = permissionMapper.getPermissionByUid(uid);
+            List<Permission> permissions = MAPPER.permission.getPermissionByUid(uid);
             if (permissions.isEmpty()) return ResponseUtil.build(Result.error(404, "未找到权限"));
             else return ResponseUtil.build(Result.success(permissions, "返回权限"));
         }catch (Exception e) {
@@ -73,7 +75,7 @@ public class PermissionService {
 
     public ResponseEntity<Result> getPermissionByStationId(int stationId){
         try {
-            List<Permission> permissions = permissionMapper.getPermissionByStationId(stationId);
+            List<Permission> permissions = MAPPER.permission.getPermissionByStationId(stationId);
             if (permissions.isEmpty()) return ResponseUtil.build(Result.error(404, "未找到权限"));
             else return ResponseUtil.build(Result.success(permissions, "返回权限"));
         }catch (Exception e) {
@@ -82,12 +84,12 @@ public class PermissionService {
     }
 
     public boolean isPermitted( int stationId,int uid) {
-            List<Permission> permissions = permissionMapper.getPermissionByUid(uid);
+            List<Permission> permissions = MAPPER.permission.getPermissionByUid(uid);
             for (Permission permission : permissions) {
                 int curStationId = stationId, topStationId = permission.getStationId();
                 while (curStationId != 0) {
                     if (curStationId == topStationId) return true;
-                    else curStationId = stationMapper.getStationById(curStationId).getPId();
+                    else curStationId = MAPPER.station.getStationById(curStationId).getPId();
                 }
             }
             return false;

@@ -55,4 +55,9 @@ public class StationController {
     public ResponseEntity<Result> search(@RequestParam String name) {
         return stationService.getStationByName(name);
     }
+
+    @GetMapping("/allIn")
+    public Result allIn() {
+        return stationService.allIn();
+    }
 }
