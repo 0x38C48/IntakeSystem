@@ -41,11 +41,19 @@ public class AnswerController {
 
     @PostMapping("/create/finish")
     public ResponseEntity<Result> createFinish(@RequestBody Finish finish) {
+        String executor = ThreadLocalUtil.get().studentNumber;
+        int uid = MAPPER.user.getUserIdByUsername(executor);
+        finish.setUid(uid);
+        
         return finishService.createFinish(finish);
     }
 
     @PostMapping("/update/finish")
     public ResponseEntity<Result> updateFinish(@RequestBody Finish finish) {
+        String executor = ThreadLocalUtil.get().studentNumber;
+        int uid = MAPPER.user.getUserIdByUsername(executor);
+        finish.setUid(uid);
+        
         return finishService.updateFinish(finish);
     }
 
@@ -92,10 +100,14 @@ public class AnswerController {
     }
 
     @GetMapping("/view/user")
-    public ResponseEntity<Result> getFinishByUid(@RequestParam int userId) {
-        String username = ThreadLocalUtil.get().studentNumber;
-        String uid = MAPPER.user.getUserIdByUsername(username) + "";
-        if(Integer.parseInt(uid)==userId){
+    public ResponseEntity<Result> getFinishByUsername(@RequestParam String username) {
+        String executor = ThreadLocalUtil.get().studentNumber;
+        int uid = MAPPER.user.getUserIdByUsername(executor);
+        if(username == null || username.isEmpty()){
+            return finishService.listFinishForUser(uid);
+        }
+        int userId=MAPPER.user.getUserIdByUsername(username);
+        if(uid==userId){
             return finishService.listFinishForUser(userId);
         }else return ResponseUtil.build(Result.error(401,"无权限"));
     }
