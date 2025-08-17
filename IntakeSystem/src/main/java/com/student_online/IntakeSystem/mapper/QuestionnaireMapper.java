@@ -10,7 +10,7 @@ import java.util.List;
 
 @Mapper
 public interface QuestionnaireMapper  {
-    @Insert("insert into questionnaire (start_time,end_time,title,status,description,department_id) values (#{startTime},#{endTime},#{title},#{status},#{description},#{department_id})")
+    @Insert("insert into questionnaire (start_time,end_time,title,status,description,department_id) values (#{startTime},#{endTime},#{title},#{status},#{description},#{departmentId})")
     void createQuestionnaire(Questionnaire questionnaire);
 
     @Delete("delete from questionnaire where id=#{id}")

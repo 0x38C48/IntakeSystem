@@ -14,7 +14,7 @@ public interface FinishMapper {
     void deleteFinishById(int questionnaireId);
 
     @Select("select * from finish where uid=#{uid} and questionnaire_id=#{questionnaireId}")
-    Finish getFinishByUidAndQuestionnaireId(int uid,int questionnaireId);
+    Finish getFinishByUidAndQuestionnaireId(@Param("uid") int uid,@Param("questionnaireId")int questionnaireId);
 
     @Select("select * from finish where questionnaire_id=#{QuestionnaireId}")
     List<Finish> getFinishByQuestionnaireId(int QuestionnaireId);

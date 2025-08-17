@@ -2,8 +2,10 @@ package com.student_online.IntakeSystem.service;
 
 
 import com.student_online.IntakeSystem.mapper.FinishMapper;
+import com.student_online.IntakeSystem.mapper.QuestionnaireMapper;
 import com.student_online.IntakeSystem.model.po.Answer;
 import com.student_online.IntakeSystem.model.po.Finish;
+import com.student_online.IntakeSystem.model.po.Questionnaire;
 import com.student_online.IntakeSystem.model.vo.QuestionVo;
 import com.student_online.IntakeSystem.model.vo.QuestionnaireAndQuestionVo;
 import com.student_online.IntakeSystem.model.vo.Result;
@@ -21,6 +23,10 @@ public class FinishService {
 
     @Autowired
     private FinishMapper finishMapper;
+    @Autowired
+    private DepartmentService departmentService;
+    @Autowired
+    private QuestionnaireMapper questionnaireMapper;
 
 
     
@@ -82,5 +88,11 @@ public class FinishService {
         }catch (Exception e){
             return ResponseUtil.build(Result.error(400,"更新作答失败"));
         }
+    }
+
+    int getStationIdForFinish(Integer finishId) {
+        Finish finish=finishMapper.getFinishById(finishId);
+        Questionnaire questionnaire=questionnaireMapper.getQuestionnaireById(finish.getQuestionnaireId());
+        return departmentService.getStationId(questionnaire.getDepartmentId());
     }
 }
