@@ -118,7 +118,12 @@ public class QuestionService  {
             return null;
         }
         // 查询问卷问题列表
-        List<QuestionVo> questions = questionMapper.getQuestionsAndOptionsByQuestionnaireId(questionnaireId);
+        List<Question> rawQuestions = questionMapper.getQuestionsByQuestionnaireId(questionnaireId);
+        List<QuestionVo> questions = new ArrayList<>();
+        for (Question question : rawQuestions){
+            List<Option> options = optionMapper.getOptionByQuestionId(question.getId());
+            questions.add(new QuestionVo(question, options));
+        }
 
         // 处理由于连接查询出现的笛卡尔积情况造成重复列表数据
         // 通过LinkedHashSet去除重复数据列，并且保留插入顺序

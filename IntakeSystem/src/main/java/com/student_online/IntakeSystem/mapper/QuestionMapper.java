@@ -1,8 +1,8 @@
 package com.student_online.IntakeSystem.mapper;
 
 
+import com.student_online.IntakeSystem.model.po.Option;
 import com.student_online.IntakeSystem.model.po.Question;
-import com.student_online.IntakeSystem.model.vo.QuestionVo;
 import org.apache.ibatis.annotations.*;
 
 
@@ -10,8 +10,11 @@ import java.util.List;
 
 @Mapper
 public interface QuestionMapper {
-
-    List<QuestionVo> getQuestionsAndOptionsByQuestionnaireId(int questionnaireId);
+    @Select("select * from question where questionnaire_id=#{questionnaireId}")
+    List<Question> getQuestionsByQuestionnaireId(int questionnaireId);
+    
+    @Select("select * from option where question_id=#{questionId}")
+    List<Option> getOptionsByQuestionId(int questionId);
 
     @Insert("insert into question (questionnaire_id,sort,content,type) values (#{questionnaireId},#{sort},#{content},#{type})")
     void createQuestion(Question question);

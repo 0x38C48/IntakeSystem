@@ -23,6 +23,15 @@ public class QuestionVo extends Question {
 
 
     private Integer type;//题目类型
+    
+    public QuestionVo(Question question, List<Option> option){
+        setId(question.getId());
+        setContent(question.getContent());
+        setQuestionnaireId(question.getQuestionnaireId());
+        setSort(question.getSort());
+        this.type = question.getType();
+        this.option = option;
+    }
 
     @Override
     public String toString() {

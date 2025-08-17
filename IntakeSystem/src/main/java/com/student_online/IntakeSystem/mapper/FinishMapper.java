@@ -7,7 +7,7 @@ import java.util.List;
 
 @Mapper
 public interface FinishMapper {
-    @Insert("insert into finish (questionnaire_id,uid) values (#{questionnaire_id},#{uid})")
+    @Insert("insert into finish (questionnaire_id,uid) values (#{questionnaireId},#{uid})")
     void createFinish(Finish finish);
 
     @Delete("delete from finish where questionnaire_id=#{questionnaireId}")

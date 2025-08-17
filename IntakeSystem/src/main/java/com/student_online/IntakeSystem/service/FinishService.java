@@ -77,6 +77,7 @@ public class FinishService {
             }
             else return ResponseUtil.build(Result.error(409,"已经存在你的作答"));
         }catch (Exception e){
+            e.printStackTrace();
             return ResponseUtil.build(Result.error(400,"创建作答失败"));
         }
     }

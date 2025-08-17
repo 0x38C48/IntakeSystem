@@ -13,17 +13,17 @@ import java.util.List;
 @Data
 public class QuestionnaireAndQuestionVo {
 
-    private Long questionnaireId;
+    private Long id;
 
-    private String questionnaireTitle;
+    private String title;
 
-    private String questionnaireDescription;
+    private String description;
 
-    private LocalDateTime questionnaireStartTime;
+    private LocalDateTime startTime;
 
-    private LocalDateTime questionnaireEndTime;
+    private LocalDateTime endTime;
 
-    private Integer questionnaireStatus;
+    private Integer status;
     
     private List<QuestionVo> questions;
 }
