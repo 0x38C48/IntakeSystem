@@ -4,13 +4,11 @@ import com.student_online.IntakeSystem.model.constant.MAPPER;
 import com.student_online.IntakeSystem.model.po.Department;
 import com.student_online.IntakeSystem.model.po.Answer;
 import com.student_online.IntakeSystem.model.po.Finish;
+import com.student_online.IntakeSystem.model.po.Questionnaire;
 import com.student_online.IntakeSystem.model.vo.AnswerVo;
 import com.student_online.IntakeSystem.model.vo.QuestionVo;
 import com.student_online.IntakeSystem.model.vo.Result;
-import com.student_online.IntakeSystem.service.AnswerService;
-import com.student_online.IntakeSystem.service.DepartmentService;
-import com.student_online.IntakeSystem.service.FinishService;
-import com.student_online.IntakeSystem.service.PermissionService;
+import com.student_online.IntakeSystem.service.*;
 import com.student_online.IntakeSystem.utils.ResponseUtil;
 import com.student_online.IntakeSystem.utils.ThreadLocalUtil;
 import jakarta.servlet.http.HttpServletRequest;
@@ -38,6 +36,7 @@ public class AnswerController {
 
     @Autowired
     private DepartmentService departmentService;
+    private QuestionnaireService questionnaireService;
 
     @PostMapping("/create/finish")
     public ResponseEntity<Result> createFinish(@RequestBody Finish finish) {
@@ -96,6 +95,18 @@ public class AnswerController {
         int stationId=departmentService.getStationId(departmentId);
         if(permissionService.isPermitted(stationId, Integer.parseInt(uid))){
             return finishService.listFinishForDepartment(departmentId);
+        }else return ResponseUtil.build(Result.error(401,"无权限"));
+    }
+
+    @GetMapping("/view/user_questionnaire")
+    public ResponseEntity<Result> getFinishByUidAndQuestionnaireId(@RequestParam int userId,@RequestParam int questionnaireId) {
+        String username = ThreadLocalUtil.get().studentNumber;
+        String uid = MAPPER.user.getUserIdByUsername(username) + "";
+        Questionnaire questionnaire= (Questionnaire) Objects.requireNonNull(questionnaireService.getQuestionnaireById(questionnaireId).getBody()).getData();
+        int departmentId=questionnaire.getDepartmentId();
+        int stationId=departmentService.getStationId(departmentId);
+        if(permissionService.isPermitted(stationId, Integer.parseInt(uid))){
+            return finishService.getFinishForUserByQuestionnaireId(userId,questionnaireId);
         }else return ResponseUtil.build(Result.error(401,"无权限"));
     }
 

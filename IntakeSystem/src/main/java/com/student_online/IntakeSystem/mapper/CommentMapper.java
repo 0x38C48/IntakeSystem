@@ -16,6 +16,10 @@ public interface CommentMapper {
     @Select("select * from comment where finish_id=#{finishId}")
     List<Comment> getCommentByFinishId(Integer finishId);
 
+    @Select("select * from comment where finish_id=#{finishId} and viewable=1")
+    List<Comment> getViewableCommentByFinishId(Integer finishId);
+
+
     @Select("select * from comment where uid=#{uid}")
     List<Comment> getCommentByUid(Integer uid);
 

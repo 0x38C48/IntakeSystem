@@ -22,9 +22,6 @@ public class DepartmentController {
     private DepartmentService departmentService;
 
     @Autowired
-    private PermissionService permissionService;
-
-    @Autowired
     private QuestionnaireService questionnaireService;
 
     @PostMapping("/create")
