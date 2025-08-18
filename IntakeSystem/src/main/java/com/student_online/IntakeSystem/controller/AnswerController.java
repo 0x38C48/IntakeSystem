@@ -99,13 +99,15 @@ public class AnswerController {
     }
 
     @GetMapping("/view/user_questionnaire")
-    public ResponseEntity<Result> getFinishByUidAndQuestionnaireId(@RequestParam int userId,@RequestParam int questionnaireId) {
-        String username = ThreadLocalUtil.get().studentNumber;
-        String uid = MAPPER.user.getUserIdByUsername(username) + "";
+    public ResponseEntity<Result> getFinishByUsernameAndQuestionnaireId(@RequestParam String username,@RequestParam int questionnaireId) {
+        String executor = ThreadLocalUtil.get().studentNumber;
+        String uid = MAPPER.user.getUserIdByUsername(executor) + "";
         Questionnaire questionnaire= (Questionnaire) Objects.requireNonNull(questionnaireService.getQuestionnaireById(questionnaireId).getBody()).getData();
         int departmentId=questionnaire.getDepartmentId();
         int stationId=departmentService.getStationId(departmentId);
         if(permissionService.isPermitted(stationId, Integer.parseInt(uid))){
+            int userId=MAPPER.user.getUserIdByUsername(username);
+            
             return finishService.getFinishForUserByQuestionnaireId(userId,questionnaireId);
         }else return ResponseUtil.build(Result.error(401,"无权限"));
     }

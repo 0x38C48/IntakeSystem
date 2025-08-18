@@ -24,6 +24,7 @@ public class CommentController {
     public ResponseEntity<Result> createComment(@RequestBody Comment comment) {
         String username = ThreadLocalUtil.get().studentNumber;
         String uid = MAPPER.user.getUserIdByUsername(username) + "";
+        comment.setUid(Integer.parseInt(uid));
 //        if(Integer.parseInt(uid)!=comment.getUid())return ResponseUtil.build(Result.error(400,"uid设置有误"));
         return commentService.createComment(comment);
     }
@@ -32,6 +33,7 @@ public class CommentController {
     public ResponseEntity<Result> updateComment(@RequestBody Comment comment) {
         String username = ThreadLocalUtil.get().studentNumber;
         String uid = MAPPER.user.getUserIdByUsername(username) + "";
+        comment.setUid(Integer.parseInt(uid));
 //        if(Integer.parseInt(uid)!=comment.getUid())return ResponseUtil.build(Result.error(400,"uid设置有误"));
         return commentService.updateComment(comment);
     }
@@ -44,7 +46,9 @@ public class CommentController {
     }
 
     @GetMapping("/view/user")
-    public ResponseEntity<Result> getCommentByUid(@RequestParam int uid) {
+    public ResponseEntity<Result> getCommentByUsername(@RequestParam String username) {
+        int uid = MAPPER.user.getUserIdByUsername(username);
+        
         return commentService.getCommentByUid(uid);
     }
 
