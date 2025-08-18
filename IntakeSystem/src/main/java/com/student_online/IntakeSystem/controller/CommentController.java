@@ -13,7 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/department")
+@RequestMapping("/comment")
 public class CommentController {
     @Autowired
     private CommentService commentService;
@@ -24,16 +24,16 @@ public class CommentController {
     public ResponseEntity<Result> createComment(@RequestBody Comment comment) {
         String username = ThreadLocalUtil.get().studentNumber;
         String uid = MAPPER.user.getUserIdByUsername(username) + "";
-        if(Integer.parseInt(uid)!=comment.getUid())return ResponseUtil.build(Result.error(400,"uid设置有误"));
-        else return commentService.createComment(comment);
+//        if(Integer.parseInt(uid)!=comment.getUid())return ResponseUtil.build(Result.error(400,"uid设置有误"));
+        return commentService.createComment(comment);
     }
 
     @PostMapping("/update")
     public ResponseEntity<Result> updateComment(@RequestBody Comment comment) {
         String username = ThreadLocalUtil.get().studentNumber;
         String uid = MAPPER.user.getUserIdByUsername(username) + "";
-        if(Integer.parseInt(uid)!=comment.getUid())return ResponseUtil.build(Result.error(400,"uid设置有误"));
-        else return commentService.updateComment(comment);
+//        if(Integer.parseInt(uid)!=comment.getUid())return ResponseUtil.build(Result.error(400,"uid设置有误"));
+        return commentService.updateComment(comment);
     }
 
     @PostMapping("/delete")

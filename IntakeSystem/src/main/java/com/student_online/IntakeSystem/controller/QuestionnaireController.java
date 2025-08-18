@@ -80,4 +80,9 @@ public class QuestionnaireController {
     public ResponseEntity<Result> getQuestionnaireByStatus(@RequestParam int status) {
         return questionnaireService.getQuestionnairesByStatus(status);
     }
+    
+    @GetMapping("/view")
+    public ResponseEntity<Result> getQuestionnaireById(@RequestParam int questionnaireId){
+        return questionnaireService.getQuestionnaireById(questionnaireId);
+    }
 }
