@@ -11,6 +11,7 @@ import com.student_online.IntakeSystem.model.vo.Result;
 import com.student_online.IntakeSystem.service.*;
 import com.student_online.IntakeSystem.utils.ResponseUtil;
 import com.student_online.IntakeSystem.utils.ThreadLocalUtil;
+import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -36,6 +37,8 @@ public class AnswerController {
 
     @Autowired
     private DepartmentService departmentService;
+    
+    @Resource
     private QuestionnaireService questionnaireService;
 
     @PostMapping("/create/finish")
