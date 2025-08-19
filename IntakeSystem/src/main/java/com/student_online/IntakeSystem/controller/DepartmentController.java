@@ -6,6 +6,7 @@ import com.student_online.IntakeSystem.model.vo.Result;
 import com.student_online.IntakeSystem.service.PermissionService;
 import com.student_online.IntakeSystem.service.DepartmentService;
 import com.student_online.IntakeSystem.service.QuestionnaireService;
+import com.student_online.IntakeSystem.utils.ResponseUtil;
 import com.student_online.IntakeSystem.utils.ThreadLocalUtil;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,10 +47,15 @@ public class DepartmentController {
     }
 
     @GetMapping("/view")
-    public ResponseEntity<Result> view(@RequestParam int id) {
-        return departmentService.getDepartmentById(id);
+    public ResponseEntity<Result> view(@RequestParam(required = false) Integer id,
+                                        @RequestParam(required = false) Integer stationId) {
+        if(id == null && stationId == null){
+            return ResponseUtil.build(Result.error(400, "参数错误"));
+        }
+        return departmentService.getDepartmentById(id,stationId);
     }
-
+    
+    
     @GetMapping("/search")
     public ResponseEntity<Result> search(@RequestParam String name) {
         return departmentService.getDepartmentByName(name);

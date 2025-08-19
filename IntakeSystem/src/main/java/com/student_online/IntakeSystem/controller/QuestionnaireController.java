@@ -37,7 +37,7 @@ public class QuestionnaireController {
     public ResponseEntity<Result> editQuestionnaire(@RequestParam int departmentId, @RequestBody Questionnaire questionnaire) {
         String username = ThreadLocalUtil.get().studentNumber;
         String uid = MAPPER.user.getUserIdByUsername(username) + "";
-        Department department= (Department) Objects.requireNonNull(departmentService.getDepartmentById(departmentId).getBody()).getData();
+        Department department= (Department) Objects.requireNonNull(departmentService.getDepartmentById(departmentId,null).getBody()).getData();
         if(permissionService.isPermitted(department.getStationId(),Integer.parseInt(uid))){
             return questionnaireService.saveOrUpdateQuestionnaire(questionnaire,departmentId);
         }else return ResponseUtil.build(Result.error(401,"无权限"));

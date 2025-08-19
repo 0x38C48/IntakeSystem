@@ -82,14 +82,20 @@ public class DepartmentService {
         }
     }
 
-    public ResponseEntity<Result> getDepartmentById(int departmentId) {
+    public ResponseEntity<Result> getDepartmentById(Integer departmentId,Integer stationId) {
         try {
-            Department department = departmentMapper.getDepartmentById(departmentId);
-            if (department == null) {
-                return ResponseUtil.build(Result.error(404, "未找到该部门"));
+            Department department;
+            if (departmentId != null) {
+                department = departmentMapper.getDepartmentById(departmentId);
             } else {
-                return ResponseUtil.build(Result.success(department, "返回部门"));
+                department = departmentMapper.getDepartmentByStationId(stationId);
             }
+                if (department == null) {
+                    return ResponseUtil.build(Result.error(404, "未找到该部门"));
+                } else {
+                    return ResponseUtil.build(Result.success(department, "返回部门"));
+                }
+            
         }catch (Exception e) {
             return ResponseUtil.build(Result.error(400, "获取失败"));
         }
