@@ -10,8 +10,8 @@ public interface FinishMapper {
     @Insert("insert into finish (questionnaire_id,uid) values (#{questionnaireId},#{uid})")
     void createFinish(Finish finish);
 
-    @Delete("delete from finish where finish_id=#{finish_id}")
-    void deleteFinishById(int finish_id);
+    @Delete("delete from finish where id=#{id}")
+    void deleteFinishById(int id);
 
     @Select("select * from finish where uid=#{uid} and questionnaire_id=#{questionnaireId}")
     Finish getFinishByUidAndQuestionnaireId(@Param("uid") int uid,@Param("questionnaireId")int questionnaireId);
