@@ -102,12 +102,17 @@ public class AnswerController {
     }
 
     @GetMapping("/view/user_questionnaire")
-    public ResponseEntity<Result> getFinishByUsernameAndQuestionnaireId(@RequestParam String username,@RequestParam int questionnaireId) {
+    public ResponseEntity<Result> getFinishByUsernameAndQuestionnaireId(@RequestParam(required = false) String username,@RequestParam int questionnaireId) {
         String executor = ThreadLocalUtil.get().studentNumber;
         String uid = MAPPER.user.getUserIdByUsername(executor) + "";
         Questionnaire questionnaire= (Questionnaire) Objects.requireNonNull(questionnaireService.getQuestionnaireById(questionnaireId).getBody()).getData();
         int departmentId=questionnaire.getDepartmentId();
         int stationId=departmentService.getStationId(departmentId);
+        
+        if(username == null || username.isEmpty()){
+            username = executor;
+        }
+        
         if(permissionService.isPermitted(stationId, Integer.parseInt(uid))){
             int userId=MAPPER.user.getUserIdByUsername(username);
             
