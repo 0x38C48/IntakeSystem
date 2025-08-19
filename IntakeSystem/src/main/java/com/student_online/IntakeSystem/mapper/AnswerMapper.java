@@ -7,7 +7,7 @@ import java.util.List;
 
 @Mapper
 public interface AnswerMapper {
-    @Insert("insert into answer (questionnaire_id,answer_content,option_id,type,question_id) values (#{questionnaireId},#{answerContent},#{optionId},#{type},#{questionId})")
+    @Insert("insert into answer (questionnaire_id,answer_content,，finish_id,option_id,type,question_id) values (#{questionnaireId},#{answerContent},#{finishId},#{optionId},#{type},#{questionId})")
     void createAnswer(Answer answer);
 
     @Delete("delete from answer where question_id=#{id}")
