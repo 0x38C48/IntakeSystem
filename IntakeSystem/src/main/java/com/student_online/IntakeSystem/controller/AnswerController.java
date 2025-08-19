@@ -116,7 +116,7 @@ public class AnswerController {
     }
 
     @GetMapping("/view/user")
-    public ResponseEntity<Result> getFinishByUsername(@RequestParam String username) {
+    public ResponseEntity<Result> getFinishByUsername(@RequestParam(required = false) String username) {
         String executor = ThreadLocalUtil.get().studentNumber;
         int uid = MAPPER.user.getUserIdByUsername(executor);
         if(username == null || username.isEmpty()){
