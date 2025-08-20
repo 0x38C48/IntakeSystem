@@ -9,6 +9,7 @@ import com.student_online.IntakeSystem.model.po.Questionnaire;
 import com.student_online.IntakeSystem.model.vo.QuestionVo;
 import com.student_online.IntakeSystem.model.vo.QuestionnaireAndQuestionVo;
 import com.student_online.IntakeSystem.model.vo.Result;
+import com.student_online.IntakeSystem.utils.MapUtil;
 import com.student_online.IntakeSystem.utils.ResponseUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +17,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
@@ -53,7 +55,10 @@ public class FinishService {
         if(finishes.isEmpty()){
             return ResponseUtil.build(Result.error(404,"未找到完成的问卷"));
         }
-        else return ResponseUtil.build(Result.success(finishes,"返回完成结果"));
+        else {
+            Map<String, Object> map = MapUtil.transToMapWithUsername(finishes);
+            return ResponseUtil.build(Result.success(map, "返回完成结果"));
+        }
 
     }
 

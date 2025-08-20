@@ -5,6 +5,7 @@ import com.student_online.IntakeSystem.mapper.StationMapper;
 import com.student_online.IntakeSystem.model.constant.MAPPER;
 import com.student_online.IntakeSystem.model.po.Permission;
 import com.student_online.IntakeSystem.model.vo.Result;
+import com.student_online.IntakeSystem.utils.MapUtil;
 import com.student_online.IntakeSystem.utils.ResponseUtil;
 import jakarta.annotation.Resource;
 import org.jetbrains.annotations.NotNull;
@@ -13,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class PermissionService {
@@ -77,7 +79,10 @@ public class PermissionService {
         try {
             List<Permission> permissions = MAPPER.permission.getPermissionByStationId(stationId);
             if (permissions.isEmpty()) return ResponseUtil.build(Result.error(404, "未找到权限"));
-            else return ResponseUtil.build(Result.success(permissions, "返回权限"));
+            else {
+                Map<String, Object> map = MapUtil.transToMapWithUsername(permissions);
+                return ResponseUtil.build(Result.success(map, "返回权限"));
+            }
         }catch (Exception e) {
             return ResponseUtil.build(Result.error(400, "获取失败"));
         }

@@ -50,4 +50,7 @@ public interface UserMapper {
     
     @Update("UPDATE user SET qq = #{qq}, profile = #{profile},email = #{email} WHERE username = #{username}")
     void updateUserInfo(UserDto userDto);
+    
+    @Select("SELECT username FROM user WHERE uid = #{id}")
+    String getUsernameById(Integer id);
 }
