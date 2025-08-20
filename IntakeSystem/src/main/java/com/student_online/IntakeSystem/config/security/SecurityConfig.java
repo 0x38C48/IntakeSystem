@@ -12,13 +12,13 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity(prePostEnabled = true)
-public class SecurityConfig {
+public class SecurityConfig  {
     
     @Bean
     protected SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.csrf(AbstractHttpConfigurer::disable)
                 .addFilterBefore(new IPCounterFilter(), UsernamePasswordAuthenticationFilter.class)
-                ;
+                .cors(cors -> cors.disable());
         return http.build();
     }
     
