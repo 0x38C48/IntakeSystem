@@ -21,7 +21,8 @@ public class MapUtil {
             }
             try {
                 try {
-                    String key = getter.getName().substring(3).toLowerCase();
+                    String key = getter.getName().substring(3);
+                    key = Character.toLowerCase(key.charAt(0)) + key.substring(1);
                     map.put(key, getter.invoke(obj));
                 } catch (InvocationTargetException e) {
                     throw new RuntimeException(e);
