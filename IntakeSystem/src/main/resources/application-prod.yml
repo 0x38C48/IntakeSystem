@@ -9,5 +9,5 @@ spring:
 
 avatar:
   path:
-    upload: /app/avatars/
+    upload: /app/avatar/
     access: /avatar/
