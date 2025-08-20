@@ -1,20 +1,31 @@
 package com.student_online.IntakeSystem.utils;
 
 import com.student_online.IntakeSystem.model.constant.MAPPER;
+import lombok.SneakyThrows;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.regex.Pattern;
 
 public class MapUtil {
     public static Map<String, Object> transToMap(Object obj){
         Map<String, Object> map = new HashMap<>();
         
-        Field[] fields = obj.getClass().getDeclaredFields();
-        for (Field field : fields) {
-            field.setAccessible(true);
+        Method[] getters = obj.getClass().getMethods();
+        for (Method getter : getters) {
+            if(! getter.getName().startsWith("get") || getter.getParameterCount() > 0 || "getClass".equals(getter.getName())){
+                continue;
+            }
             try {
-                map.put(field.getName(), field.get(obj));
+                try {
+                    String key = getter.getName().substring(3).toLowerCase();
+                    map.put(key, getter.invoke(obj));
+                } catch (InvocationTargetException e) {
+                    throw new RuntimeException(e);
+                }
             } catch (IllegalArgumentException | IllegalAccessException e) {
                 e.printStackTrace();
             }
@@ -23,17 +34,13 @@ public class MapUtil {
         return map;
     }
     
+    @SneakyThrows
     public static Map<String, Object> transToMapWithUsername(Object obj){
         Map<String, Object> map = transToMap(obj);
+        Method method = obj.getClass().getMethod("getUid");
         try {
-            Field field = obj.getClass().getField("uid");
-            field.setAccessible(true);
-            try {
-                map.put("username", MAPPER.user.getUsernameById((Integer) field.get(obj)));
-            } catch (IllegalAccessException e) {
-                throw new RuntimeException(e);
-            }
-        } catch (NoSuchFieldException e) {
+            map.put("username", MAPPER.user.getUsernameById((Integer) method.invoke(obj)));
+        } catch (IllegalAccessException e) {
             throw new RuntimeException(e);
         }
         return map;

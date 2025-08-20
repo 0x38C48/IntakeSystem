@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -80,10 +81,15 @@ public class PermissionService {
             List<Permission> permissions = MAPPER.permission.getPermissionByStationId(stationId);
             if (permissions.isEmpty()) return ResponseUtil.build(Result.error(404, "未找到权限"));
             else {
-                Map<String, Object> map = MapUtil.transToMapWithUsername(permissions);
-                return ResponseUtil.build(Result.success(map, "返回权限"));
+                List<Map<String,Object>> maps = new ArrayList<>();
+                for (Permission permission : permissions){
+                    Map<String, Object> map = MapUtil.transToMapWithUsername(permission);
+                    maps.add(map);
+                }
+                return ResponseUtil.build(Result.success(maps, "返回权限"));
             }
         }catch (Exception e) {
+            e.printStackTrace();
             return ResponseUtil.build(Result.error(400, "获取失败"));
         }
     }

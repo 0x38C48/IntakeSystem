@@ -56,8 +56,12 @@ public class FinishService {
             return ResponseUtil.build(Result.error(404,"未找到完成的问卷"));
         }
         else {
-            Map<String, Object> map = MapUtil.transToMapWithUsername(finishes);
-            return ResponseUtil.build(Result.success(map, "返回完成结果"));
+            List<Map<String,Object>> maps = new ArrayList<>();
+            for (Finish finish : finishes) {
+                Map<String,Object> map=MapUtil.transToMapWithUsername(finish);
+                maps.add(map);
+            }
+            return ResponseUtil.build(Result.success(maps, "返回完成结果"));
         }
 
     }
