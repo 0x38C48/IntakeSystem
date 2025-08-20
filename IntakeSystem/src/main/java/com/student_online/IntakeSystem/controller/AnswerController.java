@@ -105,6 +105,7 @@ public class AnswerController {
     public ResponseEntity<Result> getFinishByUsernameAndQuestionnaireId(@RequestParam(required = false) String username,@RequestParam int questionnaireId) {
         String executor = ThreadLocalUtil.get().studentNumber;
         String uid = MAPPER.user.getUserIdByUsername(executor) + "";
+        Object obj = questionnaireService.getQuestionnaireById(questionnaireId).getBody().getData();
         Questionnaire questionnaire= (Questionnaire) Objects.requireNonNull(questionnaireService.getQuestionnaireById(questionnaireId).getBody()).getData();
         int departmentId=questionnaire.getDepartmentId();
         int stationId=departmentService.getStationId(departmentId);

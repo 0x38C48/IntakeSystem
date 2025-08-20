@@ -88,7 +88,7 @@ public class QuestionnaireService {
 
     public ResponseEntity<Result> getQuestionnaireById(int questionnaireId) {
         try{
-            Questionnaire questionnaire=questionnaireMapper.getQuestionnaireByDepartmentId(questionnaireId);
+            Questionnaire questionnaire = questionnaireMapper.getQuestionnaireById(questionnaireId);
             if(questionnaire==null){
                 return ResponseUtil.build(Result.error(404,"未找到"));
             }else return ResponseUtil.build(Result.success(questionnaire,"返回该问卷信息"));
