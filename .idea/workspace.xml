@@ -6,9 +6,9 @@
   <component name="ChangeListManager">
     <list default="true" id="550f93a3-53ab-42ec-83c3-ef7986e85d54" name="更改" comment="debug">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IntakeSystem/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/IntakeSystem/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/IntakeSystem/src/main/java/com/student_online/IntakeSystem/mapper/TagMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/IntakeSystem/src/main/java/com/student_online/IntakeSystem/mapper/TagMapper.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/IntakeSystem/src/main/java/com/student_online/IntakeSystem/model/po/Tag.java" beforeDir="false" afterPath="$PROJECT_DIR$/IntakeSystem/src/main/java/com/student_online/IntakeSystem/model/po/Tag.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/IntakeSystem/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/IntakeSystem/src/main/resources/application.yml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -73,7 +73,7 @@
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
     &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;com.itangcent.idea.plugin.configurable.rootConfigurable.apifox&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;reference.projectsettings.compiler.annotationProcessors&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
@@ -267,7 +267,8 @@
       <workItem from="1755582986096" duration="730000" />
       <workItem from="1755598618841" duration="2988000" />
       <workItem from="1755674964902" duration="9632000" />
-      <workItem from="1755768547940" duration="4974000" />
+      <workItem from="1755768547940" duration="6151000" />
+      <workItem from="1755785667628" duration="1141000" />
     </task>
     <task id="LOCAL-00001" summary="initial">
       <option name="closed" value="true" />
@@ -366,8 +367,18 @@
           <line>91</line>
           <option name="timeStamp" value="22" />
         </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/IntakeSystem/src/main/java/com/student_online/IntakeSystem/service/TagService.java</url>
+          <line>33</line>
+          <option name="timeStamp" value="26" />
+        </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
+    <pin-to-top-manager>
+      <pinned-members>
+        <PinnedItemInfo parentTag="java.lang.Integer" memberName="value" />
+      </pinned-members>
+    </pin-to-top-manager>
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

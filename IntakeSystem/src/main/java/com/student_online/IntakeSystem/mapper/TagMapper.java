@@ -2,6 +2,7 @@ package com.student_online.IntakeSystem.mapper;
 
 import com.student_online.IntakeSystem.model.po.Tag;
 import org.apache.ibatis.annotations.*;
+import org.apache.ibatis.type.JdbcType;
 
 import java.time.LocalDateTime;
 
@@ -13,6 +14,9 @@ public interface TagMapper {
     
     @Select("SELECT * FROM tag WHERE uid = #{uid} AND depart_id = #{departId}")
     Tag get(@Param("uid") int uid,@Param("departId") int departId);
+    
+    @Select("SELECT * FROM tag WHERE uid = #{uid} AND depart_id = #{departId}")
+    Tag getByUidAndDepartId(@Param("uid") int uid, @Param("departId") int departId);
     
     @Select("SELECT * FROM tag WHERE id = #{tagId}")
     Tag getById(int tagId);
