@@ -1,14 +1,14 @@
 spring:
   datasource:
-    url: jdbc:mysql://47.113.194.64:3306/ISDU_NXXT
+    url: jdbc:mysql://10.2.13.94:3306/ISDU_NXXT
     username: "NXXT_manager"
-    password: ",1]cLVki5TQFsf9*43PRb+7X:qt6eA2}"
+    password: "H5m566!2DZzan=c1i8gw4RLU8~y7lO|{SIYv0f]ME9X*T(90hB7,Q21G.rsJe3bk"
     driver-class-name: com.mysql.cj.jdbc.Driver
   data:
     redis:
-      host: 47.113.194.64
-      port: 7777
-      password: "0n/pMC%^b41IsaVO6+e35u]dcF7Z$G9D"
+      host: 10.2.13.13
+      port: 6379
+      password: "{Oh7LYRvu4qNKG-bie9cSwQIAJ8FX_~6t0Ck/@10ys}84xf155(j93P6Vzm7E+[2"
   profiles:
     active: prod
   servlet:
