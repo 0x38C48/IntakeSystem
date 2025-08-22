@@ -13,14 +13,20 @@ public class TagService {
     @Resource
     private PermissionService permissionService;
     
-    public Result create(String username, String tag, int departId) {
+    public Result create(String username, String value, int departId) {
         int executor = MAPPER.user.getUserIdByUsername(ThreadLocalUtil.get().studentNumber);
         if(!permissionService.isPermitted(departId, executor)){
             return Result.error(CommonErr.NO_AUTHORITY);
         }
-        
         int uid = MAPPER.user.getUserIdByUsername(username);
-        MAPPER.tag.create(uid, tag, departId);
+        
+        Tag tag = MAPPER.tag.get(uid, departId);
+        
+        if(tag != null){
+            return Result.error(CommonErr.OPERATE_REPEAT);
+        }
+        
+        MAPPER.tag.create(uid, value, departId);
         return Result.ok();
     }
     
