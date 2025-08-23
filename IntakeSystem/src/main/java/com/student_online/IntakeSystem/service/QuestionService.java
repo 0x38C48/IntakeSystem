@@ -92,8 +92,9 @@ public class QuestionService  {
             for(Option option : optionsToSave) {
                 optionMapper.createOption(option);
             }
+            return ResponseUtil.build(Result.ok());
         }
-        else return ResponseUtil.build(Result.error(400, "没有选项可以保存"));
+
 
 
         // 更改问卷状态，并向控制器返回结果
