@@ -1,7 +1,9 @@
 package com.student_online.IntakeSystem.controller;
 
+import com.student_online.IntakeSystem.mapper.QuestionMapper;
 import com.student_online.IntakeSystem.model.constant.MAPPER;
 import com.student_online.IntakeSystem.model.po.Department;
+import com.student_online.IntakeSystem.model.po.Question;
 import com.student_online.IntakeSystem.model.po.Questionnaire;
 import com.student_online.IntakeSystem.model.vo.QuestionVo;
 import com.student_online.IntakeSystem.model.vo.Result;
@@ -32,6 +34,8 @@ public class QuestionnaireController {
     private PermissionService permissionService;
     @Autowired
     private DepartmentService departmentService;
+    @Autowired
+    private QuestionMapper questionMapper;
 
     @PostMapping("/edit")//编辑部门问卷基本信息
     public ResponseEntity<Result> editQuestionnaire(@RequestParam int departmentId, @RequestBody Questionnaire questionnaire) {
@@ -50,6 +54,16 @@ public class QuestionnaireController {
         int stationId=departmentService.getStationId(departmentId);
         if(permissionService.isPermitted(stationId,Integer.parseInt(uid))){
             return questionService.saveQuestion(questions);
+        }else return ResponseUtil.build(Result.error(401,"无权限"));
+    }
+
+    @PostMapping("/delete/questions")//删除部门问卷题目
+    public ResponseEntity<Result> editQuestions(@RequestParam Integer questionId,@RequestParam Integer departmentId) {
+        String username = ThreadLocalUtil.get().studentNumber;
+        String uid = MAPPER.user.getUserIdByUsername(username) + "";
+        int stationId=departmentService.getStationId(departmentId);
+        if(permissionService.isPermitted(stationId,Integer.parseInt(uid))){
+            return questionService.deleteQuestion(questionId);
         }else return ResponseUtil.build(Result.error(401,"无权限"));
     }
 

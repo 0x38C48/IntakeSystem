@@ -92,10 +92,8 @@ public class QuestionService  {
             for(Option option : optionsToSave) {
                 optionMapper.createOption(option);
             }
-            return ResponseUtil.build(Result.ok());
+
         }
-
-
 
         // 更改问卷状态，并向控制器返回结果
         return ResponseUtil.build(Result.ok());
@@ -149,5 +147,15 @@ public class QuestionService  {
         for(Question question : questions) {
             questionMapper.deleteQuestionById(question.getId());
         }
+    }
+
+    public ResponseEntity<Result> deleteQuestion(Integer questionId) {
+        try {
+            questionMapper.deleteQuestionById(questionId);
+            return ResponseUtil.build(Result.ok());
+        }catch(Exception e){
+            return ResponseUtil.build(Result.error(400,"删除失败"));
+        }
+
     }
 }
