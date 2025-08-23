@@ -158,7 +158,7 @@ public class QuestionnaireService {
         }
         // 检查开始时间是否大于等于系统时间(开始时间不能小于系统时间，考虑延迟设置15s)
         LocalDateTime now = LocalDateTimeUtil.now();
-        if (LocalDateTimeUtil.between(questionnaireStartTime, now).getSeconds() >= 15) {
+        if (LocalDateTimeUtil.between(questionnaireStartTime, now).getSeconds() <= 15) {
             return ResponseUtil.build(Result.error(400,"开始时间距现在太近"));
         }
 
