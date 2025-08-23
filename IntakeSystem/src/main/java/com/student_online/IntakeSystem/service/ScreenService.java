@@ -15,7 +15,7 @@ import java.util.List;
 @Service
 public class ScreenService {
     
-    public Result getUsers(String name, String studentNumber, String gender, String college, String major,Integer department, String tag, String order, String orderBy, Integer stationId, Integer page, Integer size) {
+    public Result getWills(String name, String studentNumber, String gender, String college, String major,Integer department, String tag, String order, String orderBy, Integer stationId, Integer page, Integer size) {
         String executor = ThreadLocalUtil.get().studentNumber;
         if(MAPPER.permission.getPermissionByUid(MAPPER.user.getUserIdByUsername(executor)) == null){
             return Result.error(CommonErr.NO_AUTHORITY);
