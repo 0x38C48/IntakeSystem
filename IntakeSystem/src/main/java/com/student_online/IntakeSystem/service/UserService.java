@@ -133,7 +133,11 @@ public class UserService {
             
             Map<String, String> userInfo = ServicedeskLogin.fetchStudentInfo(cookie, studentNumber);
             
-            User user = new User(1, studentNumber, null, userInfo.get("USER_SEX"), userInfo.get("UNIT_NAME"), userInfo.get("MAJOR_NAME"), userInfo.get("USER_NAME"), userInfo.get("EMAIL"), 0,null,null,"该用户很神秘,没有简介");
+            ticket = sduLogin.login(BkzhjxLogin.GATE_WAY);
+            cookie = BkzhjxLogin.fetchBkzhjxCookie(ticket);
+            Map<String, String> userInfo2 = BkzhjxLogin.getUserInfo(cookie);
+            
+            User user = new User(1, studentNumber, null, userInfo.get("USER_SEX"), userInfo.get("UNIT_NAME"), userInfo2.get("major"), userInfo.get("USER_NAME"), userInfo.get("EMAIL"), 0,null,null,"该用户很神秘,没有简介");
             MAPPER.user.insertUser(user);
         }
         

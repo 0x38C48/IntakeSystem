@@ -6,32 +6,46 @@ import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 
 @Mapper
 public interface ScreenMapper {
     
-    @Select("SELECT * FROM user where " +
-            "name like #{name} and " +
-            "username like #{studentNumber} and " +
-            "gender like #{gender} and " +
-            "college like #{college} and " +
-            "major like #{major} and " +
-            "station like #{station} and " +
-            "department like #{department} and " +
-            "tag like #{tag} " +
-            "order by #{order} " +
+    @Select("SELECT u.name,u.username,u.gender,u.college,u.major,t.value as tag ,d.name as depart,d.id as departId FROM user u " +
+            "JOIN will w " +
+            "ON u.uid = w.uid and " +
+            "#{department} in (w.department_id,-1) " +
+            "JOIN department d ON " +
+            "d.id = w.department_id " +
+            "LEFT JOIN tag t ON " +
+            "t.uid = u.uid and " +
+            "t.depart_id = w.department_id and " +
+            "t.value like #{tag} " +
+            
+            "where " +
+            "u.name like #{name} and " +
+            "u.username like #{studentNumber} and " +
+            "u.gender like #{gender} and " +
+            "u.college like #{college} and " +
+            "u.major like #{major} and " +
+            "((select station_id from department where id = d.id) in ${stations}) or #{stations} = '(-1)' " +
+            
+            
+            "order by ${orderBy} ${order} " +
             "LIMIT #{size} " +
             "offset #{offset}"
             )
-    List<User> get(@Param("name") String name,
-                   @Param("studentNumber") String studentNumber,
-                   @Param("gender") String gender,
-                   @Param("college") String college,
-                   @Param("major") String major,
-                   @Param("station") String station,
-                   @Param("department") String department,
-                   @Param("tag") String tag,
-                   @Param("order") String order,
-                   @Param("offset") Integer offset,
-                   @Param("size") Integer size);
+    List<Map<String, Object>> get(@Param("name") String name,
+                    @Param("studentNumber") String studentNumber,
+                    @Param("gender") String gender,
+                    @Param("college") String college,
+                    @Param("major") String major,
+                    @Param("department") Integer department,
+                    @Param("tag") String tag,
+                    @Param("order") String order,
+                    @Param("orderBy") String orderBy,
+                    @Param("stations") String stations,
+                    @Param("offset") Integer offset,
+                    @Param("size") Integer size);
 }

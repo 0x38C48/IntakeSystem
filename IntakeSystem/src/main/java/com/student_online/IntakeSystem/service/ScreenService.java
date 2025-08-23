@@ -2,13 +2,20 @@ package com.student_online.IntakeSystem.service;
 
 import com.student_online.IntakeSystem.config.exception.CommonErr;
 import com.student_online.IntakeSystem.model.constant.MAPPER;
+import com.student_online.IntakeSystem.model.po.Department;
+import com.student_online.IntakeSystem.model.po.Station;
 import com.student_online.IntakeSystem.model.vo.Result;
 import com.student_online.IntakeSystem.utils.ThreadLocalUtil;
+import org.springframework.jdbc.BadSqlGrammarException;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class ScreenService {
-    public Result getUsers(String name, String studentNumber, String gender, String college, String major, String station, String department, String tag, String order, Integer page, Integer size) {
+    
+    public Result getUsers(String name, String studentNumber, String gender, String college, String major,Integer department, String tag, String order, String orderBy, Integer stationId, Integer page, Integer size) {
         String executor = ThreadLocalUtil.get().studentNumber;
         if(MAPPER.permission.getPermissionByUid(MAPPER.user.getUserIdByUsername(executor)) == null){
             return Result.error(CommonErr.NO_AUTHORITY);
@@ -24,13 +31,13 @@ public class ScreenService {
             page = 1;
             size = 20;
         }
-        if(name != null && name.isEmpty()) {
+        if(name != null && !name.isEmpty()) {
             name = "%" + name + "%";
         }
-        if(studentNumber != null && studentNumber.isEmpty()) {
+        if(studentNumber != null && !studentNumber.isEmpty()) {
             studentNumber = "%" + studentNumber + "%";
         }
-        if(tag != null && tag.isEmpty()) {
+        if(tag != null && !tag.isEmpty()) {
             tag = "%" + tag + "%";
         }
         
@@ -49,16 +56,88 @@ public class ScreenService {
         if(major == null || major.isEmpty()){
             major = "%";
         }
-        if(station == null || station.isEmpty()){
-            station = "%";
-        }
-        if(department == null || department.isEmpty()) {
-            department = "%";
+        if(department == null){
+            department = -1;
         }
         if(tag == null || tag.isEmpty()){
             tag = "%";
         }
+        if(orderBy == null || orderBy.isEmpty()){
+            orderBy = "u.name";
+        }
         
-        return Result.success(MAPPER.screen.get(name, studentNumber, gender, college, major, station, department, tag, order, page*size, size),"获取成功");
+        switch (orderBy) {
+            case "studentNumber":
+                orderBy = "u.username";
+                break;
+            case "gender":
+                orderBy = "u.gender";
+                break;
+            case "college":
+                orderBy = "u.college";
+                break;
+            case "major":
+                orderBy = "u.major";
+                break;
+            case "department":
+                orderBy = "d.name";
+                break;
+            case "tag":
+                orderBy = "t.value";
+                break;
+            default:
+                orderBy = "u.name";
+                break;
+        }
+        
+        String stations = "";
+        if(stationId == null){
+            stations = "(-1)";
+        } else {
+            List<Integer> stationIds = getStations(stationId);
+            for (int i = 0; i < stationIds.size(); i++) {
+                if (i == 0) {
+                    stations = "("+stationIds.get(i);
+                } else if(i < stationIds.size()-1) {
+                    stations += ","+stationIds.get(i);
+                } else {
+                    stations += ","+stationIds.get(i)+")";
+                }
+            }
+        }
+        System.out.println("stations: "+stations);
+        
+        try {
+            return Result.success(MAPPER.screen.get(name, studentNumber, gender, college, major, department, tag, order, orderBy, stations , (page-1)*size, size),"获取成功");
+        } catch (BadSqlGrammarException e) {
+            return Result.error(CommonErr.PARAM_WRONG);
+        }
+    }
+    
+    private void process(List<Integer> open,List<Integer> result){
+        for (int i = 0;true;i++) {
+            int stationId = open.get(i);
+            List<Station> list = MAPPER.station.getChildren(stationId);
+            if (list.isEmpty()) {
+                result.add(stationId);
+            } else {
+                for (Station station : list) {
+                    open.add(station.getId());
+                }
+            }
+            if(i >= open.size()-1){
+                break;
+            }
+        }
+    }
+    
+    private List<Integer> getStations(Integer stationId){
+        List<Integer> open = new ArrayList<>();
+        List<Integer> result = new ArrayList<>();
+        open.add(stationId);
+        
+        process(open,result);
+        
+        return result;
     }
 }
