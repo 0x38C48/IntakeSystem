@@ -16,7 +16,11 @@ public class MAPPER {
         station = stationMapper;
         permission = permissionMapper;
         tag = tagMapper;
+        screen = screenMapper;
     }
+    @Resource
+    private ScreenMapper screenMapper;
+    public static ScreenMapper screen;
     
     @Autowired
     private UserMapper userMapper;

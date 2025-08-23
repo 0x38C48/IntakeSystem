@@ -146,9 +146,13 @@ public class UserService {
         if(!MAPPER.user.isUsernameExists(studentNumber)){
             return Result.error(400, "用户不存在");
         }
-        String hsPassword = MAPPER.user.getPasswordByUsername(studentNumber);
-        if (!BCryptUtil.checkpw(password, hsPassword)) {
-            return Result.error(400, "密码错误");
+        try {
+            String hsPassword = MAPPER.user.getPasswordByUsername(studentNumber);
+            if (!BCryptUtil.checkpw(password, hsPassword)) {
+                return Result.error(400, "密码错误");
+            }
+        } catch (NullPointerException e) {
+            return Result.error(400, "用户未设置密码");
         }
         String token = JwtUtil.generate(studentNumber);
         return Result.success(token, "登入成功");
@@ -170,7 +174,7 @@ public class UserService {
                 return Result.error(CommonErr.NO_DATA);
             }
             
-            if (!Objects.equals(username, executor) && MAPPER.user.getTypeByUsername(executor) < 1) {
+            if (!Objects.equals(username, executor) && MAPPER.permission.getPermissionByUid(MAPPER.user.getUserIdByUsername(executor)) == null) {
                 return Result.error(CommonErr.NO_AUTHORITY);
             }
         }
