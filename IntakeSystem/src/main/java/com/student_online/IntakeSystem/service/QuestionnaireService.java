@@ -108,16 +108,13 @@ public class QuestionnaireService {
             int questionnaireId=questionnaire1.getId();
             List<QuestionVo> questions = questionService.getQuestions(questionnaireId);
 
-            // 获取问卷基本信息
-            Questionnaire questionnaireById = questionnaireMapper.getQuestionnaireById(questionnaireId);
-
             QuestionnaireAndQuestionVo questionnaire = new QuestionnaireAndQuestionVo();
 
             // 设置问题
             questionnaire.setQuestions(questions);
 
             // 使用拷贝
-            BeanUtil.copyProperties(questionnaireById, questionnaire);
+            BeanUtil.copyProperties(questionnaire1, questionnaire);
 
             return ResponseUtil.build(Result.success(questionnaire, "返回问卷和题目"));
         }

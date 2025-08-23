@@ -112,11 +112,6 @@ public class QuestionService  {
 
 
     public List<QuestionVo> getQuestions(Integer questionnaireId) {
-        // 查询问卷状态，如果未设计直接返回空
-        if (questionnaireMapper.getQuestionnaireById(questionnaireId).getStatus()
-                == 0) {
-            return null;
-        }
         // 查询问卷问题列表
         List<Question> rawQuestions = questionMapper.getQuestionsByQuestionnaireId(questionnaireId);
         List<QuestionVo> questions = new ArrayList<>();
