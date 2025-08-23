@@ -20,7 +20,7 @@ public interface ScreenMapper {
             "department like #{department} and " +
             "tag like #{tag} " +
             "order by #{order} " +
-            "LIMIT #{size}" +
+            "LIMIT #{size} " +
             "offset #{offset}"
             )
     List<User> get(@Param("name") String name,
