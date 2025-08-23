@@ -14,7 +14,7 @@ public interface ScreenMapper {
     
     @Select("SELECT u.name,u.username,u.gender,u.college,u.major,t.value as tag ,d.name as depart,d.id as departId FROM user u " +
             "JOIN will w " +
-            "ON u.uid = w.uid and " +
+            "ON u.uid = w.uid " +
             "JOIN department d ON " +
             "d.id = w.department_id " +
             "LEFT JOIN tag t ON " +

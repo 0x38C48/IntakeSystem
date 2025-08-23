@@ -110,6 +110,8 @@ public class ScreenService {
         try {
             return Result.success(MAPPER.screen.get(name, studentNumber, gender, college, major, department, tag, order, orderBy, stations , (page-1)*size, size),"获取成功");
         } catch (BadSqlGrammarException e) {
+            System.out.println(e.getSql());
+            e.printStackTrace();
             return Result.error(CommonErr.PARAM_WRONG);
         }
     }
