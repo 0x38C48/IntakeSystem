@@ -67,7 +67,7 @@ public class DepartmentController {
     }
 
     @GetMapping("/view/questions")
-    public ResponseEntity<Result> getQuestionnaireDetailedById(@RequestParam int departmentId) {
+    public ResponseEntity<Result> getQuestionnaireDetailedByDepartmentId(@RequestParam int departmentId) {
         return questionnaireService.getQuestionnaireDetailedByDepartmentId(departmentId);
     }
 }
