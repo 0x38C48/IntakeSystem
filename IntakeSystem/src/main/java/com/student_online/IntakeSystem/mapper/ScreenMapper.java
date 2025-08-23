@@ -15,13 +15,12 @@ public interface ScreenMapper {
     @Select("SELECT u.name,u.username,u.gender,u.college,u.major,t.value as tag ,d.name as depart,d.id as departId FROM user u " +
             "JOIN will w " +
             "ON u.uid = w.uid and " +
-            "#{department} in (w.department_id,-1) " +
             "JOIN department d ON " +
             "d.id = w.department_id " +
             "LEFT JOIN tag t ON " +
             "t.uid = u.uid and " +
-            "t.depart_id = w.department_id and " +
-            "t.value like #{tag} " +
+            "t.depart_id = w.department_id " +
+            
             
             "where " +
             "u.name like #{name} and " +
@@ -29,8 +28,9 @@ public interface ScreenMapper {
             "u.gender like #{gender} and " +
             "u.college like #{college} and " +
             "u.major like #{major} and " +
-            "((select station_id from department where id = d.id) in ${stations}) or #{stations} = '(-1)' " +
-            
+            "((select station_id from department where id = d.id) in ${stations}) or #{stations} = '(-1)' and " +
+            "t.value like #{tag} or #{tag} = '%' and " +
+            "d.id = #{department} or #{department} = -1 " +
             
             "order by ${orderBy} ${order} " +
             "LIMIT #{size} " +
