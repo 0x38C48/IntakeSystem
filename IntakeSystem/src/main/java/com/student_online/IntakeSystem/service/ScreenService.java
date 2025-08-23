@@ -3,11 +3,18 @@ package com.student_online.IntakeSystem.service;
 import com.student_online.IntakeSystem.config.exception.CommonErr;
 import com.student_online.IntakeSystem.model.constant.MAPPER;
 import com.student_online.IntakeSystem.model.vo.Result;
+import com.student_online.IntakeSystem.utils.ThreadLocalUtil;
 import org.springframework.stereotype.Service;
 
 @Service
 public class ScreenService {
     public Result getUsers(String name, String studentNumber, String gender, String college, String major, String station, String department, String tag, String order, Integer page, Integer size) {
+        String executor = ThreadLocalUtil.get().studentNumber;
+        if(MAPPER.permission.getPermissionByUid(MAPPER.user.getUserIdByUsername(executor)) == null){
+            return Result.error(CommonErr.NO_AUTHORITY);
+        }
+        
+        
         if(order == null || order.isEmpty()){
             order = "ASC";
         } else{

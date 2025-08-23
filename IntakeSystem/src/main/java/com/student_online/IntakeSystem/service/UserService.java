@@ -174,7 +174,7 @@ public class UserService {
                 return Result.error(CommonErr.NO_DATA);
             }
             
-            if (!Objects.equals(username, executor) && MAPPER.user.getTypeByUsername(executor) < 1) {
+            if (!Objects.equals(username, executor) && MAPPER.permission.getPermissionByUid(MAPPER.user.getUserIdByUsername(executor)) == null) {
                 return Result.error(CommonErr.NO_AUTHORITY);
             }
         }
