@@ -80,9 +80,9 @@ public class StationService {
 
     public ResponseEntity<Result> getStationByName(@NotNull String name) {
         try {
-            Station station = stationMapper.getStationByName(name);
-            if (station == null) return ResponseUtil.build(Result.error(404, "未找到该模块"));
-            else return ResponseUtil.build(Result.success(station, "返回模块"));
+            List<Station> stations = stationMapper.getStationsByName(name);
+            if (stations.isEmpty()) return ResponseUtil.build(Result.error(404, "未找到该模块"));
+            else return ResponseUtil.build(Result.success(stations, "返回模块"));
         }catch (Exception e) {
             return ResponseUtil.build(Result.error(400, "获取失败"));
         }

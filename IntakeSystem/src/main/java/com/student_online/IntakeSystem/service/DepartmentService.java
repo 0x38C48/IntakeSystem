@@ -103,11 +103,11 @@ public class DepartmentService {
 
     public ResponseEntity<Result> getDepartmentByName(@NotNull String name) {
         try {
-            Department department = departmentMapper.getDepartmentByName(name);
-            if (department == null) {
+            List<Department> departments = departmentMapper.getDepartmentsByName(name);
+            if (departments.isEmpty()) {
                 return ResponseUtil.build(Result.error(404, "未找到该部门"));
             } else {
-                return ResponseUtil.build(Result.success(department, "返回部门"));
+                return ResponseUtil.build(Result.success(departments, "返回部门"));
             }
         }catch (Exception e) {
             return ResponseUtil.build(Result.error(400, "获取失败"));

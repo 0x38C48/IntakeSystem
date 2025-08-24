@@ -14,6 +14,9 @@ public interface DepartmentMapper {
     @Select("select * from department where name=#{name}")
     Department getDepartmentByName(String name);
 
+    @Select("select * from department where name like '%${name}%' ")
+    List<Department> getDepartmentsByName(String name);
+
     @Delete("delete from department where id=#{id}")
     void deleteDepartmentById(int id);
 
