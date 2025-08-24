@@ -16,7 +16,7 @@ public class User {
 
     private String gender;
     
-    private String depart;
+    private String college;
     
     private String major;
     
