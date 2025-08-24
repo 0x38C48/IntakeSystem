@@ -17,7 +17,12 @@ public class MAPPER {
         permission = permissionMapper;
         tag = tagMapper;
         screen = screenMapper;
+        department = departmentMapper;
     }
+    @Resource
+    private DepartmentMapper departmentMapper;
+    public static DepartmentMapper department;
+    
     @Resource
     private ScreenMapper screenMapper;
     public static ScreenMapper screen;

@@ -11,3 +11,10 @@ avatar:
   path:
     upload: "E:/avatar"
     access: "/avatar/"
+
+logging:
+  level:
+    com:
+      student_online:
+        IntakeSystem:
+          mapper: DEBUG
