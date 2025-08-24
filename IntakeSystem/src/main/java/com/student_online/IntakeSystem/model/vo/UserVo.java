@@ -9,7 +9,7 @@ public class UserVo {
     
     private String gender;
     
-    private String depart;
+    private String college;
     
     private String major;
     
@@ -28,7 +28,7 @@ public class UserVo {
     public UserVo(User user){
         this.username = user.getUsername();
         this.gender = user.getGender();
-        this.depart = user.getDepart();
+        this.college = user.getCollege();
         this.major = user.getMajor();
         this.name = user.getName();
         this.email = user.getEmail();
