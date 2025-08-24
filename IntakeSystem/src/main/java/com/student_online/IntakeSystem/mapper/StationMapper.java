@@ -17,6 +17,9 @@ public interface StationMapper {
     @Select("select * from station where name=#{name}")
     Station getStationByName(String name);
 
+    @Select("select * from station where name like '%${name}%'")
+    List<Station> getStationsByName(String name);
+
     @Select("select * from station where p_id=#{pid}")
     List<Station> getStationByParentId(int pid);
 
@@ -26,6 +29,6 @@ public interface StationMapper {
     @Update("update station set name=#{name},p_id=#{p_id},description=#{description} ,is_department=#{isDepartment} where id=#{stationId}")
     void updateStation(Station station);
     
-    @Select("select * from station where p_id = null or p_id = 0")
+    @Select("select * from station where p_id IS NULL or p_id = 0")
     List<Station> getRoots();
 }
