@@ -151,6 +151,11 @@ public class QuestionService  {
 
     public ResponseEntity<Result> deleteQuestion(Integer questionId) {
         try {
+            Question question=questionMapper.getQuestionById(questionId);
+            Questionnaire questionnaire=questionnaireMapper.getQuestionnaireById(question.getQuestionnaireId());
+            if(questionnaire.getStatus()!=0){
+                return ResponseUtil.build(Result.error(400,"问卷已发布，不能更改"));
+            }
             questionMapper.deleteQuestionById(questionId);
             return ResponseUtil.build(Result.ok());
         }catch(Exception e){
