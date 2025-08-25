@@ -10,7 +10,7 @@ import java.util.List;
 
 @Mapper
 public interface QuestionnaireMapper  {
-    @Insert("insert into questionnaire (start_time,end_time,title,status,description,department_id) values (#{startTime},#{endTime},#{title},#{status},#{description},#{departmentId})")
+    @Insert("insert into questionnaire (start_time,end_time,title,status,description,department_id,collected) values (#{startTime},#{endTime},#{title},#{status},#{description},#{departmentId},#{collected})")
     void createQuestionnaire(Questionnaire questionnaire);
 
     @Delete("delete from questionnaire where id=#{id}")
@@ -25,7 +25,7 @@ public interface QuestionnaireMapper  {
     @Select("select * from questionnaire where status=#{status}")
     List<Questionnaire> getQuestionnaireByStatus(int status);
 
-    @Update("update questionnaire set start_time=#{startTime},end_time=#{endTime},title=#{title},status=#{status},description=#{description} where id=#{id}")
+    @Update("update questionnaire set start_time=#{startTime},end_time=#{endTime},title=#{title},status=#{status},description=#{description},collected=#{collected} where id=#{id}")
     void updateQuestionnaire(Questionnaire questionnaire);
 
 }
