@@ -52,6 +52,9 @@ public class PermissionController {
 
     @GetMapping("/show/user")
     public ResponseEntity<Result> showPermissionByUserId(@RequestParam String username) {
+        if(username == null || username.isEmpty()){
+            username = ThreadLocalUtil.get().studentNumber;
+        }
         if(!MAPPER.user.isUsernameExists(username)){
             return ResponseUtil.build(Result.error(CommonErr.NO_DATA));
         }
