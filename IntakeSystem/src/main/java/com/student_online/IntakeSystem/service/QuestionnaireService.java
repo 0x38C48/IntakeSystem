@@ -130,6 +130,9 @@ public class QuestionnaireService {
             return 0;
         }
         // 设置数量+1
+        if(questionnaire.getCollected()==null){
+            questionnaire.setCollected(0);
+        }
         questionnaire.setCollected(questionnaire.getCollected() + 1);
 
         // 更新问卷收集数量字段
