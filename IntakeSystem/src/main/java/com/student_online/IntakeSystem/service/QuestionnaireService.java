@@ -19,6 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * <p>
@@ -121,12 +122,13 @@ public class QuestionnaireService {
     }
 
 
-    public ResponseEntity<Result> updateQuestionnaireCollected(Questionnaire questionnaire) {
+    public int updateQuestionnaireCollected(Integer questionnaireId) {
+        Questionnaire questionnaire = questionnaireMapper.getQuestionnaireById(questionnaireId);
         // 检查问卷是否已经达到结束时间
-        boolean isEnd = (boolean) checkQuestionnaireIsEnd(questionnaire).getBody().getData();
+        boolean isEnd = (boolean) Objects.requireNonNull(checkQuestionnaireIsEnd(questionnaire).getBody()).getData();
         if (isEnd) {
             // 已经结束了无法提交
-            return ResponseUtil.build(Result.error(400,"已经结束了无法提交"));
+            return 0;
         }
         // 设置数量+1
         questionnaire.setCollected(questionnaire.getCollected() + 1);
@@ -137,7 +139,7 @@ public class QuestionnaireService {
 
         checkQuestionnaireIsEnd(questionnaire);
 
-        return ResponseUtil.build(Result.ok());
+        return 1;
     }
 
     

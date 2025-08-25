@@ -29,9 +29,10 @@ public class FinishService {
     private DepartmentService departmentService;
     @Autowired
     private QuestionnaireMapper questionnaireMapper;
+    @Autowired
+    private QuestionnaireService questionnaireService;
 
 
-    
     public ResponseEntity<Result> listFinishForUser(Integer userId) {
         List<Finish> finishes=finishMapper.getFinishByUid(userId);
         if(finishes.isEmpty()){
@@ -91,7 +92,8 @@ public class FinishService {
             int questionnaireId=finish.getQuestionnaireId();
             if(finishMapper.getFinishByUidAndQuestionnaireId(uid,questionnaireId)==null) {
                 finishMapper.createFinish(finish);
-                return ResponseUtil.build(Result.success(finish.getId(),"创建成功"));
+                int collected=questionnaireService.updateQuestionnaireCollected(questionnaireId);
+                return collected==1?ResponseUtil.build(Result.success(finish.getId(),"创建成功")):ResponseUtil.build(Result.error(400,"创建作答失败"));
             }
             else return ResponseUtil.build(Result.error(409,"已经存在你的作答"));
         }catch (Exception e){
