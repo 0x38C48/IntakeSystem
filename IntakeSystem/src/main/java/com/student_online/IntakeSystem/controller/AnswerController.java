@@ -1,5 +1,6 @@
 package com.student_online.IntakeSystem.controller;
 
+import com.student_online.IntakeSystem.mapper.QuestionnaireMapper;
 import com.student_online.IntakeSystem.model.constant.MAPPER;
 import com.student_online.IntakeSystem.model.po.Department;
 import com.student_online.IntakeSystem.model.po.Answer;
@@ -25,6 +26,9 @@ import java.util.Objects;
 public class AnswerController {
     @Autowired
     private HttpServletRequest request;
+    
+    @Autowired
+    private QuestionnaireMapper questionnaireMapper;
 
     @Autowired
     private AnswerService answerService;
@@ -76,6 +80,12 @@ public class AnswerController {
         String uid = MAPPER.user.getUserIdByUsername(username) + "";
         Finish finish= (Finish) Objects.requireNonNull(finishService.listFinishById(finishId).getBody()).getData();
         if(Integer.parseInt(uid)==finish.getUid()){
+            
+            Questionnaire questionnaire = (Questionnaire) questionnaireService.getQuestionnaireById(finish.getQuestionnaireId()).getBody().getData();
+            questionnaire.setCollected(questionnaire.getCollected() - 1);
+            
+            questionnaireMapper.updateQuestionnaire(questionnaire);
+            
             return finishService.deleteById(finishId);
         }else return ResponseUtil.build(Result.error(401,"无权限"));
     }

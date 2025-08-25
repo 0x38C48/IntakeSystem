@@ -80,6 +80,9 @@ public class FinishService {
     public ResponseEntity<Result> deleteById(Integer finishId) {
         try{
             finishMapper.deleteFinishById(finishId);
+            
+            
+            
             return ResponseUtil.build(Result.ok());
         }catch (Exception e){
             return ResponseUtil.build(Result.error(400,"删除失败"));
