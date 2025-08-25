@@ -49,12 +49,11 @@ public class QuestionnaireService {
 
             // 是否更新操作，排除自己重复情况
             if (questionnaireMapper.getQuestionnaireByDepartmentId(departmentId) != null) {
-
-                // 更新操作时，判断问卷限制数量是否修改，如果修改且小于当前已收集的问卷数量，则不能修改
                 questionnaireMapper.updateQuestionnaire(questionnaire);
                 return ResponseUtil.build(Result.ok());
             }
             // 保存
+            questionnaire.setCollected(0);
             questionnaireMapper.createQuestionnaire(questionnaire);
             return ResponseUtil.build(Result.ok());
         }catch (Exception e) {
@@ -125,15 +124,19 @@ public class QuestionnaireService {
     public int updateQuestionnaireCollected(Integer questionnaireId) {
         Questionnaire questionnaire = questionnaireMapper.getQuestionnaireById(questionnaireId);
         // 检查问卷是否已经达到结束时间
-        int status =questionnaire.getStatus();
-        if (status == 0) {
+        boolean isEnd = (boolean) Objects.requireNonNull(checkQuestionnaireIsEnd(questionnaire).getBody()).getData();
+        if (isEnd) {
             // 已经结束了无法提交
             return 0;
         }
         // 设置数量+1
         questionnaire.setCollected(questionnaire.getCollected() + 1);
+
         // 更新问卷收集数量字段
         questionnaireMapper.updateQuestionnaire(questionnaire);
+
+
+        checkQuestionnaireIsEnd(questionnaire);
 
         return 1;
     }
@@ -200,6 +203,25 @@ public class QuestionnaireService {
         LocalDateTime questionnaireStartTime = questionnaire.getStartTime();
         LocalDateTime questionnaireEndTime = questionnaire.getEndTime();
         return ResponseUtil.build(Result.success(currentTime.isAfter(questionnaireStartTime) && currentTime.isBefore(questionnaireEndTime),"获取开始状态成功"));
+    }
+
+
+    public ResponseEntity<Result> checkQuestionnaireIsEnd(Questionnaire questionnaire) {
+        try {
+            // 获取当前时间
+            LocalDateTime currentTime = LocalDateTime.now();
+            LocalDateTime questionnaireEndTime = questionnaire.getEndTime();
+            // 如果当前时间大于结束时间，则将问卷状态设置为已结束
+            if (currentTime.isAfter(questionnaireEndTime)) {
+                // 更新问卷状态
+                changeStatus(questionnaire.getId());
+                return ResponseUtil.build(Result.success(true,"获取结束状态成功"));
+            }
+
+            return ResponseUtil.build(Result.success(false,"获取结束状态成功"));
+        } catch (Exception e) {
+            return ResponseUtil.build(Result.error(400, "获取结束状态失败"));
+        }
     }
 
 
