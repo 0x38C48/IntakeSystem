@@ -93,7 +93,7 @@ public class FinishService {
             if(finishMapper.getFinishByUidAndQuestionnaireId(uid,questionnaireId)==null) {
                 finishMapper.createFinish(finish);
                 int collected=questionnaireService.updateQuestionnaireCollected(questionnaireId);
-                return collected==1?ResponseUtil.build(Result.success(finish.getId(),"创建成功")):ResponseUtil.build(Result.error(400,"创建作答失败"));
+                return collected==1?(ResponseUtil.build(Result.success(finish.getId(),"创建成功"))):(ResponseUtil.build(Result.error(400,"问卷结束已经结束")));
             }
             else return ResponseUtil.build(Result.error(409,"已经存在你的作答"));
         }catch (Exception e){

@@ -1,4 +1,4 @@
-package com.student_online.IntakeSystem.model.constant;
+package com.student_online.IntakeSystem.config;
 
 import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
 import lombok.extern.slf4j.Slf4j;
