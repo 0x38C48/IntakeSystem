@@ -114,7 +114,7 @@ public class AnswerController {
             username = executor;
         }
         
-        if(permissionService.isPermitted(stationId, Integer.parseInt(uid))){
+        if(permissionService.isPermitted(stationId, Integer.parseInt(uid)) || Objects.equals(username,executor)){
             int userId=MAPPER.user.getUserIdByUsername(username);
             
             return finishService.getFinishForUserByQuestionnaireId(userId,questionnaireId);
