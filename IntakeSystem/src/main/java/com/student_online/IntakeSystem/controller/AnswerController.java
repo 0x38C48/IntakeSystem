@@ -2,10 +2,7 @@ package com.student_online.IntakeSystem.controller;
 
 import com.student_online.IntakeSystem.mapper.QuestionnaireMapper;
 import com.student_online.IntakeSystem.model.constant.MAPPER;
-import com.student_online.IntakeSystem.model.po.Department;
-import com.student_online.IntakeSystem.model.po.Answer;
-import com.student_online.IntakeSystem.model.po.Finish;
-import com.student_online.IntakeSystem.model.po.Questionnaire;
+import com.student_online.IntakeSystem.model.po.*;
 import com.student_online.IntakeSystem.model.vo.AnswerVo;
 import com.student_online.IntakeSystem.model.vo.QuestionVo;
 import com.student_online.IntakeSystem.model.vo.Result;
@@ -95,7 +92,11 @@ public class AnswerController {
         String username = ThreadLocalUtil.get().studentNumber;
         String uid = MAPPER.user.getUserIdByUsername(username) + "";
         Finish finish= (Finish) Objects.requireNonNull(finishService.listFinishById(finishId).getBody()).getData();
-        if(Integer.parseInt(uid)==finish.getUid()){
+        
+        Questionnaire questionnaire = (Questionnaire) questionnaireService.getQuestionnaireById(finish.getQuestionnaireId()).getBody().getData();
+        Department department = MAPPER.department.getDepartmentById(questionnaire.getDepartmentId());
+        
+        if(permissionService.isPermitted(department.getStationId(), Integer.parseInt(uid)) || finish.getUid() == Integer.parseInt(uid)){
             return answerService.getAnswerByFinishId(finishId);
         }else return ResponseUtil.build(Result.error(401,"无权限"));
     }

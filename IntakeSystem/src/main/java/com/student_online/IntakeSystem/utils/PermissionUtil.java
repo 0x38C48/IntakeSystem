@@ -23,7 +23,18 @@ public class PermissionUtil {
         if(station.getPId() == 0){
             return false;
         }
-        return check(uid, stationMapper.getStationById(station.getPId()));
+        return check(uid, station.getPId());
+    }
+    
+    public static boolean check(int uid, int stationId){
+        if(permissionMapper.isExists(uid,stationId)){
+            return true;
+        }
+        int pid = stationMapper.getPidById(stationId);
+        if(pid == 0){
+            return false;
+        }
+        return check(uid, pid);
     }
 
 }

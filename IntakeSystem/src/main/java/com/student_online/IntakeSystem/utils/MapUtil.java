@@ -6,7 +6,9 @@ import lombok.SneakyThrows;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.regex.Pattern;
 
@@ -33,6 +35,14 @@ public class MapUtil {
         }
         
         return map;
+    }
+    
+    public static <T> List<Map<String, Object>> transToListMap(List<T> list){
+        List<Map<String, Object>> listMap = new ArrayList<>();
+        for (Object obj : list) {
+            listMap.add(transToMap(obj));
+        }
+        return listMap;
     }
     
     @SneakyThrows

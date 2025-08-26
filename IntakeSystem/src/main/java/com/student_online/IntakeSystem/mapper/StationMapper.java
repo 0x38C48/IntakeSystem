@@ -31,4 +31,7 @@ public interface StationMapper {
     
     @Select("select * from station where p_id IS NULL or p_id = 0")
     List<Station> getRoots();
+    
+    @Select("select p_id from station where id=#{id}")
+    int getPidById(Integer pId);
 }

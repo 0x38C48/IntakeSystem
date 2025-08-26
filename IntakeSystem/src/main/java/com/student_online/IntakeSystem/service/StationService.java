@@ -1,11 +1,11 @@
 package com.student_online.IntakeSystem.service;
 
 import com.student_online.IntakeSystem.mapper.StationMapper;
+import com.student_online.IntakeSystem.model.constant.MAPPER;
 import com.student_online.IntakeSystem.model.pljo.StationTree;
 import com.student_online.IntakeSystem.model.po.Station;
 import com.student_online.IntakeSystem.model.vo.Result;
-import com.student_online.IntakeSystem.utils.ResponseUtil;
-import com.student_online.IntakeSystem.utils.StationUtil;
+import com.student_online.IntakeSystem.utils.*;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class StationService {
@@ -21,7 +22,9 @@ public class StationService {
 
     @Autowired
     private PermissionService permissionService;
-
+    @Autowired
+    private MAPPER mAPPER;
+    
     public ResponseEntity<Result> createStation(Station station,int uid) {
         try {
             String name = station.getName();
@@ -91,9 +94,22 @@ public class StationService {
 
     public ResponseEntity<Result> getStationByParentId( int pid) {
         try {
+            String executor = ThreadLocalUtil.get().studentNumber;
+            int uid = MAPPER.user.getUserIdByUsername(executor);
+            
             List<Station> result = stationMapper.getStationByParentId(pid);
+            
+            List<Map<String, Object>> list =MapUtil.transToListMap(result);
+            
+            for(Map<String, Object> map: list){
+                int stationId = (int) map.get("id");
+                if(PermissionUtil.check(uid, MAPPER.station.getStationById(stationId))){
+                    map.put("permitted", true);
+                }
+            }
+            
             if (result.isEmpty()) return ResponseUtil.build(Result.error(404, "未找到它的子模块"));
-            else return ResponseUtil.build(Result.success(result, "返回子模块"));
+            else return ResponseUtil.build(Result.success(list, "返回子模块"));
         }catch (Exception e) {
             return ResponseUtil.build(Result.error(400, "获取失败"));
         }

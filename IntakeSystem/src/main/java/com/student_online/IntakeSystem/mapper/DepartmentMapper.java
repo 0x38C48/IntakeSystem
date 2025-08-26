@@ -1,5 +1,6 @@
 package com.student_online.IntakeSystem.mapper;
 import com.student_online.IntakeSystem.model.po.Department;
+import com.student_online.IntakeSystem.model.po.Station;
 import org.apache.ibatis.annotations.*;
 import java.util.List;
 
