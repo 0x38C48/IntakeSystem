@@ -3,6 +3,7 @@ package com.student_online.IntakeSystem.utils;
 
 import com.student_online.IntakeSystem.mapper.PermissionMapper;
 import com.student_online.IntakeSystem.mapper.StationMapper;
+import com.student_online.IntakeSystem.model.constant.MAPPER;
 import com.student_online.IntakeSystem.model.po.Station;
 import jakarta.annotation.Resource;
 
@@ -17,7 +18,7 @@ public class PermissionUtil {
     private static StationMapper stationMapper;
     
     public static boolean check(int uid, Station station){
-        if(permissionMapper.isExists(uid,station.getId())){
+        if(MAPPER.permission.isExists(uid,station.getId())){
             return true;
         }
         if(station.getPId() == 0){
@@ -27,10 +28,10 @@ public class PermissionUtil {
     }
     
     public static boolean check(int uid, int stationId){
-        if(permissionMapper.isExists(uid,stationId)){
+        if(MAPPER.permission.isExists(uid,stationId)){
             return true;
         }
-        int pid = stationMapper.getPidById(stationId);
+        int pid = MAPPER.station.getPidById(stationId);
         if(pid == 0){
             return false;
         }

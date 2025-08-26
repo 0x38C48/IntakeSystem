@@ -111,6 +111,7 @@ public class StationService {
             if (result.isEmpty()) return ResponseUtil.build(Result.error(404, "未找到它的子模块"));
             else return ResponseUtil.build(Result.success(list, "返回子模块"));
         }catch (Exception e) {
+            e.printStackTrace();
             return ResponseUtil.build(Result.error(400, "获取失败"));
         }
     }
