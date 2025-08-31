@@ -12,8 +12,8 @@ public interface DepartmentMapper {
     @Select("select * from department where id=#{id}")
     Department getDepartmentById(int id);
 
-    @Select("select * from department where name=#{name}")
-    Department getDepartmentByName(String name);
+    @Select("select * from department where name=#{name} and p_id=#{pId}")
+    Department getDepartmentByNameAndPid(String name, Integer pId);
 
     @Select("select * from department where name like '%${name}%' ")
     List<Department> getDepartmentsByName(String name);

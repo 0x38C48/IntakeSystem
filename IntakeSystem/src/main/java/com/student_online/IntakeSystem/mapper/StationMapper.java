@@ -16,6 +16,9 @@ public interface StationMapper {
 
     @Select("select * from station where name=#{name}")
     Station getStationByName(String name);
+    
+    @Select("select * from station where name=#{name} and p_id = #{pId}")
+    Station getStationByNameAndPId(String name, Integer pId);
 
     @Select("select * from station where name like '%${name}%'")
     List<Station> getStationsByName(String name);

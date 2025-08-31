@@ -51,7 +51,7 @@ public class DepartmentService {
             int pid = department.getPId();
             PermissionService permissionService = new PermissionService();
             if (permissionService.isPermitted(pid, uid)) {
-                if (departmentMapper.getDepartmentByName(name) != null) {
+                if (departmentMapper.getDepartmentByNameAndPid(name, pid) != null) {
                     return ResponseUtil.build(Result.error(409, "该部门已存在"));
                 } else {
                     Station station = new Station();
@@ -60,7 +60,7 @@ public class DepartmentService {
                     station.setPId(department.getPId());
                     station.setIsDepartment(1);
                     stationMapper.createStation(station);
-                    station = stationMapper.getStationByName(name);
+                    station = stationMapper.getStationByNameAndPId(name, pid);
                     department.setStationId(station.getId());
                     departmentMapper.createDepartment(department);
                     
