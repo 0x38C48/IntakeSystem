@@ -6,9 +6,7 @@ import com.google.common.hash.Hashing;
 import com.student_online.IntakeSystem.config.exception.CommonErr;
 import com.student_online.IntakeSystem.config.exception.CommonErrException;
 import lombok.Getter;
-import lombok.Setter;
 import org.apache.commons.codec.digest.DigestUtils;
-import org.apache.ibatis.annotations.Select;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.springframework.http.HttpMethod;
@@ -20,7 +18,6 @@ import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Scanner;
 
 /**
  * 统一认证登入爬虫 示例代码
@@ -56,6 +53,8 @@ public class SduLogin {
     
     public String JSESSIONID;
     public String cookie_adx;
+    
+    public boolean checked = false;
     
     /**
      * 统一认证登入页面Cookie
@@ -106,12 +105,16 @@ public class SduLogin {
             JSESSIONID = loginFormResponse.cookie("JSESSIONID");
             cookie_adx = loginFormResponse.cookie("cookie-adx");
         }
-        casLoginCookie.put("JSESSIONID", JSESSIONID);
-        casLoginCookie.put("cookie-adx", cookie_adx);
-        casLoginCookie.put("Language", Language);
+        proCookie();
         
         // 提取页面隐藏字段
         lt = loginFormResponse.parse().select("input[name=lt]").attr("value");
+    }
+    
+    public void proCookie() {
+        casLoginCookie.put("JSESSIONID", JSESSIONID);
+        casLoginCookie.put("cookie-adx", cookie_adx);
+        casLoginCookie.put("Language", Language);
     }
     
     /**
@@ -307,25 +310,25 @@ public class SduLogin {
         String casLoginURL = CAS_LOGIN_PAGE + "?service=" + URLEncoder.encode(loginService, StandardCharsets.UTF_8);
         
         String redirectUrl = null;
-
-
-//        if (checked) {
+        
+        
+        if (checked) {
 //            System.out.println("执行CASTGC验证...");
-//            redirectUrl = casTgcVerification(casLoginURL);
-//        }
-
-//        if (!checked) {
-//            System.out.println("进入统一认证登入页面提取信息...");
-        enterCasLoginPage(casLoginURL);
-//        System.out.println("执行设备验证...");
-        String result = deviceCheck();
-        if (Objects.equals(result, "need captcha")) {
-            return result;
+            redirectUrl = casTgcVerification(casLoginURL);
         }
-//        System.out.println("进行用户名密码验证...");
-        redirectUrl = passwordVerification(casLoginURL);
-
-//        }
+        
+        if (!checked) {
+            System.out.println("进入统一认证登入页面提取信息...");
+            enterCasLoginPage(casLoginURL);
+//        System.out.println("执行设备验证...");
+            String result = deviceCheck();
+            if (Objects.equals(result, "need captcha")) {
+                return result;
+            }
+//            System.out.println("进行用户名密码验证...");
+            redirectUrl = passwordVerification(casLoginURL);
+            checked = true;
+        }
 
 //        System.out.println("统一认证登入验证通过！");
 //        System.out.println("统一认证登入重定向 URL: " + redirectUrl);
