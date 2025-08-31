@@ -26,7 +26,7 @@ public interface StationMapper {
     @Delete("delete from station where id=#{id}")
     void deleteStationById(int id);
 
-    @Update("update station set name=#{name},p_id=#{p_id},description=#{description} ,is_department=#{isDepartment} where id=#{stationId}")
+    @Update("update station set name=#{name},p_id=#{pId},description=#{description} ,is_department=#{isDepartment} where id=#{id}")
     void updateStation(Station station);
     
     @Select("select * from station where p_id IS NULL or p_id = 0")

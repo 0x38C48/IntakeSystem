@@ -54,6 +54,7 @@ public class StationService {
                 return ResponseUtil.build(Result.ok());
             } else return ResponseUtil.build(Result.error(401, "无权限"));
         }catch (Exception e) {
+            e.printStackTrace();
             return ResponseUtil.build(Result.error(400, "更新失败"));
         }
 

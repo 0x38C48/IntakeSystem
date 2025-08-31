@@ -21,7 +21,7 @@ public interface DepartmentMapper {
     @Delete("delete from department where id=#{id}")
     void deleteDepartmentById(int id);
 
-    @Update("update department set name=#{name},p_id=#{p_id},description=#{description} where id=#{id}")
+    @Update("update department set name=#{name},p_id=#{pId},description=#{description} where id=#{id}")
     void updateDepartment(Department department);
     
     @Select("select * from department where station_id=#{stationId}")
