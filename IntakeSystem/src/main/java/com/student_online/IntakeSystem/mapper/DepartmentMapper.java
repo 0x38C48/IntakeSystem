@@ -6,7 +6,7 @@ import java.util.List;
 
 @Mapper
 public interface DepartmentMapper {
-    @Insert("insert into department (name,station_id,p_id,description) values (#{name},#{stationId},#{pId},#{description}")
+    @Insert("insert into department (name,station_id,p_id,description) values (#{name},#{stationId},#{pId},#{description})")
     void createDepartment(Department department);
 
     @Select("select * from department where id=#{id}")
