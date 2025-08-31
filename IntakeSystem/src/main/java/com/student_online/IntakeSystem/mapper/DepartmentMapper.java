@@ -6,7 +6,7 @@ import java.util.List;
 
 @Mapper
 public interface DepartmentMapper {
-    @Insert("insert into department (name,station_id,p_id,description,image) values (#{name},#{stationId},#{pId},#{description},#{image})")
+    @Insert("insert into department (name,station_id,p_id,description) values (#{name},#{stationId},#{pId},#{description}")
     void createDepartment(Department department);
 
     @Select("select * from department where id=#{id}")
@@ -26,4 +26,7 @@ public interface DepartmentMapper {
     
     @Select("select * from department where station_id=#{stationId}")
     Department getDepartmentByStationId(Integer stationId);
+    
+    @Update("update department set image=#{s} where id=#{id}")
+    void setImg(int id, String s);
 }

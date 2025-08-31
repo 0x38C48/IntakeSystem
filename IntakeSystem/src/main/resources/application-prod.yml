@@ -11,3 +11,8 @@ avatar:
   path:
     upload: /app/avatar/
     access: /avatar/
+
+depart:
+  path:
+    upload: /app/depart/
+    access: /depart/

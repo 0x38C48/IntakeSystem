@@ -26,6 +26,12 @@ public class WebConfig implements WebMvcConfigurer {
     @Value("${avatar.path.access}")
     private String avatarPathAccess;
     
+    @Value("${depart.path.upload}")
+    private String departPathUpload;
+    
+    @Value("${depart.path.access}")
+    private String departPathAccess;
+    
     private static final Logger logger = LoggerFactory.getLogger(WebConfig.class);
 
     @Override
@@ -36,6 +42,7 @@ public class WebConfig implements WebMvcConfigurer {
                         "/user/login",
                         "/user/login/cas",
                         "/avatar/**",
+                        "/depart/**",
                         "/test"
                 );
     }
@@ -45,5 +52,8 @@ public class WebConfig implements WebMvcConfigurer {
 
         registry.addResourceHandler( avatarPathAccess + "**")
                 .addResourceLocations("file:///"+avatarPathUpload);
+        
+        registry.addResourceHandler( departPathAccess + "**")
+                .addResourceLocations("file:///"+departPathUpload);
     }
 }

@@ -12,6 +12,11 @@ avatar:
     upload: "E:/avatar"
     access: "/avatar/"
 
+depart:
+  path:
+    upload: "E:/depart"
+    access: "/depart/"
+
 logging:
   level:
     com:

@@ -6,14 +6,23 @@ import com.student_online.IntakeSystem.model.pljo.StationTree;
 import com.student_online.IntakeSystem.model.po.Station;
 import com.student_online.IntakeSystem.model.vo.Result;
 import com.student_online.IntakeSystem.utils.*;
+import lombok.SneakyThrows;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Stream;
 
 @Service
 public class StationService {
@@ -22,10 +31,11 @@ public class StationService {
 
     @Autowired
     private PermissionService permissionService;
-    @Autowired
-    private MAPPER mAPPER;
     
-    public ResponseEntity<Result> createStation(Station station,int uid) {
+
+
+    
+    public ResponseEntity<Result> createStation(Station station, int uid) {
         try {
             String name = station.getName();
             int pid = station.getPId();
@@ -59,6 +69,8 @@ public class StationService {
         }
 
     }
+    
+    
 
     public ResponseEntity<Result> deleteStation( int stationId,int uid) {
         try {
