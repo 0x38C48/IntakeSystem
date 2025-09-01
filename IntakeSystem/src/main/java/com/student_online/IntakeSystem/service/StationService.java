@@ -1,8 +1,10 @@
 package com.student_online.IntakeSystem.service;
 
+import com.student_online.IntakeSystem.mapper.DepartmentMapper;
 import com.student_online.IntakeSystem.mapper.StationMapper;
 import com.student_online.IntakeSystem.model.constant.MAPPER;
 import com.student_online.IntakeSystem.model.pljo.StationTree;
+import com.student_online.IntakeSystem.model.po.Department;
 import com.student_online.IntakeSystem.model.po.Station;
 import com.student_online.IntakeSystem.model.vo.Result;
 import com.student_online.IntakeSystem.utils.*;
@@ -31,10 +33,10 @@ public class StationService {
 
     @Autowired
     private PermissionService permissionService;
-    
+    @Autowired
+    private DepartmentMapper departmentMapper;
 
 
-    
     public ResponseEntity<Result> createStation(Station station, int uid) {
         try {
             String name = station.getName();
@@ -61,6 +63,13 @@ public class StationService {
             int stationId = station.getId();
             if (permissionService.isPermitted(stationId, uid)) {
                 stationMapper.updateStation(station);
+                if(station.getIsDepartment()==1){
+                    Department department=departmentMapper.getDepartmentByStationId(stationId);
+                    department.setPId(station.getPId());
+                    department.setDescription(station.getDescription());
+                    department.setName(station.getName());
+                    departmentMapper.updateDepartment(department);
+                }
                 return ResponseUtil.build(Result.ok());
             } else return ResponseUtil.build(Result.error(401, "无权限"));
         }catch (Exception e) {
