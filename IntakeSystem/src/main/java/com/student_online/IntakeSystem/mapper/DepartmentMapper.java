@@ -23,6 +23,9 @@ public interface DepartmentMapper {
 
     @Update("update department set name=#{name},p_id=#{pId},description=#{description} where id=#{id}")
     void updateDepartment(Department department);
+
+    @Update("update department set name=#{name},p_id=#{pId},description=#{description} where station_id=#{stationId}")
+    void updateDepartmentByStationId(Department department);
     
     @Select("select * from department where station_id=#{stationId}")
     Department getDepartmentByStationId(Integer stationId);

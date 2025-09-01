@@ -82,7 +82,7 @@ public class DepartmentService {
             int stationId = department.getStationId();
             PermissionService permissionService = new PermissionService();
             if (permissionService.isPermitted(stationId, uid)) {
-                departmentMapper.updateDepartment(department);
+                departmentMapper.updateDepartmentByStationId(department);
                 Station station=stationMapper.getStationById(stationId);
                 station.setDescription(department.getDescription());
                 station.setPId(department.getPId());
