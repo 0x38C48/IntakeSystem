@@ -52,7 +52,9 @@ public class FinishService {
     }
 
     public ResponseEntity<Result> listFinishForDepartment(Integer DepartmentId) {
-        List<Finish> finishes=finishMapper.getFinishByDepartmentId(DepartmentId);
+        Questionnaire questionnaire = questionnaireMapper.getQuestionnaireByDepartmentId(DepartmentId);
+        
+        List<Finish> finishes=finishMapper.getFinishByQuestionnaireId(questionnaire.getId());
         if(finishes.isEmpty()){
             return ResponseUtil.build(Result.error(404,"未找到完成的问卷"));
         }

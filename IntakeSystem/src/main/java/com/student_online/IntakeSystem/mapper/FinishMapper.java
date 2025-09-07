@@ -27,7 +27,4 @@ public interface FinishMapper {
     
     @Update("update finish set questionnaire_id=#{questionnaireId},uid=#{uid} where id=#{id}")
     void updateFinish(Finish finish);
-    
-    @Select("select * from finish where department_id=#{departmentId}")
-    List<Finish> getFinishByDepartmentId(Integer departmentId);
 }
