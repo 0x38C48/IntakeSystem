@@ -46,14 +46,6 @@ public class QuestionService  {
             return ResponseUtil.build(Result.error(400, "问卷已经发布无法修改"));
         }
 
-        // 先删除问卷下的问题和选项(可能是更新操作)
-        // 判断是否第一次设计问卷的保存，如果第一次无需再进行删除操作
-        if (questionnaireMapper.getQuestionnaireById(questionnaireId)!= null) {
-            // MySQL数据库设置了外键级联删除，选项会自动删除
-            deleteQuestions(questionnaireId);
-        }
-        // 保存问题
-        // 对象转化
         List<Question> questions = new ArrayList<>();
         for (QuestionVo dto : questionsDto) {
             Question question = new Question();
