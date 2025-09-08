@@ -39,7 +39,7 @@ public class UserController {
     public Result uploadAvatar(@RequestParam("file") MultipartFile file){
         try {
             return userService.uploadAvatar(file);
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
             return Result.error(500, "上传失败");
         }

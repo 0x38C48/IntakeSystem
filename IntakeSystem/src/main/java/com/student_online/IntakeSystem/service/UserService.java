@@ -81,6 +81,7 @@ public class UserService {
                     });
         } catch (IOException e) {
             e.printStackTrace();
+            return Result.error(500, "上传失败");
         }
         
         Path path = Paths.get(uploadPath);
