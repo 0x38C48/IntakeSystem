@@ -27,5 +27,8 @@ public interface QuestionnaireMapper  {
 
     @Update("update questionnaire set start_time=#{startTime},end_time=#{endTime},title=#{title},status=#{status},description=#{description},collected=#{collected} where id=#{id}")
     void updateQuestionnaire(Questionnaire questionnaire);
+    
+    @Update("update questionnaire set start_time=#{startTime},end_time=#{endTime},title=#{title},status=#{status},description=#{description} where id=#{id}")
+    void editQuestionnaire(Questionnaire questionnaire);
 
 }

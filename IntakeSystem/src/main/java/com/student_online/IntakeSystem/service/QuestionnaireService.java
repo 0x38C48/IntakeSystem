@@ -49,7 +49,7 @@ public class QuestionnaireService {
 
             // 是否更新操作，排除自己重复情况
             if (questionnaireMapper.getQuestionnaireByDepartmentId(departmentId) != null) {
-                questionnaireMapper.updateQuestionnaire(questionnaire);
+                questionnaireMapper.editQuestionnaire(questionnaire);
                 return ResponseUtil.build(Result.ok());
             }
             // 保存
