@@ -4,13 +4,16 @@ import com.student_online.IntakeSystem.config.exception.CommonErr;
 import com.student_online.IntakeSystem.model.constant.MAPPER;
 import com.student_online.IntakeSystem.model.po.Department;
 import com.student_online.IntakeSystem.model.po.Station;
+import com.student_online.IntakeSystem.model.po.User;
 import com.student_online.IntakeSystem.model.vo.Result;
+import com.student_online.IntakeSystem.utils.MapUtil;
 import com.student_online.IntakeSystem.utils.ThreadLocalUtil;
 import org.springframework.jdbc.BadSqlGrammarException;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class ScreenService {
@@ -141,5 +144,35 @@ public class ScreenService {
         process(open,result);
         
         return result;
+    }
+    
+    public Result getUser(String username, String name) {
+        String executor = ThreadLocalUtil.get().studentNumber;
+        if(MAPPER.permission.getPermissionByUid(MAPPER.user.getUserIdByUsername(executor)) == null){
+            return Result.error(CommonErr.NO_AUTHORITY);
+        }
+        
+        if(name == null || name.isEmpty()){
+            name = "%";
+        } else {
+            name = "%" + name + "%";
+        }
+        if(username == null || username.isEmpty()){
+            username = "%";
+        } else {
+            username = "%" + username + "%";
+        }
+        
+        List<User> users = MAPPER.screen.getUser(username, name);
+        List<Map<String, Object>> list = MapUtil.transToListMap(users);
+        for (Map<String, Object> map : list) {
+            map.remove("password");
+            map.remove("type");
+            map.remove("uid");
+            map.remove("create_time");
+        }
+        
+        return Result.success(list,"获取成功");
+        
     }
 }

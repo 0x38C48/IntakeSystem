@@ -1,7 +1,9 @@
 package com.student_online.IntakeSystem.controller;
 
+import com.student_online.IntakeSystem.model.constant.MAPPER;
 import com.student_online.IntakeSystem.model.vo.Result;
 import com.student_online.IntakeSystem.service.ScreenService;
+import com.student_online.IntakeSystem.utils.ThreadLocalUtil;
 import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -32,5 +34,10 @@ public class ScreenController {
             @RequestParam(required = false) Integer stationId
     ){
         return screenService.getWills(name, studentNumber, gender, college, major, departmentId, tag, order,orderBy,stationId , page, size);
+    }
+    
+    @GetMapping("/user")
+    public Result getUser(@RequestParam(required = false) String username, @RequestParam(required = false) String name){
+        return screenService.getUser(username, name);
     }
 }

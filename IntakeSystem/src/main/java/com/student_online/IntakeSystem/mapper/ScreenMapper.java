@@ -12,14 +12,14 @@ import java.util.Objects;
 @Mapper
 public interface ScreenMapper {
     
-    @Select("SELECT u.name,u.username,u.gender,u.college,u.major,t.value as tag ,d.name as depart,d.id as departId FROM user u " +
-            "JOIN will w " +
-            "ON u.uid = w.uid " +
+    @Select("SELECT u.name,u.username,u.gender,u.college,u.major,t.value as tag ,d.name as depart,d.id as departId, f.questionnaire_id FROM user u " +
+            "JOIN finish f " +
+            "ON f.uid = u.uid " +
             "JOIN department d ON " +
-            "d.id = w.department_id " +
+            "d.id = (select department_id from questionnaire where id = f.questionnaire_id) " +
             "LEFT JOIN tag t ON " +
             "t.uid = u.uid and " +
-            "t.depart_id = w.department_id " +
+            "t.depart_id = (select department_id from questionnaire where id = f.questionnaire_id) " +
             
             
             "where " +
@@ -48,4 +48,7 @@ public interface ScreenMapper {
                     @Param("stations") String stations,
                     @Param("offset") Integer offset,
                     @Param("size") Integer size);
+    
+    @Select("SELECT * FROM user WHERE username like #{username} and name like #{name}")
+    List<User> getUser(String username, String name);
 }
