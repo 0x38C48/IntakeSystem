@@ -137,10 +137,10 @@ public class AnswerController {
         String executor = ThreadLocalUtil.get().studentNumber;
         int uid = MAPPER.user.getUserIdByUsername(executor);
         if(username == null || username.isEmpty()){
-            return finishService.listFinishForUser(uid);
+            username = executor;
         }
         int userId=MAPPER.user.getUserIdByUsername(username);
-        if(uid==userId){
+        if(uid==userId|| permissionService.isPermitted(1,uid)){
             return finishService.listFinishForUser(userId);
         }else return ResponseUtil.build(Result.error(401,"无权限"));
     }

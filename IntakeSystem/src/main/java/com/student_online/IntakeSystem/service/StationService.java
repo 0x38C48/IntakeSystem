@@ -116,19 +116,9 @@ public class StationService {
 
     public ResponseEntity<Result> getStationByParentId( int pid) {
         try {
-            String executor = ThreadLocalUtil.get().studentNumber;
-            int uid = MAPPER.user.getUserIdByUsername(executor);
-            
             List<Station> result = stationMapper.getStationByParentId(pid);
             
             List<Map<String, Object>> list =MapUtil.transToListMap(result);
-            
-            for(Map<String, Object> map: list){
-                int stationId = (int) map.get("id");
-                if(PermissionUtil.check(uid, MAPPER.station.getStationById(stationId))){
-                    map.put("permitted", true);
-                }
-            }
             
             if (result.isEmpty()) return ResponseUtil.build(Result.error(404, "未找到它的子模块"));
             else return ResponseUtil.build(Result.success(list, "返回子模块"));

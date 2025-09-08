@@ -61,4 +61,9 @@ public class PermissionController {
         int uid = MAPPER.user.getUserIdByUsername(username);
         return permissionService.getPermissionByUid(uid);
     }
+
+    @GetMapping("/search")
+    public ResponseEntity<Result> searchPermission(@RequestParam int stationId,@RequestParam String username) {
+        return permissionService.getPermissionByStationId(stationId);
+    }
 }
