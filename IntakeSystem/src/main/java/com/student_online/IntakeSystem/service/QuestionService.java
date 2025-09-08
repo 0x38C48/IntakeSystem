@@ -55,7 +55,9 @@ public class QuestionService  {
         // 保存，如果失败返回错误
         try{
             for(Question question : questions) {
-                questionMapper.createQuestion(question);
+                if(questionnaireMapper.getQuestionnaireById(questionnaireId) != null) {
+                    questionMapper.updateQuestion(question);
+                }else questionMapper.createQuestion(question);
             }
         }catch (Exception e){
             return ResponseUtil.build(Result.error(400, "保存问题失败"));
@@ -82,7 +84,9 @@ public class QuestionService  {
         }
         if (!optionsToSave.isEmpty()) {
             for(Option option : optionsToSave) {
-                optionMapper.createOption(option);
+                if(questionMapper.getQuestionById(option.getQuestionId()) != null) {
+                    optionMapper.updateOption(option);
+                }else optionMapper.createOption(option);
             }
 
         }
