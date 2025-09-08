@@ -116,9 +116,6 @@ public class StationService {
 
     public ResponseEntity<Result> getStationByParentId( int pid) {
         try {
-            String executor = ThreadLocalUtil.get().studentNumber;
-            int uid = MAPPER.user.getUserIdByUsername(executor);
-            
             List<Station> result = stationMapper.getStationByParentId(pid);
             
             List<Map<String, Object>> list =MapUtil.transToListMap(result);
