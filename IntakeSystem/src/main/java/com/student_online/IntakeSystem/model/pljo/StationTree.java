@@ -11,11 +11,13 @@ public class StationTree {
     
     private String name;
     
-    private List<StationTree> children;
-    
     private String description;
     
     private Integer isDepartment;
+    
+    private boolean permitted;
+    
+    private List<StationTree> children;
     
     public StationTree(Station station) {
         this.id = station.getId();
