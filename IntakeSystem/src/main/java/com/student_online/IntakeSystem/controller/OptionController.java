@@ -34,7 +34,7 @@ public class OptionController {
     }
 
     @PostMapping("/update")//更新部门问卷选项
-    public ResponseEntity<Result> editQuestions(@RequestBody Option option, @RequestParam int departmentId) {
+    public ResponseEntity<Result> editOptions(@RequestBody Option option, @RequestParam int departmentId) {
         String username = ThreadLocalUtil.get().studentNumber;
         String uid = MAPPER.user.getUserIdByUsername(username) + "";
         int stationId=departmentService.getStationId(departmentId);
@@ -44,7 +44,7 @@ public class OptionController {
     }
 
     @PostMapping("/delete")//删除部门问卷选项
-    public ResponseEntity<Result> editOptions(@RequestParam Integer optionId,@RequestParam Integer departmentId) {
+    public ResponseEntity<Result> deleteOption(@RequestParam Integer optionId,@RequestParam Integer departmentId) {
         String username = ThreadLocalUtil.get().studentNumber;
         String uid = MAPPER.user.getUserIdByUsername(username) + "";
         int stationId=departmentService.getStationId(departmentId);

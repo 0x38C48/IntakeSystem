@@ -19,7 +19,7 @@ import java.util.List;
 public class QuestionVo extends Question {
 
 
-    private List<Option> option;
+    private List<Option> options;
 
 
     private Integer type;//题目类型
@@ -30,7 +30,7 @@ public class QuestionVo extends Question {
         setQuestionnaireId(question.getQuestionnaireId());
         setSort(question.getSort());
         this.type = question.getType();
-        this.option = option;
+        this.options = option;
     }
 
     @Override
@@ -41,7 +41,7 @@ public class QuestionVo extends Question {
                 ", 问题类型:" + super.getType() +
                 ", 问题内容:'" + super.getContent() + '\'' +
                 ", 问题序号:'" + super.getSort() + '\'' +
-                ", Option=" + option +
+                ", Option=" + options +
                 "}]\n";
     }
 }
