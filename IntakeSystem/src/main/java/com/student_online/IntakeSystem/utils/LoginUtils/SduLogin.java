@@ -163,7 +163,7 @@ public class SduLogin {
             }
             case "validErr", "notFound" -> {
 //                System.out.println("密码错误或用户不存在");
-                throw new CommonErrException(CommonErr.NO_DATA);
+                throw new CommonErrException(CommonErr.USER_WRONG);
             }
             case "mobileErr" -> {
 //                System.out.println("未绑定手机");
