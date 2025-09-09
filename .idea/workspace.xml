@@ -5,10 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="550f93a3-53ab-42ec-83c3-ef7986e85d54" name="更改" comment="debug">
-      <change afterPath="$PROJECT_DIR$/IntakeSystem/src/main/java/com/student_online/IntakeSystem/model/pljo/UserForExcel.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/IntakeSystem/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/IntakeSystem/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IntakeSystem/src/main/java/com/student_online/IntakeSystem/mapper/ScreenMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/IntakeSystem/src/main/java/com/student_online/IntakeSystem/mapper/ScreenMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IntakeSystem/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/IntakeSystem/src/main/resources/application.yml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -63,7 +63,7 @@
     "RequestMappingsPanelWidth1": "75",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "Spring Boot.IntakeSystemApplication (1).executor": "Run",
+    "Spring Boot.IntakeSystemApplication (1).executor": "Debug",
     "git-widget-placeholder": "master",
     "ignore.virus.scanning.warn.message": "true",
     "kotlin-language-version-configured": "true",
@@ -292,7 +292,7 @@
       <workItem from="1757306335142" duration="12000" />
       <workItem from="1757327938619" duration="6317000" />
       <workItem from="1757338486823" duration="950000" />
-      <workItem from="1757382829017" duration="6503000" />
+      <workItem from="1757382829017" duration="7342000" />
     </task>
     <task id="LOCAL-00001" summary="initial">
       <option name="closed" value="true" />
@@ -355,6 +355,11 @@
           <url>file://$PROJECT_DIR$/IntakeSystem/src/main/java/com/student_online/IntakeSystem/utils/LoginUtils/SduLogin.java</url>
           <line>165</line>
           <option name="timeStamp" value="24" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/IntakeSystem/src/main/java/com/student_online/IntakeSystem/service/ScreenService.java</url>
+          <line>113</line>
+          <option name="timeStamp" value="25" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

@@ -28,7 +28,7 @@ public interface ScreenMapper {
             "u.gender like #{gender} and " +
             "u.college like #{college} and " +
             "u.major like #{major} and " +
-            "((select station_id from department where id = d.id) in ${stations}) or #{stations} = '(-1)' and " +
+            "(((select station_id from department where id = d.id) in ${stations}) or #{stations} = '(-1)') and " +
             "(t.value like #{tag} or #{tag} = '%') and " +
             "(d.id = #{department} or #{department} = -1) " +
             
