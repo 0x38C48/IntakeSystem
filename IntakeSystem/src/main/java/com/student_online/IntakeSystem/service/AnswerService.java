@@ -1,17 +1,23 @@
 package com.student_online.IntakeSystem.service;
 
 import cn.hutool.core.collection.CollUtil;
+import com.student_online.IntakeSystem.config.exception.CommonErr;
+import com.student_online.IntakeSystem.config.exception.CommonErrException;
 import com.student_online.IntakeSystem.mapper.AnswerMapper;
 import com.student_online.IntakeSystem.mapper.FinishMapper;
 import com.student_online.IntakeSystem.mapper.OptionMapper;
 import com.student_online.IntakeSystem.mapper.UserMapper;
+import com.student_online.IntakeSystem.model.constant.MAPPER;
 import com.student_online.IntakeSystem.model.dto.QuestionnaireInfoDto;
 import com.student_online.IntakeSystem.model.po.Answer;
 import com.student_online.IntakeSystem.model.po.Finish;
+import com.student_online.IntakeSystem.model.po.Questionnaire;
 import com.student_online.IntakeSystem.model.po.User;
 import com.student_online.IntakeSystem.model.vo.AnswerVo;
 import com.student_online.IntakeSystem.model.vo.Result;
+import com.student_online.IntakeSystem.utils.PermissionUtil;
 import com.student_online.IntakeSystem.utils.ResponseUtil;
+import com.student_online.IntakeSystem.utils.ThreadLocalUtil;
 import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
@@ -135,6 +141,38 @@ public class AnswerService {
         }
         return dataList;
     }
-
-
+    
+    
+    public Result estimate(int finishId, int score) {
+        Finish finish = finishMapper.getFinishById(finishId);
+        String executor = ThreadLocalUtil.get().studentNumber;
+        Questionnaire questionnaire = MAPPER.questionnaire.getQuestionnaireById(finish.getQuestionnaireId());
+        if(!PermissionUtil.check(MAPPER.user.getUserIdByUsername(executor), MAPPER.department.getDepartmentById(questionnaire.getDepartmentId()).getStationId())){
+            throw new CommonErrException(CommonErr.NO_AUTHORITY);
+        }
+        if(finish == null){
+            throw new CommonErrException(CommonErr.NO_DATA);
+        }
+        
+        if(score<0 || score>10){
+            throw new CommonErrException(CommonErr.PARAM_WRONG);
+        }
+        
+        MAPPER.finish.setScore(finishId, score);
+        return Result.ok();
+    }
+    
+    public Result getScore(int finishId) {
+        Finish finish = finishMapper.getFinishById(finishId);
+        String executor = ThreadLocalUtil.get().studentNumber;
+        Questionnaire questionnaire = MAPPER.questionnaire.getQuestionnaireById(finish.getQuestionnaireId());
+        if(!PermissionUtil.check(MAPPER.user.getUserIdByUsername(executor), MAPPER.department.getDepartmentById(questionnaire.getDepartmentId()).getStationId())){
+            throw new CommonErrException(CommonErr.NO_AUTHORITY);
+        }
+        if(finish == null){
+            throw new CommonErrException(CommonErr.NO_DATA);
+        }
+        
+        return Result.success(finish.getScore(),"获取分数成功");
+    }
 }

@@ -144,4 +144,14 @@ public class AnswerController {
             return finishService.listFinishForUser(userId);
         }else return ResponseUtil.build(Result.error(401,"无权限"));
     }
+    
+    @PostMapping("/estimate")
+    public Result estimate(@RequestParam int finishId, @RequestParam int score){
+        return answerService.estimate(finishId, score);
+    }
+    
+    @GetMapping("/score")
+    public Result getScore(@RequestParam int finishId){
+        return answerService.getScore(finishId);
+    }
 }

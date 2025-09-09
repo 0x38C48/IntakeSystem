@@ -19,7 +19,17 @@ public class MAPPER {
         screen = screenMapper;
         department = departmentMapper;
         error = errorMapper;
+        questionnaire = questionnaireMapper;
+        finish = finishMapper;
     }
+    @Resource
+    private FinishMapper finishMapper;
+    public static FinishMapper finish;
+    
+    @Resource
+    private QuestionnaireMapper questionnaireMapper;
+    public static QuestionnaireMapper questionnaire;
+    
     @Resource
     private ErrorMapper errorMapper;
     public static ErrorMapper error;

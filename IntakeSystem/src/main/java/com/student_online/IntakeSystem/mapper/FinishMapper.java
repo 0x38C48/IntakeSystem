@@ -27,4 +27,7 @@ public interface FinishMapper {
     
     @Update("update finish set questionnaire_id=#{questionnaireId},uid=#{uid} where id=#{id}")
     void updateFinish(Finish finish);
+    
+    @Update("update finish set score=#{score} where id=#{finishId}")
+    void setScore(int finishId, int score);
 }
