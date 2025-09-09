@@ -70,7 +70,7 @@ public enum CommonErr {
     STUDENT_NOT_FOUND(1003, "学生不存在"),
     COURSE_NOT_FOUND(1004, "课程不存在"),
     INVALID_STUDENT_NUMBER(1005, "学号格式错误，应为12位数字"),
-    CLAZZ_NOT_FOUND(1006, "班级不存在");
+    CLAZZ_NOT_FOUND(1006, "班级不存在"), CAPTCHA_WRONG(401, "验证码错误");
     
     
     private int code;
