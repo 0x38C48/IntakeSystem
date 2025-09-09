@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @TableName("option")
 public class Option {
-    private int optionId;
+    private Integer optionId;
 
     private Integer questionId;
 

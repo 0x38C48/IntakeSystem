@@ -35,16 +35,10 @@ public class QuestionService  {
 
     public ResponseEntity<Result> saveQuestion(List<QuestionVo> questionsDto) {
         if (questionsDto.isEmpty()) {
-            return ResponseUtil.build(Result.error(400, ""));
+            return ResponseUtil.build(Result.error(400, "未传入问题"));
         }
         // 获取问卷id
         Integer questionnaireId = questionsDto.get(0).getQuestionnaireId();
-
-        Questionnaire questionnaireById = questionnaireMapper.getQuestionnaireById(questionnaireId);
-        // 判断问卷状态
-        if (questionnaireById.getStatus() == 1) {
-            return ResponseUtil.build(Result.error(400, "问卷已经发布无法修改"));
-        }
 
         List<Question> questions = new ArrayList<>();
         for (QuestionVo dto : questionsDto) {
@@ -55,7 +49,7 @@ public class QuestionService  {
         // 保存，如果失败返回错误
         try{
             for(Question question : questions) {
-                if(questionnaireMapper.getQuestionnaireById(questionnaireId) != null) {
+                if(question.getId()!= null) {
                     questionMapper.updateQuestion(question);
                 }else questionMapper.createQuestion(question);
             }
@@ -84,7 +78,7 @@ public class QuestionService  {
         }
         if (!optionsToSave.isEmpty()) {
             for(Option option : optionsToSave) {
-                if(questionMapper.getQuestionById(option.getQuestionId()) != null) {
+                if(option.getOptionId() != null) {
                     optionMapper.updateOption(option);
                 }else optionMapper.createOption(option);
             }
