@@ -7,7 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.http.HttpStatus;
 
-@Getter
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class Result {
