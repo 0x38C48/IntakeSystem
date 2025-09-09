@@ -1,17 +1,13 @@
 package com.student_online.IntakeSystem.controller;
 
-import com.student_online.IntakeSystem.mapper.QuestionMapper;
 import com.student_online.IntakeSystem.model.constant.MAPPER;
 import com.student_online.IntakeSystem.model.po.Department;
-import com.student_online.IntakeSystem.model.po.Option;
-import com.student_online.IntakeSystem.model.po.Question;
 import com.student_online.IntakeSystem.model.po.Questionnaire;
 import com.student_online.IntakeSystem.model.vo.QuestionVo;
 import com.student_online.IntakeSystem.model.vo.Result;
 import com.student_online.IntakeSystem.service.DepartmentService;
 import com.student_online.IntakeSystem.service.PermissionService;
 import com.student_online.IntakeSystem.service.QuestionService;
-import com.student_online.IntakeSystem.service.OptionService;
 import com.student_online.IntakeSystem.service.QuestionnaireService;
 import com.student_online.IntakeSystem.utils.ResponseUtil;
 import com.student_online.IntakeSystem.utils.ThreadLocalUtil;
@@ -36,8 +32,6 @@ public class QuestionnaireController {
     private PermissionService permissionService;
     @Autowired
     private DepartmentService departmentService;
-    @Autowired
-    private OptionService optionService;
 
     @PostMapping("/edit")//编辑部门问卷基本信息
     public ResponseEntity<Result> editQuestionnaire(@RequestParam int departmentId, @RequestBody Questionnaire questionnaire) {
@@ -61,7 +55,7 @@ public class QuestionnaireController {
 
 
     @PostMapping("/delete/questions")//删除部门问卷题目
-    public ResponseEntity<Result> editQuestions(@RequestParam Integer questionId,@RequestParam Integer departmentId) {
+    public ResponseEntity<Result> deleteQuestions(@RequestParam Integer questionId,@RequestParam Integer departmentId) {
         String username = ThreadLocalUtil.get().studentNumber;
         String uid = MAPPER.user.getUserIdByUsername(username) + "";
         int stationId=departmentService.getStationId(departmentId);
