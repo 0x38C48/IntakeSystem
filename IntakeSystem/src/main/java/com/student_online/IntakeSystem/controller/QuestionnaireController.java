@@ -1,9 +1,7 @@
 package com.student_online.IntakeSystem.controller;
 
-import com.student_online.IntakeSystem.mapper.QuestionMapper;
 import com.student_online.IntakeSystem.model.constant.MAPPER;
 import com.student_online.IntakeSystem.model.po.Department;
-import com.student_online.IntakeSystem.model.po.Question;
 import com.student_online.IntakeSystem.model.po.Questionnaire;
 import com.student_online.IntakeSystem.model.vo.QuestionVo;
 import com.student_online.IntakeSystem.model.vo.Result;
@@ -34,8 +32,6 @@ public class QuestionnaireController {
     private PermissionService permissionService;
     @Autowired
     private DepartmentService departmentService;
-    @Autowired
-    private QuestionMapper questionMapper;
 
     @PostMapping("/edit")//编辑部门问卷基本信息
     public ResponseEntity<Result> editQuestionnaire(@RequestParam int departmentId, @RequestBody Questionnaire questionnaire) {
@@ -47,7 +43,7 @@ public class QuestionnaireController {
         }else return ResponseUtil.build(Result.error(401,"无权限"));
     }
 
-    @PostMapping("/edit/questions")//编辑部门问卷题目
+    @PostMapping("/edit/questions")//更新或创建部门问卷题目
     public ResponseEntity<Result> editQuestions(@RequestBody List<QuestionVo> questions,@RequestParam int departmentId) {
         String username = ThreadLocalUtil.get().studentNumber;
         String uid = MAPPER.user.getUserIdByUsername(username) + "";
@@ -57,8 +53,9 @@ public class QuestionnaireController {
         }else return ResponseUtil.build(Result.error(401,"无权限"));
     }
 
+
     @PostMapping("/delete/questions")//删除部门问卷题目
-    public ResponseEntity<Result> editQuestions(@RequestParam Integer questionId,@RequestParam Integer departmentId) {
+    public ResponseEntity<Result> deleteQuestions(@RequestParam Integer questionId,@RequestParam Integer departmentId) {
         String username = ThreadLocalUtil.get().studentNumber;
         String uid = MAPPER.user.getUserIdByUsername(username) + "";
         int stationId=departmentService.getStationId(departmentId);
@@ -66,6 +63,8 @@ public class QuestionnaireController {
             return questionService.deleteQuestion(questionId);
         }else return ResponseUtil.build(Result.error(401,"无权限"));
     }
+
+
 
     @PostMapping("/delete")//删除部门问卷
     public ResponseEntity<Result> deleteQuestionnaire(@RequestParam int departmentId) {
@@ -77,7 +76,7 @@ public class QuestionnaireController {
         }else return ResponseUtil.build(Result.error(401,"无权限"));
     }
 
-    @PostMapping("/publish")
+    @PostMapping("/publish")//发布问卷
     public ResponseEntity<Result> publishQuestionnaire(@RequestParam int questionnaireId) {
         String username = ThreadLocalUtil.get().studentNumber;
         String uid = MAPPER.user.getUserIdByUsername(username) + "";
@@ -99,4 +98,6 @@ public class QuestionnaireController {
     public ResponseEntity<Result> getQuestionnaireById(@RequestParam int questionnaireId){
         return questionnaireService.getQuestionnaireById(questionnaireId);
     }
+
+
 }

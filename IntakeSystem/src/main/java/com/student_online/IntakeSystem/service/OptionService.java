@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 
 @Service
 public class OptionService  {
@@ -20,7 +21,7 @@ public class OptionService  {
     @Autowired
     private QuestionMapper questionMapper;
 
-    ResponseEntity<Result>  getOptionByQuestionId(Integer questionId) {
+    public ResponseEntity<Result>  getOptionByQuestionId(Integer questionId) {
         Question question = questionMapper.getQuestionById(questionId);
         if(question.getType()==3)return ResponseUtil.build(Result.error(400,"这个问题不是选择题"));
         else{
@@ -31,21 +32,42 @@ public class OptionService  {
         }
     }
 
-    ResponseEntity<Result> deleteOption(Integer questionId, Integer sort) {
+    public ResponseEntity<Result> deleteOption(Integer optionId) {
         try{
-            optionMapper.deleteOptionByQuestionIdAndSort(questionId,sort);
+            optionMapper.deleteOptionById(optionId);
             return ResponseUtil.build(Result.ok());
         }catch (Exception e){
             return ResponseUtil.build(Result.error(400,"删除失败"));
         }
     }
 
-    ResponseEntity<Result> deleteOption(Integer questionId) {
+    public ResponseEntity<Result> updateOption(Option option) {
         try{
-            optionMapper.deleteOptionByQuestionId(questionId);
+            Integer questionId = option.getQuestionId();
+            List<Option> optionList = optionMapper.getOptionByQuestionId(questionId);
+            for (Option option1 : optionList) {
+                if (Objects.equals(option1.getOptionSort(), option.getOptionSort())&& !Objects.equals(option.getOptionId(), option1.getOptionId()))ResponseUtil.build(Result.error(400,"这个选项序号和已有选项冲突"));
+            }
+            optionMapper.updateOption(option);
             return ResponseUtil.build(Result.ok());
         }catch (Exception e){
-            return ResponseUtil.build(Result.error(400,"删除失败"));
+            return ResponseUtil.build(Result.error(400,"更新失败"));
         }
     }
+
+    public ResponseEntity<Result> createOption(Option option) {
+        try{
+            Integer questionId = option.getQuestionId();
+            List<Option> optionList = optionMapper.getOptionByQuestionId(questionId);
+            for (Option option1 : optionList) {
+                if (Objects.equals(option1.getOptionSort(), option.getOptionSort()))ResponseUtil.build(Result.error(400,"这个选项序号和已有选项冲突"));
+            }
+            optionMapper.createOption(option);
+            return ResponseUtil.build(Result.ok());
+        }catch (Exception e){
+            return ResponseUtil.build(Result.error(400,"创建失败"));
+        }
+    }
+
+
 }
