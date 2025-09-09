@@ -13,11 +13,14 @@ public interface OptionMapper {
     @Delete("delete from `option` where question_id=#{id}")
     void deleteOptionByQuestionId(int id);
 
-    @Delete("delete from `option` where question_id=#{id} and option_sort=#{sort}")
-    void deleteOptionByQuestionIdAndSort(@Param("id") int id,@Param("sort") int sort);
+    @Delete("delete from `option` where question_id=#{id}")
+    void deleteOptionById(int id);
 
     @Select("select * from `option` where question_id=#{questionId}")
     List<Option> getOptionByQuestionId(int questionId);
+
+    @Select("select option_content from `option` where option_id=#{optionId}")
+    String getContentById(int optionId);
 
     @Update("update `option` set question_id=#{questionId},option_sort=#{optionSort},option_content=#{optionContent} where option_id=#{optionId}")
     void updateOption(Option option);

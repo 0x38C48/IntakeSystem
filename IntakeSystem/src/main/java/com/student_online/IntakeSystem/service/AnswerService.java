@@ -2,7 +2,13 @@ package com.student_online.IntakeSystem.service;
 
 import cn.hutool.core.collection.CollUtil;
 import com.student_online.IntakeSystem.mapper.AnswerMapper;
+import com.student_online.IntakeSystem.mapper.FinishMapper;
+import com.student_online.IntakeSystem.mapper.OptionMapper;
+import com.student_online.IntakeSystem.mapper.UserMapper;
+import com.student_online.IntakeSystem.model.dto.QuestionnaireInfoDto;
 import com.student_online.IntakeSystem.model.po.Answer;
+import com.student_online.IntakeSystem.model.po.Finish;
+import com.student_online.IntakeSystem.model.po.User;
 import com.student_online.IntakeSystem.model.vo.AnswerVo;
 import com.student_online.IntakeSystem.model.vo.Result;
 import com.student_online.IntakeSystem.utils.ResponseUtil;
@@ -13,6 +19,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -22,7 +30,13 @@ public class AnswerService {
 
     @Autowired
     private SqlSessionFactory sqlSessionFactory;
-    
+    @Autowired
+    private FinishMapper finishMapper;
+    @Autowired
+    private UserMapper userMapper;
+    @Autowired
+    private OptionMapper optionMapper;
+
     @Transactional
     public ResponseEntity<Result> saveAnswer(AnswerVo answerVo, Integer finishId) {
 
@@ -99,6 +113,28 @@ public class AnswerService {
         }
         else return ResponseUtil.build(Result.error(404,"找不到回答列表"));
     }
-    
+
+
+    public List<QuestionnaireInfoDto> dataCollect(Integer questionnaireId) {
+        List<QuestionnaireInfoDto> dataList = new ArrayList<>();
+        List<Finish>finishes=finishMapper.getFinishByQuestionnaireId(questionnaireId);
+        for (Finish finish : finishes) {
+            QuestionnaireInfoDto questionnaireInfoDto = new QuestionnaireInfoDto();
+            User user=userMapper.getUserByUid(finish.getUid());
+            questionnaireInfoDto.setUsername(user.getUsername());
+            questionnaireInfoDto.setName(user.getName());
+            questionnaireInfoDto.setUpdateTime(finish.getUpdateTime());
+            List<Answer> answerList=answerMapper.getAnswerByFinishId(finish.getId());
+            List<String> answerContents=new ArrayList<>();
+            for (Answer answer : answerList) {
+                String answerContent=answer.getAnswerContent()!=null?(answer.getAnswerContent()):(optionMapper.getContentById(answer.getOptionId()));
+                answerContents.add(answerContent);
+            }
+            questionnaireInfoDto.setAnswerContent(answerContents);
+            dataList.add(questionnaireInfoDto);
+        }
+        return dataList;
+    }
+
 
 }
