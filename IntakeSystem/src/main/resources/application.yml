@@ -10,7 +10,7 @@ spring:
       port: 6379
       password: "{Oh7LYRvu4qNKG-bie9cSwQIAJ8FX_~6t0Ck/@10ys}84xf155(j93P6Vzm7E+[2"
   profiles:
-    active: dev
+    active: prod
   servlet:
     multipart:
       max-file-size: 10MB
