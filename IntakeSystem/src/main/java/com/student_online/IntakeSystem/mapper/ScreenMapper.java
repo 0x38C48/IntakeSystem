@@ -12,7 +12,7 @@ import java.util.Objects;
 @Mapper
 public interface ScreenMapper {
     
-    @Select("SELECT u.name,u.username,u.gender,u.college,u.major,u.email,t.value as tag ,d.name as depart,d.id as departId, f.questionnaire_id,f.id as finishId FROM user u " +
+    @Select("SELECT u.name,u.username,u.gender,u.college,u.major,u.email,t.value as tag ,d.name as depart,d.id as departId, f.questionnaire_id,f.id as finishId,f.score FROM user u " +
             "JOIN finish f " +
             "ON f.uid = u.uid " +
             "JOIN department d ON " +
