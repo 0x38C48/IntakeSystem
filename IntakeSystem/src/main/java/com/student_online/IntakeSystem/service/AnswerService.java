@@ -131,12 +131,7 @@ public class AnswerService {
             questionnaireInfoDto.setName(user.getName());
             questionnaireInfoDto.setUpdateTime(finish.getUpdateTime());
             List<Answer> answerList=answerMapper.getAnswerByFinishId(finish.getId());
-            List<String> answerContents=new ArrayList<>();
-            for (Answer answer : answerList) {
-                String answerContent=answer.getAnswerContent()!=null?(answer.getAnswerContent()):(optionMapper.getContentById(answer.getOptionId()));
-                answerContents.add(answerContent);
-            }
-            questionnaireInfoDto.setAnswerContent(answerContents);
+            questionnaireInfoDto.setAnswers(answerList);
             dataList.add(questionnaireInfoDto);
         }
         return dataList;

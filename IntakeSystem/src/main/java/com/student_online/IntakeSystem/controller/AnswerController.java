@@ -2,6 +2,7 @@ package com.student_online.IntakeSystem.controller;
 
 import com.student_online.IntakeSystem.mapper.QuestionnaireMapper;
 import com.student_online.IntakeSystem.model.constant.MAPPER;
+import com.student_online.IntakeSystem.model.dto.QuestionnaireInfoDto;
 import com.student_online.IntakeSystem.model.po.*;
 import com.student_online.IntakeSystem.model.vo.AnswerVo;
 import com.student_online.IntakeSystem.model.vo.QuestionVo;
@@ -11,10 +12,13 @@ import com.student_online.IntakeSystem.utils.ResponseUtil;
 import com.student_online.IntakeSystem.utils.ThreadLocalUtil;
 import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
+import java.net.URLEncoder;
 import java.util.List;
 import java.util.Objects;
 
@@ -38,6 +42,9 @@ public class AnswerController {
 
     @Autowired
     private DepartmentService departmentService;
+
+    @Autowired
+    private QuestionnaireExporterService exporter;
     
     @Resource
     private QuestionnaireService questionnaireService;
@@ -153,5 +160,11 @@ public class AnswerController {
     @GetMapping("/score")
     public Result getScore(@RequestParam int finishId){
         return answerService.getScore(finishId);
+    }
+
+    @GetMapping("/export_data")
+    public void exportDynamicQuestionnaire(HttpServletResponse response,@RequestParam Integer questionnaireId) throws IOException {
+        List<QuestionnaireInfoDto> dataList = answerService.dataCollect(questionnaireId);
+        exporter.export(response, dataList);
     }
 }
