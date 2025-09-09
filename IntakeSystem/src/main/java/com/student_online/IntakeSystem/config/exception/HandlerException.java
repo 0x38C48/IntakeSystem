@@ -85,7 +85,7 @@ public class HandlerException {
     public Result error(ParamCheckException e) {
         System.out.println(e.getMessage());
         logError(e);
-        return e.toResult();
+        return Result.error(CommonErr.PARAM_WRONG);
     }
     @ExceptionHandler(MethodArgumentTypeMismatchException.class)
     public Result error(MethodArgumentTypeMismatchException e) {
@@ -125,7 +125,7 @@ public class HandlerException {
     public Result error(RuntimeException e) {
         e.printStackTrace();
         logError(e);
-        return Result.error(String.valueOf(e),401);
+        return Result.error("未知错误,请联系开发人员",500);
     }
     
     @ExceptionHandler(Exception.class)
