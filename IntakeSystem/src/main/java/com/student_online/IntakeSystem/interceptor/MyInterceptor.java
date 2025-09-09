@@ -77,24 +77,24 @@ public class MyInterceptor implements HandlerInterceptor {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        try {
-            error.setBody(readRequestBody(request));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+//        try {
+//            error.setBody(readRequestBody(request));
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
         
         ThreadLocalUtil.setError(error);
         return true;
     }
     
-    private static String readRequestBody(HttpServletRequest request) throws IOException {
-        StringBuilder requestBody = new StringBuilder();
-        try (BufferedReader reader = new BufferedReader(new InputStreamReader(request.getInputStream(), StandardCharsets.UTF_8))) {
-            String line;
-            while ((line = reader.readLine()) != null) {
-                requestBody.append(line);
-            }
-        }
-        return requestBody.toString();
-    }
+//    private static String readRequestBody(HttpServletRequest request) throws IOException {
+//        StringBuilder requestBody = new StringBuilder();
+//        try (BufferedReader reader = new BufferedReader(new InputStreamReader(request.getInputStream(), StandardCharsets.UTF_8))) {
+//            String line;
+//            while ((line = reader.readLine()) != null) {
+//                requestBody.append(line);
+//            }
+//        }
+//        return requestBody.toString();
+//    }
 }

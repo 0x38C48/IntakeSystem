@@ -1,6 +1,6 @@
 server:
   domain: localhost
-  port: 8081
+  port: 8000
 
 spring:
   servlet:
