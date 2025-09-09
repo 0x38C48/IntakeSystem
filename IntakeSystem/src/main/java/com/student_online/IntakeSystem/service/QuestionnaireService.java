@@ -45,8 +45,7 @@ public class QuestionnaireService {
         log.info("添加或更新问卷表基本信息服务");
         // 标题去空格
         questionnaire.setTitle(questionnaire.getTitle().trim());
-        
-        // 根据departmentId
+
         
         // 是否更新操作，排除自己重复情况
         if (questionnaireMapper.getQuestionnaireByDepartmentId(departmentId) != null) {

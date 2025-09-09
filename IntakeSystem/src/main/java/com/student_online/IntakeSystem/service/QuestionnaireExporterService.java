@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -29,8 +30,8 @@ public class QuestionnaireExporterService {
     public void export(HttpServletResponse response, List<QuestionnaireInfoDto> dataList) throws IOException {
         // 1. 收集所有出现的问题ID
         Set<Integer> allQuestionIds = dataList.stream()
-                .flatMap(dto -> dto.getAnswers() == null ? Stream.empty() :
-                        dto.getAnswers().stream().map(Answer::getQuestionId))
+                .flatMap(QuestionnaireInfoDto -> QuestionnaireInfoDto.getAnswers() == null ? Stream.empty() :
+                        QuestionnaireInfoDto.getAnswers().stream().map(Answer::getQuestionId))
                 .collect(Collectors.toSet());
 
         List<Question> questions=new ArrayList<>();
@@ -57,13 +58,13 @@ public class QuestionnaireExporterService {
         headers.add(List.of("更新时间"));
 
         // 5. 准备数据行
-        List<Map<String, String>> rows = dataList.stream().map(dto -> {
+        List<Map<String, String>> rows = dataList.stream().map(QuestionnaireInfoDto -> {
             Map<String, String> row = new LinkedHashMap<>();
-            row.put("用户名", dto.getUsername());
-            row.put("姓名", dto.getName());
+            row.put("用户名", QuestionnaireInfoDto.getUsername());
+            row.put("姓名", QuestionnaireInfoDto.getName());
             // 先将用户的回答按问题ID分组
-            Map<Integer, String> userAnswers = dto.getAnswers() == null ? new HashMap<>() :
-                    dto.getAnswers().stream()
+            Map<Integer, String> userAnswers = QuestionnaireInfoDto.getAnswers() == null ? new HashMap<>() :
+                    QuestionnaireInfoDto.getAnswers().stream()
                             .collect(Collectors.toMap(
                                     Answer::getQuestionId,
                                     answer -> {
@@ -83,14 +84,14 @@ public class QuestionnaireExporterService {
                 row.put(questionContents.get(questionId), userAnswers.getOrDefault(questionId, ""));
             });
 
-            row.put("更新时间", dto.getUpdateTime().toString());
+            row.put("更新时间", QuestionnaireInfoDto.getUpdateTime().toString());
             return row;
         }).collect(Collectors.toList());
 
         // 6. 导出Excel
-        response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+        response.setContentType("application/vnd.ms-excel");
         response.setCharacterEncoding("utf-8");
-        String fileName = URLEncoder.encode("问卷数据", "UTF-8").replaceAll("\\+", "%20");
+        String fileName = URLEncoder.encode("问卷数据", StandardCharsets.UTF_8).replaceAll("\\+", "%20");
         response.setHeader("Content-disposition", "attachment;filename*=utf-8''" + fileName + ".xlsx");
 
         EasyExcel.write(response.getOutputStream())
