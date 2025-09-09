@@ -163,8 +163,19 @@ public class AnswerController {
     }
 
     @GetMapping("/export_data")
-    public void exportDynamicQuestionnaire(HttpServletResponse response,@RequestParam Integer questionnaireId) throws IOException {
-        List<QuestionnaireInfoDto> dataList = answerService.dataCollect(questionnaireId);
-        exporter.export(response, dataList);
+    public ResponseEntity<Result> exportDynamicQuestionnaire(HttpServletResponse response,@RequestParam Integer questionnaireId) {
+        try {
+            String username = ThreadLocalUtil.get().studentNumber;
+            String uid = MAPPER.user.getUserIdByUsername(username) + "";
+            Questionnaire questionnaire= (Questionnaire) Objects.requireNonNull(questionnaireService.getQuestionnaireById(questionnaireId).getBody()).getData();
+            Department department= (Department) Objects.requireNonNull(departmentService.getDepartmentById(questionnaire.getDepartmentId(),null).getBody()).getData();
+            if(permissionService.isPermitted(department.getStationId(),Integer.parseInt(uid))){
+                List<QuestionnaireInfoDto> dataList = answerService.dataCollect(questionnaireId);
+                exporter.export(response, dataList);
+                return ResponseUtil.build(Result.ok());
+            }else return ResponseUtil.build(Result.error(401,"无权限"));
+        }catch (Exception e) {
+            return ResponseUtil.build(Result.error(500, "输出异常"));
+        }
     }
 }
