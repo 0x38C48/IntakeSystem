@@ -89,14 +89,8 @@ public class QuestionService  {
         return ResponseUtil.build(Result.ok());
     }
 
-    public List<QuestionVo> getSingleQuestions(Integer questionnaireId) {
-        // 获取所有
-        List<QuestionVo> questions = getQuestions(questionnaireId);
-        // 排除多选和客观题
-        questions.removeIf(questionVo -> questionVo.getType() == 3
-                || questionVo.getType() == 2);
-
-        return questions;
+    public String getQuestionContentById(Integer questionId) {
+        return questionMapper.getQuestionContentById(questionId);
     }
 
 
