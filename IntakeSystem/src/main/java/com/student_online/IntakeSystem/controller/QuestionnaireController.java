@@ -59,25 +59,6 @@ public class QuestionnaireController {
         }else return ResponseUtil.build(Result.error(401,"无权限"));
     }
 
-    @PostMapping("/create/options")//创建部门问卷选项
-    public ResponseEntity<Result> createOption(@RequestBody Option option, @RequestParam int departmentId) {
-        String username = ThreadLocalUtil.get().studentNumber;
-        String uid = MAPPER.user.getUserIdByUsername(username) + "";
-        int stationId=departmentService.getStationId(departmentId);
-        if(permissionService.isPermitted(stationId,Integer.parseInt(uid))){
-            return optionService.createOption(option);
-        }else return ResponseUtil.build(Result.error(401,"无权限"));
-    }
-
-    @PostMapping("/edit/options")//更新部门问卷选项
-    public ResponseEntity<Result> editQuestions(@RequestBody Option option, @RequestParam int departmentId) {
-        String username = ThreadLocalUtil.get().studentNumber;
-        String uid = MAPPER.user.getUserIdByUsername(username) + "";
-        int stationId=departmentService.getStationId(departmentId);
-        if(permissionService.isPermitted(stationId,Integer.parseInt(uid))){
-            return optionService.updateOption(option);
-        }else return ResponseUtil.build(Result.error(401,"无权限"));
-    }
 
     @PostMapping("/delete/questions")//删除部门问卷题目
     public ResponseEntity<Result> editQuestions(@RequestParam Integer questionId,@RequestParam Integer departmentId) {
@@ -89,15 +70,7 @@ public class QuestionnaireController {
         }else return ResponseUtil.build(Result.error(401,"无权限"));
     }
 
-    @PostMapping("/delete/options")//删除部门问卷选项
-    public ResponseEntity<Result> editOptions(@RequestParam Integer optionId,@RequestParam Integer departmentId) {
-        String username = ThreadLocalUtil.get().studentNumber;
-        String uid = MAPPER.user.getUserIdByUsername(username) + "";
-        int stationId=departmentService.getStationId(departmentId);
-        if(permissionService.isPermitted(stationId,Integer.parseInt(uid))){
-            return optionService.deleteOption(optionId);
-        }else return ResponseUtil.build(Result.error(401,"无权限"));
-    }
+
 
     @PostMapping("/delete")//删除部门问卷
     public ResponseEntity<Result> deleteQuestionnaire(@RequestParam int departmentId) {
@@ -132,8 +105,5 @@ public class QuestionnaireController {
         return questionnaireService.getQuestionnaireById(questionnaireId);
     }
 
-    @GetMapping("/view/options")//查看问题选项
-    public ResponseEntity<Result> getOptionByQuestion(@RequestParam int questionId) {
-        return optionService.getOptionByQuestionId(questionId);
-    }
+
 }
