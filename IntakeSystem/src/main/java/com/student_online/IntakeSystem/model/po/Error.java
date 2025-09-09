@@ -14,4 +14,6 @@ public class Error {
     private String content;
     private String category;
     private String stacktrace;
+    private String param;
+    private String body;
 }

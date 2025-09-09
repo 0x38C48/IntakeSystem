@@ -1,5 +1,6 @@
 package com.student_online.IntakeSystem.interceptor;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.student_online.IntakeSystem.model.po.Error;
 import com.student_online.IntakeSystem.utils.JwtUtil;
 import com.student_online.IntakeSystem.utils.ThreadLocalUtil;
@@ -8,6 +9,14 @@ import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
+import java.util.Collections;
+import java.util.Enumeration;
+import java.util.List;
+import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -47,7 +56,45 @@ public class MyInterceptor implements HandlerInterceptor {
         }
         error.setUrl(url);
         
+        try {
+            String param = "";
+            Enumeration<String> paramNames = request.getParameterNames();
+            for (String paramName : Collections.list(paramNames)) {
+                String PV = paramName + "=";
+                if(paramName.contains("password")){
+                    PV += "********";
+                    param += PV + "\n";
+                    continue;
+                }
+                
+                String[] values = request.getParameterValues(paramName);
+                for (String value : values) {
+                    PV += value;
+                }
+                param += PV + "\n";
+            }
+            error.setParam(param);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        try {
+            error.setBody(readRequestBody(request));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        
         ThreadLocalUtil.setError(error);
         return true;
+    }
+    
+    private static String readRequestBody(HttpServletRequest request) throws IOException {
+        StringBuilder requestBody = new StringBuilder();
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(request.getInputStream(), StandardCharsets.UTF_8))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                requestBody.append(line);
+            }
+        }
+        return requestBody.toString();
     }
 }

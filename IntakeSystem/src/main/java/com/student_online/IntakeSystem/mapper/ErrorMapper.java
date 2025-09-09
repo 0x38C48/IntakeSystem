@@ -7,6 +7,6 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface ErrorMapper {
     
-    @Insert("INSERT INTO error (content, category, stacktrace,url,username) VALUES (#{content}, #{category}, #{stacktrace}, #{url}, #{username})")
+    @Insert("INSERT INTO error (content, category, stacktrace,url,username,param,body) VALUES (#{content}, #{category}, #{stacktrace}, #{url}, #{username}, #{param}, #{body})")
     void log(Error error);
 }
