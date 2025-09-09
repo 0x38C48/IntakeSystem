@@ -10,6 +10,6 @@ import java.util.List;
 public class QuestionnaireInfoDto {
     private String username;
     private String name;
-    List<Answer> answers;
+    private List<Answer> answers;
     private LocalDateTime updateTime;
 }
