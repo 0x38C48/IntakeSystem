@@ -13,7 +13,7 @@ public interface OptionMapper {
     @Delete("delete from `option` where question_id=#{id}")
     void deleteOptionByQuestionId(int id);
 
-    @Delete("delete from `option` where question_id=#{id}")
+    @Delete("delete from `option` where option_id=#{id}")
     void deleteOptionById(int id);
 
     @Select("select * from `option` where question_id=#{questionId}")
