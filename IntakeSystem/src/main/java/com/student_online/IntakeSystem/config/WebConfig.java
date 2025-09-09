@@ -1,10 +1,13 @@
 package com.student_online.IntakeSystem.config;
 
 import com.student_online.IntakeSystem.interceptor.MyInterceptor;
+import com.student_online.IntakeSystem.interceptor.RequestCachingFilter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
@@ -33,6 +36,16 @@ public class WebConfig implements WebMvcConfigurer {
     private String departPathAccess;
     
     private static final Logger logger = LoggerFactory.getLogger(WebConfig.class);
+    
+    // 注册过滤器
+    @Bean
+    public FilterRegistrationBean<RequestCachingFilter> requestCachingFilter() {
+        FilterRegistrationBean<RequestCachingFilter> registrationBean = new FilterRegistrationBean<>();
+        registrationBean.setFilter(new RequestCachingFilter());
+        registrationBean.addUrlPatterns("/*");
+        registrationBean.setOrder(1);
+        return registrationBean;
+    }
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {

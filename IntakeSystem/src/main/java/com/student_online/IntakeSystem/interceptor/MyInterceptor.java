@@ -77,6 +77,10 @@ public class MyInterceptor implements HandlerInterceptor {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        if (request instanceof CachedBodyHttpServletRequest) {
+            String requestBody = ((CachedBodyHttpServletRequest) request).getCachedBody();
+            error.setBody(requestBody);
+        }
 //        try {
 //            error.setBody(readRequestBody(request));
 //        } catch (IOException e) {
