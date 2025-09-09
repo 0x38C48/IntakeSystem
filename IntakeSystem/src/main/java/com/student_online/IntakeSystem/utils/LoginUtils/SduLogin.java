@@ -212,7 +212,7 @@ public class SduLogin {
             }
             case "codeErr" -> {
 //                System.out.println("验证码有误");
-                throw new RuntimeException();
+                throw new CommonErrException(CommonErr.CAPTCHA_WRONG);
             }
             case "timeout" -> {
 //                System.out.println("验证码超时");

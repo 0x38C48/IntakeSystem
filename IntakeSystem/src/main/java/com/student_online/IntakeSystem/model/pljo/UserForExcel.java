@@ -20,6 +20,8 @@ public class UserForExcel {
     private String major;
     @ExcelProperty("学院")
     private String college;
+    @ExcelProperty("评分")
+    private Integer score;
     @ExcelProperty("标签")
     private String tag;
     
@@ -32,5 +34,6 @@ public class UserForExcel {
         major = (String) map.get("major");
         college = (String) map.get("college");
         tag =  map.get("tag") != null ? (String) map.get("tag") : "无";
+        score = map.get("score") != null ? (Integer) map.get("score") : -1;
     }
 }

@@ -58,11 +58,11 @@ public class ExcelService {
             dataList.add(userForExcel);
         }
         
-        FastExcel.write("excel/" + fileName, UserForExcel.class)
+        FastExcel.write("/app/excel/" + fileName, UserForExcel.class)
                 .sheet(department.getName())
                 .doWrite(dataList);
         
-        File file = new File("excel/" + fileName);
+        File file = new File("/app/excel/" + fileName);
         FileSystemResource resource = new FileSystemResource(file);
         
         // 设置响应头
