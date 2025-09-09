@@ -1,11 +1,15 @@
 package com.student_online.IntakeSystem.interceptor;
 
+import com.student_online.IntakeSystem.model.po.Error;
 import com.student_online.IntakeSystem.utils.JwtUtil;
 import com.student_online.IntakeSystem.utils.ThreadLocalUtil;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @Component
 public class MyInterceptor implements HandlerInterceptor {
@@ -32,6 +36,18 @@ public class MyInterceptor implements HandlerInterceptor {
             return false;
         }
         ThreadLocalUtil.set(claims);
+        Error error = new Error();
+        error.setUsername(claims.studentNumber);
+        
+        Pattern pattern = Pattern.compile("(?<=(https://i.sdu.edu.cn/XSZX/NXXT/api|http://127.0.0.1:8081)).*");
+        Matcher matcher = pattern.matcher(request.getRequestURI());
+        String url = request.getRequestURI();
+        if(matcher.find()) {
+             url= matcher.group();
+        }
+        error.setUrl(url);
+        
+        ThreadLocalUtil.setError(error);
         return true;
     }
 }

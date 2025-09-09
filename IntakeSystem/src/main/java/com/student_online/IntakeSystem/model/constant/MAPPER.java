@@ -18,7 +18,12 @@ public class MAPPER {
         tag = tagMapper;
         screen = screenMapper;
         department = departmentMapper;
+        error = errorMapper;
     }
+    @Resource
+    private ErrorMapper errorMapper;
+    public static ErrorMapper error;
+    
     @Resource
     private DepartmentMapper departmentMapper;
     public static DepartmentMapper department;

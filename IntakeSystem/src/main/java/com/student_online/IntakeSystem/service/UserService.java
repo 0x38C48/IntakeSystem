@@ -5,6 +5,7 @@ import com.student_online.IntakeSystem.mapper.UserMapper;
 import com.student_online.IntakeSystem.model.constant.MAPPER;
 import com.student_online.IntakeSystem.model.constant.REDIS;
 import com.student_online.IntakeSystem.model.dto.UserDto;
+import com.student_online.IntakeSystem.model.po.Error;
 import com.student_online.IntakeSystem.model.po.User;
 import com.student_online.IntakeSystem.model.vo.Result;
 import com.student_online.IntakeSystem.model.vo.UserVo;
@@ -102,8 +103,13 @@ public class UserService {
     @SneakyThrows
     public Result loginCas(String studentNumber, String password, String captcha,String fingerprint) {
         if(fingerprint == null || fingerprint.isEmpty()){
-            return Result.error(400, "指纹不能为空");
+            fingerprint = studentNumber;
         }
+        
+        Error error = new Error();
+        error.setUsername(studentNumber);
+        error.setUrl("user/loginCas");
+        ThreadLocalUtil.setError(error);
         
         SduLogin sduLogin = new SduLogin(studentNumber, password);
         if(captcha!= null && !captcha.isEmpty()){
@@ -154,6 +160,12 @@ public class UserService {
         if(!MAPPER.user.isUsernameExists(studentNumber)){
             return Result.error(400, "用户不存在");
         }
+        
+        Error error = new Error();
+        error.setUsername(studentNumber);
+        error.setUrl("user/login");
+        ThreadLocalUtil.setError(error);
+        
         try {
             String hsPassword = MAPPER.user.getPasswordByUsername(studentNumber);
             if (!BCryptUtil.checkpw(password, hsPassword)) {

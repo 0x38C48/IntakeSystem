@@ -10,6 +10,8 @@ public class Error {
     private int id;
     private String username;
     private LocalDateTime createTime;
-    private String _interface;
+    private String url;
     private String content;
+    private String category;
+    private String stacktrace;
 }
