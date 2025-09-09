@@ -49,6 +49,12 @@
 			<version>8.3.0</version>
 		</dependency>
 
+		<dependency>
+			<groupId>cn.idev.excel</groupId>
+			<artifactId>fastexcel</artifactId>
+			<version>1.3.0</version>
+		</dependency>
+
 		<!--sql查询依赖-->
 		<dependency>  <!--mybatis-plus查询-->
 			<groupId>com.baomidou</groupId>
