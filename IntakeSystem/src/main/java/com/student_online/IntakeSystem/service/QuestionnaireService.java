@@ -57,6 +57,7 @@ public class QuestionnaireService {
             questionnaireMapper.createQuestionnaire(questionnaire);
             return ResponseUtil.build(Result.ok());
         }catch (Exception e) {
+            e.printStackTrace();
             return ResponseUtil.build(Result.error(400, "编辑问卷失败"));
         }
     }
