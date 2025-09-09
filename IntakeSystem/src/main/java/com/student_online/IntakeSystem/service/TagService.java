@@ -2,6 +2,8 @@ package com.student_online.IntakeSystem.service;
 
 import com.student_online.IntakeSystem.config.exception.CommonErr;
 import com.student_online.IntakeSystem.model.constant.MAPPER;
+import com.student_online.IntakeSystem.model.po.Department;
+import com.student_online.IntakeSystem.model.po.Station;
 import com.student_online.IntakeSystem.model.po.Tag;
 import com.student_online.IntakeSystem.model.vo.Result;
 import com.student_online.IntakeSystem.utils.ThreadLocalUtil;
@@ -15,7 +17,10 @@ public class TagService {
     
     public Result create(String username, String value, int departId) {
         int executor = MAPPER.user.getUserIdByUsername(ThreadLocalUtil.get().studentNumber);
-        if(!permissionService.isPermitted(departId, executor)){
+        
+        Department department = MAPPER.department.getDepartmentById(departId);
+        
+        if(!permissionService.isPermitted(department.getStationId(), executor)){
             return Result.error(CommonErr.NO_AUTHORITY);
         }
         int uid = MAPPER.user.getUserIdByUsername(username);
@@ -32,7 +37,8 @@ public class TagService {
     
     public Result view(String username, int departId) {
         int executor = MAPPER.user.getUserIdByUsername(ThreadLocalUtil.get().studentNumber);
-        if(!permissionService.isPermitted(departId, executor)){
+        Department department = MAPPER.department.getDepartmentById(departId);
+        if(!permissionService.isPermitted(department.getStationId(), executor)){
             return Result.error(CommonErr.NO_AUTHORITY);
         }
         
@@ -45,7 +51,8 @@ public class TagService {
         Tag tag = MAPPER.tag.getById(tagId);
         
         int executor = MAPPER.user.getUserIdByUsername(ThreadLocalUtil.get().studentNumber);
-        if(!permissionService.isPermitted(tag.getDepartId(), executor)){
+        Department department = MAPPER.department.getDepartmentById(tag.getDepartId());
+        if(!permissionService.isPermitted(department.getStationId(), executor)){
             return Result.error(CommonErr.NO_AUTHORITY);
         }
         

@@ -11,6 +11,7 @@ import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 import org.springframework.web.multipart.MaxUploadSizeExceededException;
 
 
@@ -57,6 +58,11 @@ public class HandlerException {
     public Result error(ParamCheckException e) {
         System.out.println(e.getMessage());
         return e.toResult();
+    }
+    @ExceptionHandler(MethodArgumentTypeMismatchException.class)
+    public Result error(MethodArgumentTypeMismatchException e) {
+        System.out.println(e.getMessage());
+        return Result.error(CommonErr.PARAM_WRONG);
     }
     
     //token解析异常
