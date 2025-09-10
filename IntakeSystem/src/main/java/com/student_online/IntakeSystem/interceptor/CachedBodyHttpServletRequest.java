@@ -45,7 +45,7 @@ public class CachedBodyHttpServletRequest extends HttpServletRequestWrapper {
         body = body.replaceAll("(?<=(p|P)assword=)[^&]*", "******");
         
         
-        return new body;
+        return body;
     }
     
     // 内部类：包装输入流
