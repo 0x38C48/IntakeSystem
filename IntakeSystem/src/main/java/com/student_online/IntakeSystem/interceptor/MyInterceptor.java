@@ -9,6 +9,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 
+import javax.xml.stream.events.Characters;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -61,7 +62,7 @@ public class MyInterceptor implements HandlerInterceptor {
             Enumeration<String> paramNames = request.getParameterNames();
             for (String paramName : Collections.list(paramNames)) {
                 String PV = paramName + "=";
-                if(paramName.contains("password")){
+                if(paramName.toLowerCase().contains("password")){
                     PV += "********";
                     param += PV + "\n";
                     continue;
