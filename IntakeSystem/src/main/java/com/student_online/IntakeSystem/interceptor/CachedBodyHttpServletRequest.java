@@ -41,7 +41,11 @@ public class CachedBodyHttpServletRequest extends HttpServletRequestWrapper {
     
     // 获取缓存的请求体字符串
     public String getCachedBody() {
-        return new String(this.cachedBody, StandardCharsets.UTF_8);
+        String body = new String(this.cachedBody, StandardCharsets.UTF_8);
+        body = body.replaceAll("(?<=(p|P)assword=)[^&]*", "******");
+        
+        
+        return new body;
     }
     
     // 内部类：包装输入流

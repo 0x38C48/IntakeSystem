@@ -47,35 +47,35 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "JUnit.IntakeSystemApplicationTests.starIdTest.executor": "Debug",
-    "JUnit.IntakeSystemApplicationTests.starTest.executor": "Debug",
-    "JUnit.IntakeSystemApplicationTests.stationTreeTest.executor": "Run",
-    "JUnit.IntakeSystemApplicationTests.stationtest.executor": "Debug",
-    "JUnit.IntakeSystemApplicationTests.testJwt.executor": "Run",
-    "Notification.DisplayName-DoNotAsk-Database detector": "数据库检测器",
-    "Notification.DoNotAsk-Database detector": "true",
-    "RequestMappingsPanelOrder0": "0",
-    "RequestMappingsPanelOrder1": "1",
-    "RequestMappingsPanelWidth0": "75",
-    "RequestMappingsPanelWidth1": "75",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "Spring Boot.IntakeSystemApplication (1).executor": "Debug",
-    "git-widget-placeholder": "master",
-    "ignore.virus.scanning.warn.message": "true",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "E:/text/javaprojects/IntakeSystem/IntakeSystem/src/main/java/com/student_online/IntakeSystem/config/exception",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "reference.projectsettings.compiler.annotationProcessors",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;JUnit.IntakeSystemApplicationTests.starIdTest.executor&quot;: &quot;Debug&quot;,
+    &quot;JUnit.IntakeSystemApplicationTests.starTest.executor&quot;: &quot;Debug&quot;,
+    &quot;JUnit.IntakeSystemApplicationTests.stationTreeTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.IntakeSystemApplicationTests.stationtest.executor&quot;: &quot;Debug&quot;,
+    &quot;JUnit.IntakeSystemApplicationTests.testJwt.executor&quot;: &quot;Run&quot;,
+    &quot;Notification.DisplayName-DoNotAsk-Database detector&quot;: &quot;数据库检测器&quot;,
+    &quot;Notification.DoNotAsk-Database detector&quot;: &quot;true&quot;,
+    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
+    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
+    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
+    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;Spring Boot.IntakeSystemApplication (1).executor&quot;: &quot;Debug&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;E:/text/javaprojects/IntakeSystem/IntakeSystem/src/main/java/com/student_online/IntakeSystem/config/exception&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;reference.projectsettings.compiler.annotationProcessors&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="ReactorSettings">
     <option name="notificationShown" value="true" />
   </component>
@@ -295,6 +295,7 @@
       <workItem from="1757403239967" duration="54000" />
       <workItem from="1757403320933" duration="2129000" />
       <workItem from="1757406694259" duration="17221000" />
+      <workItem from="1757478446988" duration="696000" />
     </task>
     <task id="LOCAL-00001" summary="initial">
       <option name="closed" value="true" />
